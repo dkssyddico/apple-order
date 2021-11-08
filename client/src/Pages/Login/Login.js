@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import { userAPI } from '../../service/api';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser } from '../../modules/user';
 
 const LoginContainer = styled.div`
   width: 100%;
@@ -23,6 +24,10 @@ const Form = styled.form`
 `;
 
 function Login() {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  // const loggedIn = useSelector((state) => state.user.loggedIn);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const onSubmit = (e) => {
@@ -31,9 +36,7 @@ function Login() {
       email,
       password,
     };
-    userAPI.login(userInfo).then((response) => {
-      console.log(response);
-    });
+    dispatch(loginUser(userInfo));
   };
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -46,17 +49,19 @@ function Login() {
         break;
     }
   };
+
+  // useEffect(() => {
+  //   if (loggedIn) {
+  //     history.push('/');
+  //   }
+  // }, [history, loggedIn]);
+
   return (
     <LoginContainer>
       <LoginCard>
         <h1>Glad to see you again</h1>
         <Form onSubmit={onSubmit}>
-          <input
-            onChange={onChange}
-            name='email'
-            type='email'
-            placeholder='Email'
-          />
+          <input onChange={onChange} name='email' type='email' placeholder='Email' />
           <input
             onChange={onChange}
             name='password'
