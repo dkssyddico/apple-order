@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { userAPI } from '../../service/api';
 
 const LoginContainer = styled.div`
   width: 100%;
@@ -22,13 +23,47 @@ const Form = styled.form`
 `;
 
 function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const userInfo = {
+      email,
+      password,
+    };
+    userAPI.login(userInfo).then((response) => {
+      console.log(response);
+    });
+  };
+  const onChange = (e) => {
+    const { name, value } = e.target;
+    switch (name) {
+      case 'email':
+        return setEmail(value);
+      case 'password':
+        return setPassword(value);
+      default:
+        break;
+    }
+  };
   return (
     <LoginContainer>
       <LoginCard>
         <h1>Glad to see you again</h1>
-        <Form>
-          <input type='email' placeholder='Email' />
-          <input type='password' placeholder='Password' />
+        <Form onSubmit={onSubmit}>
+          <input
+            onChange={onChange}
+            name='email'
+            type='email'
+            placeholder='Email'
+          />
+          <input
+            onChange={onChange}
+            name='password'
+            type='password'
+            placeholder='Password'
+            minLength='6'
+          />
           <button type='submit'>Sign in</button>
         </Form>
         <div>

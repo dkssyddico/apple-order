@@ -29,12 +29,8 @@ const userSchema = new mongoose.Schema({
 
 userSchema.pre('save', async function () {
   const user = this;
-  console.log(user);
   if (user.isModified('password')) {
-    user.password = await bcrypt.hash(
-      user.password,
-      parseInt(process.env.SALT_ROUNDS)
-    );
+    user.password = await bcrypt.hash(user.password, parseInt(process.env.SALT_ROUNDS));
   }
 });
 

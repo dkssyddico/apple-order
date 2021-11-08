@@ -57,17 +57,13 @@ function Join() {
     const { name, value } = e.target;
     switch (name) {
       case 'username':
-        setUsername(value);
-        break;
+        return setUsername(value);
       case 'email':
-        setEmail(value);
-        break;
+        return setEmail(value);
       case 'password':
-        setPassword(value);
-        break;
+        return setPassword(value);
       case 'passwordConfirm':
-        setPasswordConfirm(value);
-        break;
+        return setPasswordConfirm(value);
       default:
         break;
     }
