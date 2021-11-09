@@ -65,3 +65,14 @@ const createToken = (id) => {
     expiresIn: process.env.JWT_EXPIRES_SEC,
   });
 };
+
+export const logout = async (req, res) => {
+  const { _id: userId } = req.user;
+  try {
+    await User.findByIdAndUpdate(userId, { token: '' });
+    res.clearCookie('auth_token');
+    return res.status(200).json({ success: true, message: '로그아웃에 성공했습니다.' });
+  } catch (error) {
+    return res.status(400).json({ success: false, error, message: '로그아웃에 실패했습니다.' });
+  }
+};

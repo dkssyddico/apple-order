@@ -12,4 +12,7 @@ export const userAPI = {
   login: (userInfo) => {
     return api.post('/users/login', userInfo);
   },
+  logout: () => {
+    return api.post('/users/logout');
+  },
 };

@@ -1,6 +1,8 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { userAPI } from '../service/api';
 
 const Nav = styled.nav`
   width: 100%;
@@ -23,6 +25,14 @@ const RightMenu = styled.ul`
 `;
 
 function NavBar() {
+  const loggedIn = useSelector((state) => state.user.loggedIn);
+
+  const onLogoutClick = (e) => {
+    userAPI.logout().then((response) => {
+      console.log(response);
+    });
+  };
+
   return (
     <Nav>
       <div>
@@ -32,9 +42,15 @@ function NavBar() {
         <li>
           <Link to='/cart'>Cart</Link>
         </li>
-        <li>
-          <Link to='/login'>Login</Link>
-        </li>
+        {loggedIn ? (
+          <li>
+            <button onClick={onLogoutClick}>Log out</button>
+          </li>
+        ) : (
+          <li>
+            <Link to='/login'>Login</Link>
+          </li>
+        )}
       </RightMenu>
     </Nav>
   );
