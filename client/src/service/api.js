@@ -13,6 +13,6 @@ export const userAPI = {
     return api.post('/users/login', userInfo);
   },
   logout: () => {
-    return api.post('/users/logout');
+    return api.get('/users/logout');
   },
 };

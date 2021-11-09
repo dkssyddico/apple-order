@@ -1,7 +1,8 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { logoutUser } from '../modules/user';
 import { userAPI } from '../service/api';
 
 const Nav = styled.nav`
@@ -26,11 +27,10 @@ const RightMenu = styled.ul`
 
 function NavBar() {
   const loggedIn = useSelector((state) => state.user.loggedIn);
+  const dispatch = useDispatch();
 
-  const onLogoutClick = (e) => {
-    userAPI.logout().then((response) => {
-      console.log(response);
-    });
+  const onLogoutClick = () => {
+    dispatch(logoutUser());
   };
 
   return (
