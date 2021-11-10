@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
-import { userAPI } from '../../service/api';
+import { useDispatch, useSelector } from 'react-redux';
+import { joinUser } from '../../reducers/userReducer';
+import Message from '../../Components/Message';
 
 const JoinContainer = styled.div`
   padding-top: 12vh;
@@ -23,6 +25,9 @@ const Form = styled.form`
 
 function Join() {
   const history = useHistory();
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+  const { error, joinInfo, loginInfo } = user;
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -36,21 +41,7 @@ function Join() {
       password,
       passwordConfirm,
     };
-
-    userAPI
-      .join(newUser)
-      .then((response) => {
-        if (response.data.success) {
-          history.push('/login');
-        }
-      })
-      .catch((error) => {
-        const { message } = error.response.data;
-        if (message) {
-          alert(message);
-        }
-        console.log(error);
-      });
+    dispatch(joinUser(newUser));
   };
 
   const handleOnchange = (e) => {
@@ -68,23 +59,25 @@ function Join() {
         break;
     }
   };
+
+  useEffect(() => {
+    if (joinInfo && joinInfo.success) {
+      alert('회원가입에 성공했습니다! 로그인해주세요.');
+      history.push('/login');
+    } else if (loginInfo && loginInfo.success) {
+      alert('로그인한 유저는 회원가입을 할 수 없습니다. 로그아웃 후 진행해주세요.');
+      history.push('/');
+    }
+  }, [history, joinInfo, loginInfo]);
+
   return (
     <JoinContainer>
       <JoinCard>
         <h1>Welcome !</h1>
+        {error && <Message>{error}</Message>}
         <Form onSubmit={handleSubmit}>
-          <input
-            onChange={handleOnchange}
-            type='text'
-            placeholder='Username'
-            name='username'
-          />
-          <input
-            onChange={handleOnchange}
-            type='email'
-            placeholder='Email'
-            name='email'
-          />
+          <input onChange={handleOnchange} type='text' placeholder='Username' name='username' />
+          <input onChange={handleOnchange} type='email' placeholder='Email' name='email' />
           <input
             onChange={handleOnchange}
             type='password'

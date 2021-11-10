@@ -28,7 +28,7 @@ function NavBar() {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.user);
-  const { info } = user;
+  const { loginInfo } = user;
 
   const onLogoutClick = () => {
     dispatch(logoutUser());
@@ -43,7 +43,7 @@ function NavBar() {
         <li>
           <Link to='/cart'>Cart</Link>
         </li>
-        {info && info.isAdmin ? (
+        {loginInfo && loginInfo.isAdmin ? (
           <>
             <li>
               <Link to='/admin'>Admin</Link>
@@ -52,7 +52,7 @@ function NavBar() {
         ) : (
           ''
         )}
-        {info && info.success ? (
+        {loginInfo && loginInfo.success ? (
           <>
             <li>
               <button onClick={onLogoutClick}>Log out</button>

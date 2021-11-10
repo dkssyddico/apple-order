@@ -11,7 +11,10 @@ import rootReducer from './reducers';
 
 const preloadedState = {
   user: {
-    info: localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null,
+    joinInfo: null,
+    loginInfo: localStorage.getItem('userInfo')
+      ? JSON.parse(localStorage.getItem('userInfo'))
+      : null,
   },
 };
 

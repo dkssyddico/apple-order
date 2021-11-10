@@ -26,8 +26,8 @@ const Form = styled.form`
 function Login() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const loggedIn = useSelector((state) => state.user.loggedIn);
-  const errorMessage = useSelector((state) => state.user.error);
+  const user = useSelector((state) => state.user);
+  const { error, loginInfo } = user;
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -51,17 +51,17 @@ function Login() {
     }
   };
 
-  // useEffect(() => {
-  //   if (loggedIn) {
-  //     history.push('/');
-  //   }
-  // }, [history, loggedIn]);
+  useEffect(() => {
+    if (loginInfo && loginInfo.success) {
+      history.push('/');
+    }
+  }, [history, loginInfo]);
 
   return (
     <LoginContainer>
       <LoginCard>
         <h1>Glad to see you again</h1>
-        {errorMessage && <h2>{errorMessage}</h2>}
+        {error && <h2>{error}</h2>}
         <Form onSubmit={onSubmit}>
           <input onChange={onChange} name='email' type='email' placeholder='Email' />
           <input
