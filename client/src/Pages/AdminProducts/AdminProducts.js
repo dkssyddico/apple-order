@@ -1,9 +1,15 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-function AdminMain() {
+const Container = styled.div`
+  padding-top: 12vh;
+  width: 100%;
+  height: 100%;
+`;
+
+function AdminProducts() {
   const { loginInfo } = useSelector((state) => state.user);
   const history = useHistory();
   useEffect(() => {
@@ -12,7 +18,14 @@ function AdminMain() {
       history.push('/');
     }
   }, [history, loginInfo]);
-  return <div>Admin</div>;
+  return (
+    <Container>
+      <h1>AdminProducts</h1>
+      <button>
+        <Link to='/admin/products/upload'>Upload product</Link>
+      </button>
+    </Container>
+  );
 }
 
-export default AdminMain;
+export default AdminProducts;

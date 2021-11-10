@@ -48,6 +48,9 @@ function NavBar() {
             <li>
               <Link to='/admin'>Admin</Link>
             </li>
+            <li>
+              <Link to='/admin/products'>Admin Products</Link>
+            </li>
           </>
         ) : (
           ''

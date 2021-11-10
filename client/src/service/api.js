@@ -5,6 +5,12 @@ const api = axios.create({
   withCredentials: true,
 });
 
+const config = {
+  header: {
+    'Content-Type': 'multipart/form-data',
+  },
+};
+
 export const userAPI = {
   join: (newUserObj) => {
     return api.post('/users/join', newUserObj);
@@ -15,5 +21,14 @@ export const userAPI = {
   },
   logout: () => {
     return api.get('/users/logout');
+  },
+};
+
+export const productAPI = {
+  add: (newProduct) => {
+    return api.post('/products', newProduct);
+  },
+  saveImage: (formData) => {
+    return api.post('/products/image', formData, config);
   },
 };

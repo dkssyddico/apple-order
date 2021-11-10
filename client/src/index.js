@@ -16,6 +16,10 @@ const preloadedState = {
       ? JSON.parse(localStorage.getItem('userInfo'))
       : null,
   },
+  productToBeUploaded: {
+    images: [],
+    info: null,
+  },
 };
 
 export const store = configureStore({

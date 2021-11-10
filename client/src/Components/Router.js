@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import AdminMain from '../Pages/AdminMain/AdminMain';
+import AdminProducts from '../Pages/AdminProducts/AdminProducts';
+import UploadProduct from '../Pages/AdminProducts/sections/UploadProduct';
 import Cart from '../Pages/Cart/Cart';
 import Home from '../Pages/Home/Home';
 import Join from '../Pages/Join/Join';
@@ -26,6 +28,12 @@ function Router() {
         </Route>
         <Route path='/admin' exact>
           <AdminMain />
+        </Route>
+        <Route path='/admin/products' exact>
+          <AdminProducts />
+        </Route>
+        <Route path='/admin/products/upload' exact>
+          <UploadProduct />
         </Route>
         <Redirect from='*' to='/' />
       </Switch>
