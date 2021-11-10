@@ -33,7 +33,7 @@ export const login = async (req, res) => {
   if (!user) {
     return res.status(400).json({
       success: false,
-      message: '없는 유저입니다. 회원가입을 진행해주세요.',
+      message: '존재하지 않는 유저입니다. 회원가입을 진행해주세요.',
     });
   }
 
@@ -50,19 +50,23 @@ export const login = async (req, res) => {
   user.token = token;
   await user.save((error, user) => {
     if (error) {
-      return res.status(400).json({ success: false, message: '로그인에 실패했습니다.' });
+      return res.status(400).json({ success: false, error, message: '로그인에 실패했습니다.' });
     }
-
     return res
       .cookie('auth_token', token)
       .status(200)
-      .json({ success: true, message: '로그인에 성공했습니다.', userId: user._id });
+      .json({
+        success: true,
+        _id: user._id,
+        token: token,
+        isAdmin: user.role === 0 ? true : false,
+      });
   });
 };
 
 const createToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_SEC,
+    expiresIn: '1h',
   });
 };
 

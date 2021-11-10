@@ -10,6 +10,7 @@ export const userAPI = {
     return api.post('/users/join', newUserObj);
   },
   login: (userInfo) => {
+    console.log(userInfo);
     return api.post('/users/login', userInfo);
   },
   logout: () => {

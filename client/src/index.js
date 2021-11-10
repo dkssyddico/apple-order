@@ -7,11 +7,18 @@ import { configureStore } from '@reduxjs/toolkit';
 import ReduxThunk from 'redux-thunk';
 import promiseMiddleware from 'redux-promise';
 import logger from 'redux-logger';
-import rootReducer from './modules';
+import rootReducer from './reducers';
+
+const preloadedState = {
+  user: {
+    info: localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null,
+  },
+};
 
 export const store = configureStore({
   reducer: rootReducer,
   middleware: [logger, ReduxThunk, promiseMiddleware],
+  preloadedState,
 });
 
 ReactDOM.render(

@@ -21,6 +21,7 @@ const userSchema = new mongoose.Schema({
   role: {
     type: Number,
     default: 1, // 1은 고객 0은 admin
+    required: true,
   },
   token: {
     type: String,

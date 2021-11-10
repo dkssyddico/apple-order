@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from '../../modules/user';
+import { loginUser } from '../../reducers/userReducer';
 
 const LoginContainer = styled.div`
   width: 100%;
@@ -26,7 +26,8 @@ const Form = styled.form`
 function Login() {
   const dispatch = useDispatch();
   const history = useHistory();
-  // const loggedIn = useSelector((state) => state.user.loggedIn);
+  const loggedIn = useSelector((state) => state.user.loggedIn);
+  const errorMessage = useSelector((state) => state.user.error);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -60,6 +61,7 @@ function Login() {
     <LoginContainer>
       <LoginCard>
         <h1>Glad to see you again</h1>
+        {errorMessage && <h2>{errorMessage}</h2>}
         <Form onSubmit={onSubmit}>
           <input onChange={onChange} name='email' type='email' placeholder='Email' />
           <input

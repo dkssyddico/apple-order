@@ -5,9 +5,11 @@ dotenv.config();
 
 export const auth = (req, res, next) => {
   let clientToken = req.cookies.auth_token;
+  console.log(clientToken);
   jwt.verify(clientToken, process.env.JWT_SECRET, async function (err, decoded) {
     if (err) {
       console.log('error here');
+      console.log(err);
       return res
         .status(401)
         .json({ success: false, error: err, message: '인증에서 문제가 발생했습니다.' });
