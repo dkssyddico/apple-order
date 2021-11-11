@@ -1,5 +1,5 @@
 import express from 'express';
-import { add, getAll, remove, saveImage } from '../controllers/product';
+import { add, getAll, getInfo, remove, saveImage, update } from '../controllers/product';
 import { auth } from '../middleware/auth';
 import isAdmin from '../middleware/isAdmin';
 
@@ -11,6 +11,10 @@ productRouter.post('/', auth, isAdmin, add);
 
 productRouter.post('/image', auth, isAdmin, saveImage);
 
+productRouter.get('/:id', auth, isAdmin, getInfo);
+
 productRouter.delete('/:id', auth, isAdmin, remove);
+
+productRouter.put('/:id', auth, isAdmin, update);
 
 export default productRouter;

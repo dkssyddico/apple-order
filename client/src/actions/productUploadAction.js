@@ -5,7 +5,6 @@ export function uploadProductIMGThunk(type, request) {
     dispatch({ type });
     try {
       const { data } = await request(params);
-      console.log(data);
       dispatch({
         type: SUCCESS,
         payload: data,

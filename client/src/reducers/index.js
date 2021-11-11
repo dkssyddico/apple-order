@@ -1,13 +1,21 @@
 import { combineReducers } from 'redux';
 import user from './userReducer';
-import productToBeUploaded from './productUploadReducer';
-import { productsListReducer, productRemoveReducer } from './productReducers';
+import { productImagesReducer, productUploadReducer } from './productUploadReducer';
+import {
+  productsListReducer,
+  productRemoveReducer,
+  productInfoReducer,
+  updateProductReducer,
+} from './productReducers';
 
 const rootReducer = combineReducers({
   user,
-  productToBeUploaded,
+  productImageUpload: productImagesReducer,
+  productUpload: productUploadReducer,
   productsList: productsListReducer,
   productRemove: productRemoveReducer,
+  productInfo: productInfoReducer,
+  updatedProduct: updateProductReducer,
 });
 
 export default rootReducer;

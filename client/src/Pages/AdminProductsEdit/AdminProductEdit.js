@@ -1,11 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Dropzone from 'react-dropzone';
-import Message from '../../../Components/Message';
-import { uploadProductImg, uploadProduct } from '../../../reducers/productUploadReducer';
-import { UPLOAD_PRODUCT_IMG_REFRESH, UPLOAD_PRODUCT_REFRESH } from '../../../actions/types';
+import { useHistory, useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { getProduct, updateProduct } from '../../reducers/productReducers';
+import {
+  GET_PRODUCT_REFRESH,
+  UPDATE_PRODUCT_REFRESH,
+  UPLOAD_PRODUCT_IMG_REFRESH,
+} from '../../actions/types';
+import { uploadProductImg } from '../../reducers/productUploadReducer';
+import Message from '../../Components/Message';
 
 const categories = [
   { key: 1, value: 'Family' },
@@ -21,14 +26,6 @@ const Container = styled.div`
   justify-content: space-between;
 `;
 
-const Previews = styled.div`
-  display: flex;
-  width: 350px;
-  height: 240px;
-  overflow-x: scroll;
-  background-color: beige;
-`;
-
 const Zone = styled.div`
   width: 300px;
   height: 240px;
@@ -38,19 +35,30 @@ const Zone = styled.div`
   justify-content: center;
 `;
 
-// 사진지우고 다시 이미지 드롭하면 이전 이미지까지불러오는 문제가 있음
-// 어느 곳에서 사진을 업로드 하든 리듀서를 공유하기 때문에 발생하는 문제.
+const Previews = styled.div`
+  display: flex;
+  width: 350px;
+  height: 240px;
+  overflow-x: scroll;
+  background-color: beige;
+`;
 
-function UploadProduct() {
+// 로딩 처리
+function AdminProductEdit() {
+  let { id } = useParams();
+  const history = useHistory();
   const dispatch = useDispatch();
   const { loginInfo } = useSelector((state) => state.user);
+  const { product } = useSelector((state) => state.productInfo);
+  const { success: successUpdateProduct, error: updateError } = useSelector(
+    (state) => state.updatedProduct
+  );
+
   const {
     images: uploadedImages,
-    error,
+    error: uploadImagesError,
     success: successUploadImages,
   } = useSelector((state) => state.productImageUpload);
-  const { success } = useSelector((state) => state.productUpload);
-  const history = useHistory();
 
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
@@ -63,20 +71,32 @@ function UploadProduct() {
       alert('관리자만 들어올 수 있습니다.');
       history.push('/');
     }
-    if (success) {
-      alert('상품 등록에 성공했습니다!');
-      history.push('/admin/products');
-      dispatch({ type: UPLOAD_PRODUCT_REFRESH });
+    if (!product || id !== product._id) {
+      dispatch({ type: GET_PRODUCT_REFRESH });
+      dispatch(getProduct(id));
+    } else {
+      setName(product.name);
+      setPrice(product.price);
+      setCategory(product.category);
+      setDescription(product.description);
+      setImages(product.images);
     }
-  }, [history, loginInfo, success, dispatch]);
+  }, [history, loginInfo, dispatch, product, id]);
 
   useEffect(() => {
     if (successUploadImages) {
-      console.log('success');
       setImages((prev) => [...uploadedImages, ...prev]);
       dispatch({ type: UPLOAD_PRODUCT_IMG_REFRESH });
     }
   }, [dispatch, successUploadImages, uploadedImages]);
+
+  useEffect(() => {
+    if (successUpdateProduct) {
+      alert('상품 업데이트에 성공했습니다!');
+      history.push('/admin/products');
+      dispatch({ type: UPDATE_PRODUCT_REFRESH });
+    }
+  }, [dispatch, history, successUpdateProduct]);
 
   const handleDrop = (files) => {
     let formData = new FormData();
@@ -117,7 +137,7 @@ function UploadProduct() {
         description,
         images,
       };
-      dispatch(uploadProduct(newProduct));
+      dispatch(updateProduct(id, newProduct));
     }
   };
 
@@ -130,7 +150,6 @@ function UploadProduct() {
 
   return (
     <div className='container'>
-      <h1>Upload product</h1>
       <Container>
         <Dropzone onDrop={handleDrop}>
           {({ getRootProps, getInputProps }) => (
@@ -156,12 +175,13 @@ function UploadProduct() {
         </Previews>
       </Container>
       <form onSubmit={handleSubmit}>
-        {error && <Message>{error}</Message>}
+        {uploadImagesError && <Message>{uploadImagesError}</Message>}
+        {updateError && <Message>{updateError}</Message>}
         <label>상품명</label>
-        <input onChange={handleChange} name='name' type='text' required />
+        <input onChange={handleChange} name='name' type='text' value={name} required />
         <br />
         <br />
-        <select name='category' onChange={handleChange} required>
+        <select name='category' value={category} onChange={handleChange} required>
           {categories.map((item) => {
             return (
               <option key={item.key} value={item.key}>
@@ -173,11 +193,11 @@ function UploadProduct() {
         <br />
         <br />
         <label>상품 가격</label>
-        <input onChange={handleChange} name='price' type='number' required />
+        <input onChange={handleChange} name='price' type='number' value={price} required />
         <br />
         <br />
         <label>상품 설명</label>
-        <textarea onChange={handleChange} name='description' required />
+        <textarea onChange={handleChange} name='description' value={description} required />
         <br />
         <br />
         <input type='submit' />
@@ -186,4 +206,4 @@ function UploadProduct() {
   );
 }
 
-export default UploadProduct;
+export default AdminProductEdit;

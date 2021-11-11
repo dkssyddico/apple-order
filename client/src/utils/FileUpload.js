@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
-import Dropzone from 'react-dropzone';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+
 import styled from 'styled-components';
+import Dropzone from 'react-dropzone';
+import { uploadProductImg } from '../reducers/productUploadReducer';
 
 const Container = styled.div`
   display: flex;
@@ -16,29 +19,15 @@ const Zone = styled.div`
   justify-content: center;
 `;
 
-const Previews = styled.div`
-  display: flex;
-  width: 350px;
-  height: 240px;
-  overflow-x: scroll;
-  background-color: beige;
-`;
-
 function FileUpload() {
-  const [images, setImages] = useState([]);
-  console.log(images);
+  const dispatch = useDispatch();
 
   const handleDrop = (files) => {
-    console.log(files);
     let formData = new FormData();
-    const config = {
-      header: {
-        'Content-Type': 'multipart/form-data',
-      },
-    };
-    formData.append('file', files[0]);
-    console.log(formData);
+    formData.append('image', files[0]);
+    dispatch(uploadProductImg(formData));
   };
+
   return (
     <Container>
       <Dropzone onDrop={handleDrop}>
@@ -51,17 +40,6 @@ function FileUpload() {
           </section>
         )}
       </Dropzone>
-      <Previews>
-        {images.map((image, index) => (
-          <div key={index}>
-            <img
-              style={{ minWidth: '300px' }}
-              // src={`http://localhost:5500/${image}`}
-              alt='product'
-            />
-          </div>
-        ))}
-      </Previews>
     </Container>
   );
 }

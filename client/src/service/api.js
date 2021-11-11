@@ -37,4 +37,10 @@ export const productAPI = {
   remove: (id) => {
     return api.delete(`/products/${id}`);
   },
+  getInfo: (id) => {
+    return api.get(`/products/${id}`);
+  },
+  update: (id, productUpdatedObj) => {
+    return api.put(`/products/${id}`, productUpdatedObj);
+  },
 };

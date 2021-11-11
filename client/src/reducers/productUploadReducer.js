@@ -6,6 +6,7 @@ import {
   UPLOAD_PRODUCT_IMG,
   UPLOAD_PRODUCT_IMG_SUCCESS,
   UPLOAD_PRODUCT_IMG_FAILURE,
+  UPLOAD_PRODUCT_IMG_REFRESH,
   UPLOAD_PRODUCT_REFRESH,
 } from '../actions/types';
 import { productAPI } from '../service/api';
@@ -13,7 +14,7 @@ import { productAPI } from '../service/api';
 export const uploadProductImg = uploadProductIMGThunk(UPLOAD_PRODUCT_IMG, productAPI.saveImage);
 export const uploadProduct = uploadProductThunk(UPLOAD_PRODUCT, productAPI.add);
 
-const productToBeUploaded = (
+export const productImagesReducer = (
   state = {
     loading: true,
     images: [],
@@ -24,18 +25,31 @@ const productToBeUploaded = (
 ) => {
   switch (action.type) {
     case UPLOAD_PRODUCT_IMG:
-      return {
-        ...state,
-        loading: true,
-      };
+      return { ...state };
     case UPLOAD_PRODUCT_IMG_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        images: [...state.images, action.payload], // 이미지를 여러 개 등록하고 싶어서.
-      };
+      return { ...state, loading: false, success: true, images: [action.payload] };
     case UPLOAD_PRODUCT_IMG_FAILURE:
-      return { ...state, loading: false, error: action.payload };
+      return { ...state, error: action.payload };
+    case UPLOAD_PRODUCT_IMG_REFRESH:
+      return {
+        loading: true,
+        images: [],
+        error: '',
+      };
+    default:
+      return state;
+  }
+};
+
+export const productUploadReducer = (
+  state = {
+    loading: true,
+    success: false,
+    error: '',
+  },
+  action
+) => {
+  switch (action.type) {
     case UPLOAD_PRODUCT:
       return {
         ...state,
@@ -61,5 +75,3 @@ const productToBeUploaded = (
       return state;
   }
 };
-
-export default productToBeUploaded;

@@ -37,7 +37,6 @@ export const saveImage = (req, res) => {
     if (err) {
       return res.status(400).json({ success: false, message: '사진 업로드에 실패했습니다' });
     }
-    console.log(res.req.file);
     return res.status(200).json({
       success: true,
       filePath: res.req.file.path,
@@ -67,4 +66,29 @@ export const remove = async (req, res) => {
     }
     return res.status(200).json({ success: true, message: '상품을 성공적으로 삭제했습니다.' });
   });
+};
+
+export const getInfo = async (req, res) => {
+  const { id } = req.params;
+  try {
+    let product = await Product.findById(id);
+    return res.status(200).json({ success: true, product });
+  } catch (error) {
+    return res
+      .status(400)
+      .json({ success: false, message: '상품 정보를 불러오는데 실패했습니다.' });
+  }
+};
+
+export const update = async (req, res) => {
+  const { id } = req.params;
+  let { name, price, category, description, images } = req.body;
+  price = parseInt(price);
+  category = parseInt(category);
+  try {
+    await Product.findByIdAndUpdate(id, { name, price, category, description, images });
+    return res.status(200).json({ success: true });
+  } catch (error) {
+    return res.status(400).json({ success: false, message: '상품 정보 업데이트에 실패했습니다.' });
+  }
 };

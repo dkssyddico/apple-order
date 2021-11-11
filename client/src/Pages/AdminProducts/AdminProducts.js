@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getProductsAll, removeProduct } from '../../reducers/productReducers';
-import { productAPI } from '../../service/api';
 import { REMOVE_PRODUCT_REFRESH } from '../../actions/types';
 
 const Container = styled.div`
@@ -67,7 +66,9 @@ function AdminProducts() {
                   <td>$ {item.price}</td>
                   <td>{item.description}</td>
                   <td>
-                    <button>Edit</button>
+                    <button onClick={() => history.push(`/admin/products/${item._id}/edit`)}>
+                      Edit
+                    </button>
                   </td>
                   <td>
                     <button onClick={() => handleDelete(item._id)}>Remove</button>
