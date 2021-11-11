@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getProductsAll } from '../../reducers/productsReducer';
+import { productAPI } from '../../service/api';
 
 const Container = styled.div`
   padding-top: 12vh;
@@ -23,6 +24,13 @@ function AdminProducts() {
     }
     dispatch(getProductsAll());
   }, [history, loginInfo, dispatch]);
+
+  const handleDelete = (itemId) => {
+    console.log(itemId);
+    productAPI.remove(itemId).then((res) => {
+      console.log(res);
+    });
+  };
 
   return (
     <Container>
@@ -60,7 +68,7 @@ function AdminProducts() {
                     <button>Edit</button>
                   </td>
                   <td>
-                    <button>Remove</button>
+                    <button onClick={() => handleDelete(item._id)}>Remove</button>
                   </td>
                 </tr>
               ))}

@@ -28,6 +28,7 @@ const user = (state = {}, action) => {
         ...state,
         joinInfo: action.payload,
         loading: false,
+        error: '',
       };
     case JOIN_USER_FAILURE:
       return {
@@ -45,6 +46,7 @@ const user = (state = {}, action) => {
         ...state,
         loading: false,
         loginInfo: action.payload,
+        error: '',
       };
     case LOGIN_USER_FAILURE:
       return {
@@ -62,6 +64,7 @@ const user = (state = {}, action) => {
         ...state,
         loading: false,
         loginInfo: null,
+        error: '',
       };
     case LOGOUT_USER_FAILURE:
       return {

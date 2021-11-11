@@ -34,4 +34,7 @@ export const productAPI = {
   getAll: () => {
     return api.get('/products');
   },
+  remove: (id) => {
+    return api.delete(`/products/${id}`);
+  },
 };

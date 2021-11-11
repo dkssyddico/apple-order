@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import Dropzone from 'react-dropzone';
 import { uploadProductImg, uploadProduct } from '../../../reducers/productUploadReducer';
 import Message from '../../../Components/Message';
+import { UPLOAD_PRODUCT_REFRESH } from '../../../actions/types';
 
 const categories = [
   { key: 1, value: 'Family' },
@@ -40,7 +41,7 @@ const Previews = styled.div`
 function UploadProduct() {
   const dispatch = useDispatch();
   const { loginInfo } = useSelector((state) => state.user);
-  const { images, error, info } = useSelector((state) => state.productToBeUploaded);
+  const { images, error, success } = useSelector((state) => state.productToBeUploaded);
   const history = useHistory();
 
   useEffect(() => {
@@ -48,11 +49,12 @@ function UploadProduct() {
       alert('관리자만 들어올 수 있습니다.');
       history.push('/');
     }
-    if (info && info.success) {
+    if (success) {
       alert('상품 등록에 성공했습니다!');
       history.push('/admin/products');
+      dispatch({ type: UPLOAD_PRODUCT_REFRESH });
     }
-  }, [history, loginInfo, info]);
+  }, [history, loginInfo, success, dispatch]);
 
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
@@ -118,15 +120,16 @@ function UploadProduct() {
           )}
         </Dropzone>
         <Previews>
-          {images.map((image, index) => (
-            <div key={index}>
-              <img
-                style={{ minWidth: '300px' }}
-                src={`http://localhost:4000/${image.filePath}`}
-                alt='product'
-              />
-            </div>
-          ))}
+          {images &&
+            images.map((image, index) => (
+              <div key={index}>
+                <img
+                  style={{ minWidth: '300px' }}
+                  src={`http://localhost:4000/${image.filePath}`}
+                  alt='product'
+                />
+              </div>
+            ))}
         </Previews>
       </Container>
       <form onSubmit={handleSubmit}>

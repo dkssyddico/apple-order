@@ -14,6 +14,7 @@ export const add = async (req, res) => {
     await Product.create({ name, price, category, description, images });
     return res.status(201).json({ success: true, message: '새로운 상품이 등록되었습니다!' });
   } catch (error) {
+    console.log(error);
     return res
       .status(400)
       .json({ success: false, error, message: '새로운 상품을 등록 실패했습니다.' });
@@ -54,4 +55,14 @@ export const getAll = async (req, res) => {
       .status(400)
       .json({ success: false, error, message: '상품들을 불러오는데 실패했습니다.' });
   }
+};
+
+export const remove = async (req, res) => {
+  const { id } = req.params;
+  await Product.findByIdAndDelete(id).exec((err, result) => {
+    if (err) {
+      return res.status(400).json({ success: false, message: '상품을 삭제하지 못했습니다.' });
+    }
+    return res.status(200).json({ success: true, message: '상품을 성공적으로 삭제했습니다.' });
+  });
 };
