@@ -2,8 +2,9 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { getProductsAll } from '../../reducers/productsReducer';
+import { getProductsAll, removeProduct } from '../../reducers/productReducers';
 import { productAPI } from '../../service/api';
+import { REMOVE_PRODUCT_REFRESH } from '../../actions/types';
 
 const Container = styled.div`
   padding-top: 12vh;
@@ -13,7 +14,8 @@ const Container = styled.div`
 
 function AdminProducts() {
   const { loginInfo } = useSelector((state) => state.user);
-  const { list } = useSelector((state) => state.products);
+  const { list } = useSelector((state) => state.productsList);
+  const { success: successRemove } = useSelector((state) => state.productRemove);
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -22,14 +24,14 @@ function AdminProducts() {
       alert('관리자만 들어올 수 있습니다.');
       history.push('/');
     }
+    if (successRemove) {
+      dispatch({ type: REMOVE_PRODUCT_REFRESH });
+    }
     dispatch(getProductsAll());
-  }, [history, loginInfo, dispatch]);
+  }, [history, loginInfo, dispatch, successRemove]);
 
   const handleDelete = (itemId) => {
-    console.log(itemId);
-    productAPI.remove(itemId).then((res) => {
-      console.log(res);
-    });
+    dispatch(removeProduct(itemId));
   };
 
   return (

@@ -59,8 +59,10 @@ export const getAll = async (req, res) => {
 
 export const remove = async (req, res) => {
   const { id } = req.params;
+  console.log(id);
   await Product.findByIdAndDelete(id).exec((err, result) => {
     if (err) {
+      console.log(err);
       return res.status(400).json({ success: false, message: '상품을 삭제하지 못했습니다.' });
     }
     return res.status(200).json({ success: true, message: '상품을 성공적으로 삭제했습니다.' });
