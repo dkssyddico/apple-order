@@ -1,9 +1,11 @@
 import express from 'express';
-import { add, saveImage } from '../controllers/product';
+import { add, getAll, saveImage } from '../controllers/product';
 import { auth } from '../middleware/auth';
 import isAdmin from '../middleware/isAdmin';
 
 const productRouter = express.Router();
+
+productRouter.get('/', auth, isAdmin, getAll);
 
 productRouter.post('/', auth, isAdmin, add);
 

@@ -44,3 +44,14 @@ export const saveImage = (req, res) => {
     });
   });
 };
+
+export const getAll = async (req, res) => {
+  try {
+    const products = await Product.find().sort({ createdAt: 'desc' });
+    return res.status(200).json({ success: true, products });
+  } catch (error) {
+    return res
+      .status(400)
+      .json({ success: false, error, message: '상품들을 불러오는데 실패했습니다.' });
+  }
+};

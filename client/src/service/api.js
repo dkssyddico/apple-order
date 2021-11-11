@@ -31,4 +31,7 @@ export const productAPI = {
   saveImage: (formData) => {
     return api.post('/products/image', formData, config);
   },
+  getAll: () => {
+    return api.get('/products');
+  },
 };

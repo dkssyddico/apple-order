@@ -20,6 +20,9 @@ const preloadedState = {
     images: [],
     info: null,
   },
+  products: {
+    list: [],
+  },
 };
 
 export const store = configureStore({

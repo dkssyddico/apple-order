@@ -40,15 +40,19 @@ const Previews = styled.div`
 function UploadProduct() {
   const dispatch = useDispatch();
   const { loginInfo } = useSelector((state) => state.user);
+  const { images, error, info } = useSelector((state) => state.productToBeUploaded);
   const history = useHistory();
+
   useEffect(() => {
     if (!loginInfo || !loginInfo.isAdmin) {
       alert('관리자만 들어올 수 있습니다.');
       history.push('/');
     }
-  }, [history, loginInfo]);
-
-  const { images, error } = useSelector((state) => state.productToBeUploaded);
+    if (info && info.success) {
+      alert('상품 등록에 성공했습니다!');
+      history.push('/admin/products');
+    }
+  }, [history, loginInfo, info]);
 
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);

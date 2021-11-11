@@ -5,7 +5,6 @@ dotenv.config();
 
 export const auth = (req, res, next) => {
   let clientToken = req.cookies.auth_token;
-  console.log(clientToken);
   jwt.verify(clientToken, process.env.JWT_SECRET, async function (err, decoded) {
     if (err) {
       console.log('error here');
