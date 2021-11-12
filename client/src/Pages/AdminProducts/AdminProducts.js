@@ -25,8 +25,11 @@ function AdminProducts() {
     dispatch(getProductsAll());
   }, [dispatch, successRemove]);
 
-  const handleDelete = (itemId) => {
-    dispatch(removeProduct(itemId));
+  const handleDelete = (itemName, itemId) => {
+    let confirm = window.confirm(`${itemName} 을/를 지우시겠습니까?`);
+    if (confirm) {
+      dispatch(removeProduct(itemId));
+    }
   };
 
   return (
@@ -70,7 +73,7 @@ function AdminProducts() {
                       </button>
                     </td>
                     <td>
-                      <button onClick={() => handleDelete(item._id)}>Remove</button>
+                      <button onClick={() => handleDelete(item.name, item._id)}>Remove</button>
                     </td>
                   </tr>
                 ))}

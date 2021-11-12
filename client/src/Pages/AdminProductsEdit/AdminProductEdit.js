@@ -125,14 +125,17 @@ function AdminProductEdit() {
     if (images.length === 0) {
       alert('상품 이미지는 한 개 이상 필요합니다.');
     } else {
-      const newProduct = {
-        name,
-        price,
-        category,
-        description,
-        images,
-      };
-      dispatch(updateProduct(id, newProduct));
+      let confirm = window.confirm('업데이트하시겠습니까?');
+      if (confirm) {
+        const newProduct = {
+          name,
+          price,
+          category,
+          description,
+          images,
+        };
+        dispatch(updateProduct(id, newProduct));
+      }
     }
   };
 

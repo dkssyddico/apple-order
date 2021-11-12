@@ -101,14 +101,17 @@ function UploadProduct() {
     if (images.length === 0) {
       alert('상품 이미지는 한 개 이상 필요합니다.');
     } else {
-      const newProduct = {
-        name,
-        price,
-        category,
-        description,
-        images,
-      };
-      dispatch(uploadProduct(newProduct));
+      let confirm = window.confirm(`새로운 ${name} 상품을 등록하시겠습니까?`);
+      if (confirm) {
+        const newProduct = {
+          name,
+          price,
+          category,
+          description,
+          images,
+        };
+        dispatch(uploadProduct(newProduct));
+      }
     }
   };
 

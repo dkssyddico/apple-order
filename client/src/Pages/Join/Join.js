@@ -35,13 +35,18 @@ function Join() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newUser = {
-      username,
-      email,
-      password,
-      passwordConfirm,
-    };
-    dispatch(joinUser(newUser));
+    let confirm = window.confirm(
+      `아래와 같은 정보로 회원가입을 진행하시겠습니까?\nUsername: ${username}\nEmail: ${email}`
+    );
+    if (confirm) {
+      const newUser = {
+        username,
+        email,
+        password,
+        passwordConfirm,
+      };
+      dispatch(joinUser(newUser));
+    }
   };
 
   const handleOnchange = (e) => {

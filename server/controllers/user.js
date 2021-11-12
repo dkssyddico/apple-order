@@ -81,7 +81,17 @@ export const logout = async (req, res) => {
 
 export const getAll = async (req, res) => {
   try {
-    const users = await User.find().sort({ createAt: 'desc' });
+    let users = await User.find().sort({ createAt: 'desc' });
+    // 보안을 위해 비밀번호 제거
+    users = users.map((user) => {
+      return {
+        _id: user._id,
+        username: user.username,
+        email: user.email,
+        role: user.role,
+        createdAt: user.createdAt,
+      };
+    });
     return res.status(200).json({ success: true, users });
   } catch (error) {
     return res

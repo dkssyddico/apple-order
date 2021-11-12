@@ -22,8 +22,11 @@ function AdminUsers() {
     dispatch(getAllUsers());
   }, [history, dispatch, removeUserSuccess]);
 
-  const handleDelete = (userId) => {
-    dispatch(removeUser(userId));
+  const handleDelete = (username, userId) => {
+    let confirm = window.confirm(`${username} 유저를 삭제하시겠습니까?`);
+    if (confirm) {
+      dispatch(removeUser(userId));
+    }
   };
 
   return (
@@ -50,7 +53,7 @@ function AdminUsers() {
                     <td>{user.email}</td>
                     <td>order</td>
                     <td>
-                      <button onClick={() => handleDelete(user._id)}>Remove</button>
+                      <button onClick={() => handleDelete(user.username, user._id)}>Remove</button>
                     </td>
                   </tr>
                 ))}
