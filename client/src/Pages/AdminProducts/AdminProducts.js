@@ -41,47 +41,47 @@ function AdminProducts() {
         <Link to='/admin/products/upload'>Upload product</Link>
       </button>
       <div>
-        <table>
-          <thead>
-            <tr>
-              <th>Product Image</th>
-              <th>Product Name</th>
-              <th>Product Price</th>
-              <th>Product Description</th>
-              <th>Edit</th>
-              <th>Remove</th>
-            </tr>
-          </thead>
-          <tbody>
-            {loading ? (
-              <Loading />
-            ) : (
-              list &&
-              list.map((item) => (
-                <tr key={item._id}>
-                  <td>
-                    <img
-                      style={{ width: '70px' }}
-                      alt='item'
-                      src={`http://localhost:4000/${item.images[0].filePath}`}
-                    />
-                  </td>
-                  <td>{item.name}</td>
-                  <td>$ {item.price}</td>
-                  <td>{item.description}</td>
-                  <td>
-                    <button onClick={() => history.push(`/admin/products/${item._id}/edit`)}>
-                      Edit
-                    </button>
-                  </td>
-                  <td>
-                    <button onClick={() => handleDelete(item._id)}>Remove</button>
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+        {loading ? (
+          <Loading />
+        ) : (
+          <table>
+            <thead>
+              <tr>
+                <th>Product Image</th>
+                <th>Product Name</th>
+                <th>Product Price</th>
+                <th>Product Description</th>
+                <th>Edit</th>
+                <th>Remove</th>
+              </tr>
+            </thead>
+            <tbody>
+              {list &&
+                list.map((item) => (
+                  <tr key={item._id}>
+                    <td>
+                      <img
+                        style={{ width: '70px' }}
+                        alt='item'
+                        src={`http://localhost:4000/${item.images[0].filePath}`}
+                      />
+                    </td>
+                    <td>{item.name}</td>
+                    <td>$ {item.price}</td>
+                    <td>{item.description}</td>
+                    <td>
+                      <button onClick={() => history.push(`/admin/products/${item._id}/edit`)}>
+                        Edit
+                      </button>
+                    </td>
+                    <td>
+                      <button onClick={() => handleDelete(item._id)}>Remove</button>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        )}
       </div>
     </Container>
   );

@@ -8,15 +8,31 @@ import {
   JOIN_USER,
   JOIN_USER_SUCCESS,
   JOIN_USER_FAILURE,
+  GET_USERS,
+  GET_USERS_SUCCESS,
+  GET_USERS_FAILURE,
+  GET_USERS_REFRESH,
+  REMOVE_USER,
+  REMOVE_USER_SUCCESS,
+  REMOVE_USER_FAILURE,
+  REMOVE_USER_REFRESH,
 } from '../actions/types';
-import { userJoinThunk, userLoginThunk, userLogoutThunk } from '../actions/userActions';
+import {
+  userJoinThunk,
+  userLoginThunk,
+  userLogoutThunk,
+  getAllUsersThunk,
+  removeUserThunk,
+} from '../actions/userActions';
 import { userAPI } from '../service/api';
 
 export const loginUser = userLoginThunk(LOGIN_USER, userAPI.login);
 export const logoutUser = userLogoutThunk(LOGOUT_USER, userAPI.logout);
 export const joinUser = userJoinThunk(JOIN_USER, userAPI.join);
+export const getAllUsers = getAllUsersThunk(GET_USERS, userAPI.getAll);
+export const removeUser = removeUserThunk(REMOVE_USER, userAPI.remove);
 
-const user = (state = {}, action) => {
+export const userReducer = (state = {}, action) => {
   switch (action.type) {
     case JOIN_USER:
       return {
@@ -77,4 +93,61 @@ const user = (state = {}, action) => {
   }
 };
 
-export default user;
+export const getUsersReducer = (
+  state = {
+    loading: true,
+    list: [],
+    error: '',
+  },
+  action
+) => {
+  switch (action.type) {
+    case GET_USERS:
+      return {
+        ...state,
+        loading: true,
+      };
+    case GET_USERS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        list: [...action.payload.users],
+      };
+    case GET_USERS_FAILURE:
+      return {
+        ...state,
+        loading: true,
+        error: action.payload,
+      };
+    case GET_USERS_REFRESH:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const removeUserReducer = (state = {}, action) => {
+  switch (action.type) {
+    case REMOVE_USER:
+      return {
+        ...state,
+        loading: true,
+      };
+    case REMOVE_USER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+      };
+    case REMOVE_USER_FAILURE:
+      return {
+        ...state,
+        loading: true,
+        error: action.payload,
+      };
+    case REMOVE_USER_REFRESH:
+      return {};
+    default:
+      return state;
+  }
+};

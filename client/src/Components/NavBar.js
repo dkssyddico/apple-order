@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { logoutUser } from '../reducers/userReducer';
+import { logoutUser } from '../reducers/userReducers';
 
 const Nav = styled.nav`
   width: 100%;
@@ -47,6 +47,9 @@ function NavBar() {
           <>
             <li>
               <Link to='/admin'>Admin</Link>
+            </li>
+            <li>
+              <Link to='/admin/users'>Admin Users</Link>
             </li>
             <li>
               <Link to='/admin/products'>Admin Products</Link>

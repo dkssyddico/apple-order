@@ -21,6 +21,12 @@ export const userAPI = {
   logout: () => {
     return api.get('/users/logout');
   },
+  getAll: () => {
+    return api.get('/users');
+  },
+  remove: (id) => {
+    return api.delete(`/users/${id}`);
+  },
 };
 
 export const productAPI = {

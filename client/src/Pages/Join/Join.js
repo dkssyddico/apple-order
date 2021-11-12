@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { joinUser } from '../../reducers/userReducer';
+import { joinUser } from '../../reducers/userReducers';
 import Message from '../../Components/Message';
 
 const JoinContainer = styled.div`

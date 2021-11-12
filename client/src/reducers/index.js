@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import user from './userReducer';
+import { getUsersReducer, removeUserReducer, userReducer } from './userReducers';
 import { productImagesReducer, productUploadReducer } from './productUploadReducer';
 import {
   productsListReducer,
@@ -9,7 +9,9 @@ import {
 } from './productReducers';
 
 const rootReducer = combineReducers({
-  user,
+  user: userReducer,
+  usersList: getUsersReducer,
+  userRemoved: removeUserReducer,
   productImageUpload: productImagesReducer,
   productUpload: productUploadReducer,
   productsList: productsListReducer,

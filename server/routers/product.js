@@ -5,7 +5,7 @@ import isAdmin from '../middleware/isAdmin';
 
 const productRouter = express.Router();
 
-productRouter.get('/', auth, isAdmin, getAll);
+productRouter.get('/', getAll);
 
 productRouter.post('/', auth, isAdmin, add);
 

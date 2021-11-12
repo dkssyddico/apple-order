@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from '../../reducers/userReducer';
+import { loginUser } from '../../reducers/userReducers';
 
 const LoginContainer = styled.div`
   width: 100%;

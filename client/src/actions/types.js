@@ -1,3 +1,10 @@
+// Users
+
+export const GET_USERS = 'users/GET_USERS';
+export const GET_USERS_SUCCESS = 'users/GET_USERS_SUCCESS';
+export const GET_USERS_FAILURE = 'users/GET_USERS_FAILURE';
+export const GET_USERS_REFRESH = 'users/GET_USERS_REFRESH';
+
 //  User
 export const LOGIN_USER = 'user/LOGIN_USER';
 export const LOGIN_USER_SUCCESS = 'user/LOGIN_USER_SUCCESS';
@@ -10,6 +17,11 @@ export const LOGOUT_USER_FAILURE = 'user/LOGOUT_USER_FAILURE';
 export const JOIN_USER = 'user/JOIN_USER';
 export const JOIN_USER_SUCCESS = 'user/JOIN_USER_SUCCESS';
 export const JOIN_USER_FAILURE = 'user/JOIN_USER_FAILURE';
+
+export const REMOVE_USER = 'user/REMOVE_USER';
+export const REMOVE_USER_SUCCESS = 'user/REMOVE_USER_SUCCESS';
+export const REMOVE_USER_FAILURE = 'user/REMOVE_USER_FAILURE';
+export const REMOVE_USER_REFRESH = 'user/REMOVE_USER_REFRESH';
 
 // Product to be uploaded
 export const UPLOAD_PRODUCT = 'product/UPLOAD_PRODUCT';

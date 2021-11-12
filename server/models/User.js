@@ -3,30 +3,33 @@ import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
 dotenv.config();
 
-const userSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    unique: true,
-    required: true,
+const userSchema = new mongoose.Schema(
+  {
+    username: {
+      type: String,
+      unique: true,
+      required: true,
+    },
+    email: {
+      type: String,
+      unique: true,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    role: {
+      type: Number,
+      default: 1, // 1은 고객 0은 admin
+      required: true,
+    },
+    token: {
+      type: String,
+    },
   },
-  email: {
-    type: String,
-    unique: true,
-    required: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  role: {
-    type: Number,
-    default: 1, // 1은 고객 0은 admin
-    required: true,
-  },
-  token: {
-    type: String,
-  },
-});
+  { timestamps: true }
+);
 
 userSchema.pre('save', async function () {
   const user = this;

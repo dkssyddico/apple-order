@@ -78,3 +78,26 @@ export const logout = async (req, res) => {
     return res.status(400).json({ success: false, error, message: '로그아웃에 실패했습니다.' });
   }
 };
+
+export const getAll = async (req, res) => {
+  try {
+    const users = await User.find().sort({ createAt: 'desc' });
+    return res.status(200).json({ success: true, users });
+  } catch (error) {
+    return res
+      .status(400)
+      .json({ success: false, message: '모든 유저 정보를 불러오는데 실패했습니다.' });
+  }
+};
+
+export const removeUser = async (req, res) => {
+  console.log(req.params);
+  const { id } = req.params;
+  await User.findByIdAndDelete(id).exec((err, result) => {
+    if (err) {
+      console.log(err);
+      return res.status(400).json({ success: false, message: '유저를 삭제하지 못했습니다.' });
+    }
+    return res.status(200).json({ success: true, message: '유저를 성공적으로 삭제했습니다.' });
+  });
+};
