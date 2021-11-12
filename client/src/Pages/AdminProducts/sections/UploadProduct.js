@@ -38,9 +38,6 @@ const Zone = styled.div`
   justify-content: center;
 `;
 
-// 사진지우고 다시 이미지 드롭하면 이전 이미지까지불러오는 문제가 있음
-// 어느 곳에서 사진을 업로드 하든 리듀서를 공유하기 때문에 발생하는 문제.
-
 function UploadProduct() {
   const dispatch = useDispatch();
   const { loginInfo } = useSelector((state) => state.user);
@@ -72,7 +69,6 @@ function UploadProduct() {
 
   useEffect(() => {
     if (successUploadImages) {
-      console.log('success');
       setImages((prev) => [...uploadedImages, ...prev]);
       dispatch({ type: UPLOAD_PRODUCT_IMG_REFRESH });
     }
