@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getAllUsers, removeUser } from '../../reducers/userReducers';
 import Loading from '../../Components/Loading';
@@ -9,24 +9,18 @@ import { REMOVE_USER_REFRESH } from '../../actions/types';
 function AdminUsers() {
   const history = useHistory();
   const dispatch = useDispatch();
-  const { loginInfo } = useSelector((state) => state.user);
   const { list: usersList, loading: usersListLoading } = useSelector((state) => state.usersList);
   const { success: removeUserSuccess, error: removeUserError } = useSelector(
     (state) => state.userRemoved
   );
 
   useEffect(() => {
-    if (!loginInfo || !loginInfo.isAdmin) {
-      alert('관리자만 들어올 수 있습니다.');
-      history.push('/');
-    }
-
     if (removeUserSuccess) {
       dispatch({ type: REMOVE_USER_REFRESH });
     }
 
     dispatch(getAllUsers());
-  }, [history, loginInfo, dispatch, removeUserSuccess]);
+  }, [history, dispatch, removeUserSuccess]);
 
   const handleDelete = (userId) => {
     dispatch(removeUser(userId));

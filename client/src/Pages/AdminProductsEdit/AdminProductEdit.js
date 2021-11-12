@@ -48,7 +48,6 @@ function AdminProductEdit() {
   let { id } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
-  const { loginInfo } = useSelector((state) => state.user);
   const { product } = useSelector((state) => state.productInfo);
   const { success: successUpdateProduct, error: updateError } = useSelector(
     (state) => state.updatedProduct
@@ -67,10 +66,6 @@ function AdminProductEdit() {
   const [images, setImages] = useState([]);
 
   useEffect(() => {
-    if (!loginInfo || !loginInfo.isAdmin) {
-      alert('관리자만 들어올 수 있습니다.');
-      history.push('/');
-    }
     if (!product || id !== product._id) {
       dispatch({ type: GET_PRODUCT_REFRESH });
       dispatch(getProduct(id));
@@ -81,7 +76,7 @@ function AdminProductEdit() {
       setDescription(product.description);
       setImages(product.images);
     }
-  }, [history, loginInfo, dispatch, product, id]);
+  }, [history, dispatch, product, id]);
 
   useEffect(() => {
     if (successUploadImages) {

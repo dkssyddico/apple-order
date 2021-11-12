@@ -40,7 +40,6 @@ const Zone = styled.div`
 
 function UploadProduct() {
   const dispatch = useDispatch();
-  const { loginInfo } = useSelector((state) => state.user);
   const {
     images: uploadedImages,
     error,
@@ -56,16 +55,12 @@ function UploadProduct() {
   const [images, setImages] = useState([]);
 
   useEffect(() => {
-    if (!loginInfo || !loginInfo.isAdmin) {
-      alert('관리자만 들어올 수 있습니다.');
-      history.push('/');
-    }
     if (success) {
       alert('상품 등록에 성공했습니다!');
       history.push('/admin/products');
       dispatch({ type: UPLOAD_PRODUCT_REFRESH });
     }
-  }, [history, loginInfo, success, dispatch]);
+  }, [history, success, dispatch]);
 
   useEffect(() => {
     if (successUploadImages) {

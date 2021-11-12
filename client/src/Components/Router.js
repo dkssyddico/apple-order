@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import AdminRoute from '../hoc/AdminRoute';
 import AdminMain from '../Pages/AdminMain/AdminMain';
 import AdminOrders from '../Pages/AdminOrders/AdminOrders';
 import AdminProducts from '../Pages/AdminProducts/AdminProducts';
@@ -29,24 +30,12 @@ function Router() {
         <Route path='/join' exact>
           <Join />
         </Route>
-        <Route path='/admin' exact>
-          <AdminMain />
-        </Route>
-        <Route path='/admin/users' exact>
-          <AdminUsers />
-        </Route>
-        <Route path='/admin/orders' exact>
-          <AdminOrders />
-        </Route>
-        <Route path='/admin/products' exact>
-          <AdminProducts />
-        </Route>
-        <Route path='/admin/products/:id/edit' exact>
-          <AdminProductEdit />
-        </Route>
-        <Route path='/admin/products/upload' exact>
-          <UploadProduct />
-        </Route>
+        <AdminRoute path='/admin' exact component={AdminMain} />
+        <AdminRoute path='/admin/users' exact component={AdminUsers} />
+        <AdminRoute path='/admin/orders' exact component={AdminOrders} />
+        <AdminRoute path='/admin/products' exact component={AdminProducts} />
+        <AdminRoute path='/admin/products/:id/edit' exact component={AdminProductEdit} />
+        <AdminRoute path='/admin/products/upload' exact component={UploadProduct} />
         <Redirect from='*' to='/' />
       </Switch>
     </BrowserRouter>

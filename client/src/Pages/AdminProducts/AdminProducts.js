@@ -13,22 +13,17 @@ const Container = styled.div`
 `;
 
 function AdminProducts() {
-  const { loginInfo } = useSelector((state) => state.user);
   const { list, loading } = useSelector((state) => state.productsList);
   const { success: successRemove } = useSelector((state) => state.productRemove);
   const history = useHistory();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!loginInfo || !loginInfo.isAdmin) {
-      alert('관리자만 들어올 수 있습니다.');
-      history.push('/');
-    }
     if (successRemove) {
       dispatch({ type: REMOVE_PRODUCT_REFRESH });
     }
     dispatch(getProductsAll());
-  }, [history, loginInfo, dispatch, successRemove]);
+  }, [dispatch, successRemove]);
 
   const handleDelete = (itemId) => {
     dispatch(removeProduct(itemId));
