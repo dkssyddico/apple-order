@@ -11,6 +11,7 @@ import Cart from '../Pages/Cart/Cart';
 import Home from '../Pages/Home/Home';
 import Join from '../Pages/Join/Join';
 import Login from '../Pages/Login/Login';
+import ProductDetail from '../Pages/ProductDetail/ProductDetail';
 import NavBar from './NavBar';
 
 function Router() {
@@ -29,6 +30,9 @@ function Router() {
         </Route>
         <Route path='/join' exact>
           <Join />
+        </Route>
+        <Route path='/product/:id'>
+          <ProductDetail />
         </Route>
         <AdminRoute path='/admin' exact component={AdminMain} />
         <AdminRoute path='/admin/users' exact component={AdminUsers} />
