@@ -1,69 +1,92 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { getProduct } from '../../reducers/productReducers';
 import Loading from '../../Components/Loading';
 import styled from 'styled-components';
+import Message from '../../Components/Message';
+import { addToCart } from '../../actions/cartAction';
+// import { addToCart } from '../../reducers/cartReducer';
 
 const ImageContainer = styled.div`
   width: 100%;
   height: 100%;
 `;
+
 const Container = styled.div`
   padding-top: 12vh;
   width: 100%;
   height: 100%;
 `;
 
-const contentStyle = {
-  height: '160px',
-  color: '#fff',
-  lineHeight: '160px',
-  textAlign: 'center',
-  background: '#364d79',
-};
-
 function ProductDetail() {
   let { id } = useParams();
-  const dispatch = useDispatch();
-  const { product, loading } = useSelector((state) => state.productInfo);
-  console.log(product, loading);
 
+  const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getProduct(id));
   }, []);
+  const productInfo = useSelector((state) => state.productInfo);
+  const { loading, error, product } = productInfo;
+
+  const [quantity, setQuantity] = useState(1);
+
+  // 객체 형태로 줘야함.
+  const handleCartClick = () => {
+    let confirm = window.confirm(
+      `다음과 같은 상품을 장바구니에 넣으시겠습니까?\n${product.name} ${quantity}개 ${
+        quantity * product.price
+      }`
+    );
+    if (confirm) {
+      let productId = product._id;
+      dispatch(addToCart(productId, quantity));
+    } else {
+    }
+  };
+
+  const handleQuantityChange = (e) => {
+    let { value } = e.target;
+    setQuantity(parseInt(value));
+  };
 
   return (
     <Container className='container'>
       {loading ? (
         <Loading />
+      ) : error ? (
+        <Message>{error}</Message>
       ) : (
-        <>
-          <div>
-            <ImageContainer className='imageContainer'>
+        product && (
+          <>
+            <div>not ladin</div>
+            <div className='imageContainer'>
+              <img src={`http://localhost:4000/${product.images[0].filePath}`} alt='product' />
+            </div>
+            <div className='infoContainer'>
+              <h1>{product.name}</h1>
+              <h2>{product.price}</h2>
               <div>
-                <img src={`http://localhost:4000/${product.images[0].filePath}`} alt='product' />
+                <label>quantity</label>
+                <select onChange={handleQuantityChange} value={quantity}>
+                  <option key={1} value={1}>
+                    1
+                  </option>
+                  <option key={2} value={2}>
+                    2
+                  </option>
+                  <option key={3} value={3}>
+                    3
+                  </option>
+                </select>
               </div>
-            </ImageContainer>
-            <section className='infoContainer'>
               <div>
-                <h1>{product.name}</h1>
-                <p>Price: ${product.price}</p>
-                <p>Description: {product.description}</p>
-                <div>
-                  <label>갯수</label>
-                  <select>
-                    <option value='1'>1</option>
-                    <option value='2'>2</option>
-                    <option value='3'>3</option>
-                  </select>
-                </div>
-                <p>total price</p>
-                <button>Add to cart</button>
+                <p>Total Price {quantity * product.price}</p>
               </div>
-            </section>
-          </div>
-        </>
+              <button onClick={handleCartClick}>Add to cart</button>
+            </div>
+          </>
+        )
       )}
     </Container>
   );

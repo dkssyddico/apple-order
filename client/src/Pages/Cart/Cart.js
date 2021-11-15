@@ -1,40 +1,83 @@
 import React from 'react';
-import { Carousel } from 'antd';
+import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
-
-const Container = styled.div`
-  width: 100%;
-`;
+import { addToCart } from '../../actions/cartAction';
+import Loading from '../../Components/Loading';
+import Message from '../../Components/Message';
+// import { addToCart } from '../../reducers/cartReducer';
 
 function Cart() {
-  function onChange(a, b, c) {
-    console.log(a, b, c);
-  }
+  const cart = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+  const { items, loading, error } = cart;
 
-  const contentStyle = {
-    height: '160px',
-    color: '#fff',
-    lineHeight: '160px',
-    textAlign: 'center',
-    background: '#364d79',
+  const handleDelete = () => {};
+
+  const handleChange = (event, item) => {
+    const { value } = event.target;
+    dispatch(addToCart(item._id, parseInt(value)));
   };
+
   return (
-    <Container>
-      <Carousel afterChange={onChange}>
+    <div className='container'>
+      <h1>Cart</h1>
+      {loading ? (
+        <Loading />
+      ) : error ? (
+        <Message>{error}</Message>
+      ) : (
         <div>
-          <h3 style={contentStyle}>1</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Product image</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Remove</th>
+              </tr>
+            </thead>
+            <tbody>
+              {items &&
+                items.map((item) => (
+                  <tr key={item._id}>
+                    <td>
+                      {/* <img
+                      style={{ width: '70px' }}
+                      src={`http://localhost:4000/${item.images[0].filePath}`}
+                      alt='product'
+                    /> */}
+                    </td>
+                    <td>{item.name}</td>
+                    <td>{item.price}</td>
+                    <td>
+                      <select value={item.quantity} onChange={(e) => handleChange(e, item)}>
+                        <option key={1} value={1}>
+                          1
+                        </option>
+                        <option key={2} value={2}>
+                          2
+                        </option>
+                        <option key={3} value={3}>
+                          3
+                        </option>
+                      </select>
+                    </td>
+                    <td>
+                      <button onClick={() => handleDelete()}>Remove</button>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
         </div>
-        <div>
-          <h3 style={contentStyle}>2</h3>
-        </div>
-        <div>
-          <h3 style={contentStyle}>3</h3>
-        </div>
-        <div>
-          <h3 style={contentStyle}>4</h3>
-        </div>
-      </Carousel>
-    </Container>
+      )}
+      <div>
+        <h1>Total price: {items.reduce((a, b) => a + b.price * b.quantity, 0)}</h1>
+        <h1>Total items: {items ? items.length : 0}</h1>
+        <button>Proceed to checkout</button>
+      </div>
+    </div>
   );
 }
 

@@ -74,18 +74,15 @@ export const productInfoReducer = (state = {}, action) => {
   switch (action.type) {
     case GET_PRODUCT:
       return {
-        ...state,
         loading: true,
       };
     case GET_PRODUCT_SUCCESS:
       return {
-        ...state,
         loading: false,
-        success: true,
         product: action.payload.product,
       };
     case GET_PRODUCT_FAILURE:
-      return { ...state, loading: false, error: action.payload };
+      return { loading: false, error: action.payload };
     case GET_PRODUCT_REFRESH:
       return {};
     default:
