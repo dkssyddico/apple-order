@@ -27,6 +27,9 @@ export const userAPI = {
   remove: (id) => {
     return api.delete(`/users/${id}`);
   },
+  getCartInfo: (userId) => {
+    return api.get(`/users/${userId}/cart`);
+  },
 };
 
 export const productAPI = {

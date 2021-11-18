@@ -111,3 +111,15 @@ export const removeUser = async (req, res) => {
     return res.status(200).json({ success: true, message: '유저를 성공적으로 삭제했습니다.' });
   });
 };
+
+export const getCartInfo = async (req, res) => {
+  const { id } = req.params;
+  try {
+    let user = await User.findById(id);
+    return res.status(200).json({ success: true, cart: user.cart });
+  } catch (error) {
+    return res
+      .status(400)
+      .json({ success: false, message: '유저 및 장바구니 정보를 불러오는데 실패했습니다.' });
+  }
+};

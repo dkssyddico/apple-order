@@ -59,7 +59,6 @@ function ProductDetail() {
       ) : (
         product && (
           <>
-            <div>not ladin</div>
             <div className='imageContainer'>
               <img src={`http://localhost:4000/${product.images[0].filePath}`} alt='product' />
             </div>

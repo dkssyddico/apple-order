@@ -11,7 +11,7 @@ productRouter.post('/', auth, isAdmin, add);
 
 productRouter.post('/image', auth, isAdmin, saveImage);
 
-productRouter.get('/:id', auth, isAdmin, getInfo);
+productRouter.get('/:id', getInfo);
 
 productRouter.delete('/:id', auth, isAdmin, remove);
 

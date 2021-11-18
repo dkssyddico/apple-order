@@ -27,6 +27,10 @@ const userSchema = new mongoose.Schema(
     token: {
       type: String,
     },
+    cart: {
+      type: Array,
+      default: [],
+    },
   },
   { timestamps: true }
 );
