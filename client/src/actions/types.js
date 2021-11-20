@@ -66,3 +66,5 @@ export const GET_CART_REQUEST = 'cart/GET_CART_REQUEST';
 export const GET_CART_SUCCESS = 'cart/GET_CART_SUCCESS';
 export const GET_CART_FAILURE = 'cart/GET_CART_FAILURE';
 export const GET_CART_REFRESH = 'cart/GET_CART_REFRESH';
+
+export const CHANGE_ITEM_QUANTITY = 'cart/CHANGE_ITEM_QUANTITY';

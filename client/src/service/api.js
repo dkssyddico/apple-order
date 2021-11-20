@@ -33,6 +33,9 @@ export const userAPI = {
   addItemToCart: (userId, product) => {
     return api.post(`/users/${userId}/cart`, product);
   },
+  changQtyInCart: (userId, product) => {
+    return api.put(`/users/${userId}/cart`, product);
+  },
 };
 
 export const productAPI = {

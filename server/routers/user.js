@@ -1,6 +1,7 @@
 import express from 'express';
 import {
   addItemToCart,
+  changeQuantityInCart,
   getAll,
   getCartInfo,
   join,
@@ -24,5 +25,6 @@ userRouter.delete('/:id', auth, isAdmin, removeUser);
 // user cart
 userRouter.get('/:id/cart', auth, getCartInfo);
 userRouter.post('/:id/cart', auth, addItemToCart);
+userRouter.put('/:id/cart', auth, changeQuantityInCart);
 
 export default userRouter;

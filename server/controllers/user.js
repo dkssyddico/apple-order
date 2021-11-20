@@ -153,3 +153,24 @@ export const addItemToCart = async (req, res) => {
     return res.status(201).json({ success: true });
   });
 };
+
+export const changeQuantityInCart = async (req, res) => {
+  const { _id: userId } = req.user;
+  const { productId, quantity } = req.body;
+  const user = await User.findById(userId);
+  if (!user) {
+    return res.status(400).json({ success: false, message: '유저 정보가 없습니다.' });
+  }
+
+  try {
+    await User.findByIdAndUpdate(userId, {
+      ...user,
+      cart: user.cart.map((item) =>
+        item.productId === productId ? (item.quantity = quantity) : item
+      ),
+    });
+    return res.status(200).json({ success: true, cart: user.cart });
+  } catch (err) {
+    return res.status(400).json({ success: false, message: '수량 변경에 실패했습니다.' });
+  }
+};

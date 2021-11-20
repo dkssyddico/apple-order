@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import styled from 'styled-components';
-import { addToCart, getCartInfo } from '../../actions/cartAction';
+import { changeQuantity, getCartInfo } from '../../actions/cartAction';
+import { GET_CART_REFRESH } from '../../actions/types';
 import Loading from '../../Components/Loading';
 import Message from '../../Components/Message';
-// import { addToCart } from '../../reducers/cartReducer';
 
 function Cart() {
   const dispatch = useDispatch();
@@ -14,18 +13,22 @@ function Cart() {
 
   const user = useSelector((state) => state.user);
   const {
-    loginInfo: { _id: id },
+    loginInfo: { _id: userId },
   } = user;
 
   useEffect(() => {
-    dispatch(getCartInfo(id));
+    dispatch(getCartInfo(userId));
   }, []);
 
   const handleDelete = () => {};
 
   const handleChange = (event, item) => {
     const { value } = event.target;
-    dispatch(addToCart(item._id, parseInt(value)));
+    let productObj = {
+      productId: item.productId,
+      quantity: parseInt(value),
+    };
+    dispatch(changeQuantity(userId, productObj));
   };
 
   return (
@@ -50,7 +53,7 @@ function Cart() {
             <tbody>
               {items &&
                 items.map((item) => (
-                  <tr key={item._id}>
+                  <tr key={item.productId}>
                     <td>
                       <img
                         style={{ width: '70px' }}

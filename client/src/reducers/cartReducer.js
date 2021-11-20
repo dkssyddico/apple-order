@@ -6,10 +6,17 @@ import {
   GET_CART_SUCCESS,
   GET_CART_FAILURE,
   GET_CART_REFRESH,
+  CHANGE_ITEM_QUANTITY,
 } from '../actions/types';
 
 export const cartReducer = (
-  state = { items: [], cartLoading: true, addItemLoading: false, error: '' },
+  state = {
+    items: [],
+    cartLoading: true,
+    addItemLoading: false,
+    changeQtyLoading: false,
+    error: '',
+  },
   action
 ) => {
   switch (action.type) {
@@ -30,6 +37,10 @@ export const cartReducer = (
         cartLoading: false,
         error: action.payload,
       };
+    case GET_CART_REFRESH:
+      return {
+        ...state,
+      };
     case ADD_CART_REQUEST:
       return {
         ...state,
@@ -44,6 +55,11 @@ export const cartReducer = (
       return {
         ...state,
         addItemLoading: false,
+      };
+    case CHANGE_ITEM_QUANTITY:
+      return {
+        ...state,
+        items: action.payload,
       };
     default:
       return state;
