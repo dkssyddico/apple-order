@@ -30,6 +30,9 @@ export const userAPI = {
   getCartInfo: (userId) => {
     return api.get(`/users/${userId}/cart`);
   },
+  addItemToCart: (userId, product) => {
+    return api.post(`/users/${userId}/cart`, product);
+  },
 };
 
 export const productAPI = {

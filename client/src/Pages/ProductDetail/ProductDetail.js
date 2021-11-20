@@ -20,14 +20,21 @@ const Container = styled.div`
 `;
 
 function ProductDetail() {
-  let { id } = useParams();
-
   const dispatch = useDispatch();
+  let { id: productId } = useParams();
+
   useEffect(() => {
-    dispatch(getProduct(id));
+    dispatch(getProduct(productId));
   }, []);
+
   const productInfo = useSelector((state) => state.productInfo);
   const { loading, error, product } = productInfo;
+
+  const user = useSelector((state) => state.user);
+
+  const {
+    loginInfo: { _id: userId },
+  } = user;
 
   const [quantity, setQuantity] = useState(1);
 
@@ -39,9 +46,11 @@ function ProductDetail() {
       }`
     );
     if (confirm) {
-      let productId = product._id;
-      dispatch(addToCart(productId, quantity));
-    } else {
+      let productObj = {
+        productId: product._id,
+        quantity,
+      };
+      dispatch(addToCart(userId, productObj));
     }
   };
 

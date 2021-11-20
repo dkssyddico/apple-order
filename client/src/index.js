@@ -16,9 +16,6 @@ const preloadedState = {
       ? JSON.parse(localStorage.getItem('userInfo'))
       : null,
   },
-  cart: {
-    items: localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [],
-  },
 };
 
 export const store = configureStore({

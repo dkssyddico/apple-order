@@ -9,7 +9,9 @@ import Message from '../../Components/Message';
 function Cart() {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
+  console.log(cart);
   const { items, loading, error } = cart;
+
   const user = useSelector((state) => state.user);
   const {
     loginInfo: { _id: id },

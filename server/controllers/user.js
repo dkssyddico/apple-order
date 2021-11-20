@@ -1,4 +1,5 @@
 import User from '../models/User';
+import Product from '../models/Product';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
@@ -122,4 +123,33 @@ export const getCartInfo = async (req, res) => {
       .status(400)
       .json({ success: false, message: '유저 및 장바구니 정보를 불러오는데 실패했습니다.' });
   }
+};
+
+export const addItemToCart = async (req, res) => {
+  const { _id: userId } = req.user;
+  const { productId, quantity } = req.body;
+  const user = await User.findById(userId);
+  if (!user) {
+    return res.status(400).json({ success: false, message: '유저 정보가 없습니다.' });
+  }
+  let product = await Product.findById(productId);
+  if (!product) {
+    return res.status(400).json({ success: false, message: '상품 정보가 없습니다.' });
+  }
+  let item = {
+    productId,
+    name: product.name,
+    price: product.price,
+    images: product.images,
+    quantity,
+  };
+  user.cart.push(item);
+  await user.save((err, user) => {
+    if (err) {
+      return res
+        .status(400)
+        .json({ success: false, message: '카트에 아이템을 저장하는데 실패했습니다.' });
+    }
+    return res.status(201).json({ success: true });
+  });
 };

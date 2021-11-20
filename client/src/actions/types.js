@@ -57,7 +57,7 @@ export const UPDATE_PRODUCT_FAILURE = 'product/UPDATE_PRODUCT_FAILURE';
 export const UPDATE_PRODUCT_REFRESH = 'product/UPDATE_PRODUCT_REFRESH';
 
 // Cart
-export const ADD_CART = 'cart/ADD_CART';
+export const ADD_CART_REQUEST = 'cart/ADD_CART_REQUEST';
 export const ADD_CART_SUCCESS = 'cart/ADD_CART_SUCCESS';
 export const ADD_CART_FAILURE = 'cart/ADD_CART_FAILURE';
 export const ADD_CART_REFRESH = 'cart/ADD_CART_REFRESH';

@@ -1,5 +1,13 @@
 import express from 'express';
-import { getAll, getCartInfo, join, login, logout, removeUser } from '../controllers/user';
+import {
+  addItemToCart,
+  getAll,
+  getCartInfo,
+  join,
+  login,
+  logout,
+  removeUser,
+} from '../controllers/user';
 import { auth } from '../middleware/auth';
 import isAdmin from '../middleware/isAdmin';
 
@@ -15,5 +23,6 @@ userRouter.delete('/:id', auth, isAdmin, removeUser);
 
 // user cart
 userRouter.get('/:id/cart', auth, getCartInfo);
+userRouter.post('/:id/cart', auth, addItemToCart);
 
 export default userRouter;
