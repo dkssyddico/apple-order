@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import { getProduct } from '../../reducers/productReducers';
 import Loading from '../../Components/Loading';
 import styled from 'styled-components';
 import Message from '../../Components/Message';
 import { addToCart } from '../../actions/cartAction';
-// import { addToCart } from '../../reducers/cartReducer';
 
-const ImageContainer = styled.div`
-  width: 100%;
-  height: 100%;
-`;
+// const ImageContainer = styled.div`
+//   width: 100%;
+//   height: 100%;
+// `;
 
 const Container = styled.div`
   padding-top: 12vh;
@@ -22,35 +21,52 @@ const Container = styled.div`
 function ProductDetail() {
   const dispatch = useDispatch();
   let { id: productId } = useParams();
+  const history = useHistory();
 
   useEffect(() => {
     dispatch(getProduct(productId));
-  }, []);
+  }, [dispatch, productId]);
 
   const productInfo = useSelector((state) => state.productInfo);
   const { loading, error, product } = productInfo;
 
   const user = useSelector((state) => state.user);
+  const { loginInfo } = user;
 
-  const {
-    loginInfo: { _id: userId },
-  } = user;
+  const cart = useSelector((state) => state.cart);
+  const { items } = cart;
 
   const [quantity, setQuantity] = useState(1);
 
   // 객체 형태로 줘야함.
   const handleCartClick = () => {
-    let confirm = window.confirm(
-      `다음과 같은 상품을 장바구니에 넣으시겠습니까?\n${product.name} ${quantity}개 ${
-        quantity * product.price
-      }`
-    );
-    if (confirm) {
-      let productObj = {
-        productId: product._id,
-        quantity,
-      };
-      dispatch(addToCart(userId, productObj));
+    if (!loginInfo) {
+      alert('장바구니는 로그인하셔야 이용하실 수 있습니다. 로그인 페이지로 이동합니다.');
+      history.push('/login');
+      return;
+    }
+    let productObj = {
+      productId,
+      quantity,
+    };
+    console.log(items.filter((item) => item.productId === productId).length);
+    let existence = items.filter((item) => item.productId === productId).length > 0 ? true : false;
+    if (existence) {
+      let confirm = window.confirm(
+        '이미 장바구니에 있는 상품입니다. 그래도 상품을 장바구니에 넣을까요?'
+      );
+      if (confirm) {
+        dispatch(addToCart(loginInfo._id, productObj));
+      }
+    } else {
+      let confirm = window.confirm(
+        `다음과 같은 상품을 장바구니에 넣으시겠습니까?\n${product.name} ${quantity}개 ${
+          quantity * product.price
+        }`
+      );
+      if (confirm) {
+        dispatch(addToCart(loginInfo._id, productObj));
+      }
     }
   };
 

@@ -49,6 +49,7 @@ export const cartReducer = (
     case ADD_CART_SUCCESS:
       return {
         ...state,
+        items: action.payload,
         addItemLoading: false,
       };
     case ADD_CART_FAILURE:
@@ -63,20 +64,5 @@ export const cartReducer = (
       };
     default:
       return state;
-  }
-};
-
-const addItemsInCart = (state, newItem) => {
-  const existence = state.items.find((prevItem) => prevItem._id === newItem._id);
-  if (existence) {
-    return {
-      loading: false,
-      items: state.items.map((prevItem) => (prevItem._id === newItem._id ? newItem : prevItem)),
-    };
-  } else {
-    return {
-      loading: false,
-      items: [newItem, ...state.items],
-    };
   }
 };

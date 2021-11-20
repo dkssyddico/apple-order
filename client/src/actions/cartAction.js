@@ -29,10 +29,10 @@ export const getCartInfo = (id) => async (dispatch, getState) => {
 export const addToCart = (userId, productObj) => async (dispatch) => {
   dispatch({ type: ADD_CART_REQUEST });
   try {
-    const response = await userAPI.addItemToCart(userId, productObj);
-    console.log(response);
+    const { data } = await userAPI.addItemToCart(userId, productObj);
     dispatch({
       type: ADD_CART_SUCCESS,
+      payload: data.cart,
     });
   } catch (error) {
     dispatch({

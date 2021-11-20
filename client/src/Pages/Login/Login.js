@@ -3,6 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../reducers/userReducers';
+import { getCartInfo } from '../../actions/cartAction';
 
 const LoginContainer = styled.div`
   width: 100%;
@@ -55,7 +56,7 @@ function Login() {
     if (loginInfo && loginInfo.success) {
       history.push('/');
     }
-  }, [history, loginInfo]);
+  }, [dispatch, history, loginInfo]);
 
   return (
     <LoginContainer>

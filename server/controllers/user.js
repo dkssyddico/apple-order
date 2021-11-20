@@ -150,7 +150,7 @@ export const addItemToCart = async (req, res) => {
         .status(400)
         .json({ success: false, message: '카트에 아이템을 저장하는데 실패했습니다.' });
     }
-    return res.status(201).json({ success: true });
+    return res.status(201).json({ success: true, cart: user.cart });
   });
 };
 

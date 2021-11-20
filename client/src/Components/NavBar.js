@@ -40,9 +40,6 @@ function NavBar() {
         <Link to='/'>Home</Link>
       </div>
       <RightMenu>
-        <li>
-          <Link to='/cart'>Cart</Link>
-        </li>
         {loginInfo && loginInfo.isAdmin ? (
           <>
             <li>
@@ -63,6 +60,9 @@ function NavBar() {
         )}
         {loginInfo && loginInfo.success ? (
           <>
+            <li>
+              <Link to='/cart'>Cart</Link>
+            </li>
             <li>
               <button onClick={onLogoutClick}>Log out</button>
             </li>

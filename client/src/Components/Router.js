@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import AdminRoute from '../hoc/AdminRoute';
+import PrivateRoute from '../hoc/PrivateRoute';
 import AdminMain from '../Pages/AdminMain/AdminMain';
 import AdminOrders from '../Pages/AdminOrders/AdminOrders';
 import AdminProducts from '../Pages/AdminProducts/AdminProducts';
@@ -22,9 +23,7 @@ function Router() {
         <Route path='/' exact>
           <Home />
         </Route>
-        <Route path='/cart' exact>
-          <Cart />
-        </Route>
+        <PrivateRoute path='/cart' exact component={Cart} />
         <Route path='/login' exact>
           <Login />
         </Route>

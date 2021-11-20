@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeQuantity, getCartInfo } from '../../actions/cartAction';
-import { GET_CART_REFRESH } from '../../actions/types';
 import Loading from '../../Components/Loading';
 import Message from '../../Components/Message';
+import { v4 as uuidv4 } from 'uuid';
 
 function Cart() {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
-  console.log(cart);
   const { items, loading, error } = cart;
 
   const user = useSelector((state) => state.user);
@@ -18,7 +17,7 @@ function Cart() {
 
   useEffect(() => {
     dispatch(getCartInfo(userId));
-  }, []);
+  }, [dispatch, userId]);
 
   const handleDelete = () => {};
 
@@ -53,7 +52,7 @@ function Cart() {
             <tbody>
               {items &&
                 items.map((item) => (
-                  <tr key={item.productId}>
+                  <tr key={uuidv4()}>
                     <td>
                       <img
                         style={{ width: '70px' }}
@@ -77,7 +76,9 @@ function Cart() {
                       </select>
                     </td>
                     <td>
-                      <button onClick={() => handleDelete()}>Remove</button>
+                      <button onClick={() => handleDelete(item.productId, item.quantity)}>
+                        Remove
+                      </button>
                     </td>
                   </tr>
                 ))}

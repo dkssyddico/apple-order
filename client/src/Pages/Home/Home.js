@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react';
-import styled from 'styled-components';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getProductsAll } from '../../reducers/productReducers';
 import Loading from '../../Components/Loading';
-import { Carousel } from 'antd';
 
 function Home() {
   const { list, loading } = useSelector((state) => state.productsList);

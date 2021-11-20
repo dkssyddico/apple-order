@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getAllUsers, removeUser } from '../../reducers/userReducers';
@@ -10,9 +9,7 @@ function AdminUsers() {
   const history = useHistory();
   const dispatch = useDispatch();
   const { list: usersList, loading: usersListLoading } = useSelector((state) => state.usersList);
-  const { success: removeUserSuccess, error: removeUserError } = useSelector(
-    (state) => state.userRemoved
-  );
+  const { success: removeUserSuccess } = useSelector((state) => state.userRemoved); // 에러처리
 
   useEffect(() => {
     if (removeUserSuccess) {
