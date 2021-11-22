@@ -1,16 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { getProductsAll } from '../../reducers/productReducers';
+import { useSelector } from 'react-redux';
 import Loading from '../../Components/Loading';
 
 function Home() {
   const { list, loading } = useSelector((state) => state.productsList);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getProductsAll());
-  }, [dispatch]);
 
   return (
     <div className='container'>

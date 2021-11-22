@@ -117,7 +117,23 @@ export const getCartInfo = async (req, res) => {
   const { id } = req.params;
   try {
     let user = await User.findById(id);
-    return res.status(200).json({ success: true, cart: user.cart });
+    let productList = await Product.find();
+    productList = productList.map((item) => String(item._id));
+    let newCart = user.cart.map((cartItem) => {
+      if (productList.includes(String(cartItem.productId))) {
+        return {
+          ...cartItem,
+        };
+      } else {
+        return {
+          ...cartItem,
+          canBeSold: false,
+          remarks: '아이템 삭제',
+        };
+      }
+    });
+    await User.findByIdAndUpdate(id, { cart: newCart });
+    return res.status(200).json({ success: true, cart: newCart });
   } catch (error) {
     return res
       .status(400)
@@ -142,6 +158,7 @@ export const addItemToCart = async (req, res) => {
     price: product.price,
     images: product.images,
     quantity,
+    canBeSold: product.canBeSold,
   };
   user.cart.push(item);
   await user.save((err, user) => {
@@ -179,10 +196,8 @@ export const deleteItem = async (req, res) => {
   const { productId } = req.params;
   const { _id: userId } = req.user;
   // 유저 아이디가 같아야 지움
-  if (String(userId) !== String(id)) {
-    return res.status(400).json({ success: false, message: '유저가 아닙니다.' });
-  }
-  const user = await User.findById(id);
+
+  const user = await User.findById(userId);
   if (!user) {
     return res.status(400).json({ success: false, message: '유저 정보가 없습니다.' });
   }

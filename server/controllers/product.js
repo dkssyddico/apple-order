@@ -11,7 +11,7 @@ export const add = async (req, res) => {
   price = parseInt(price);
   category = parseInt(category);
   try {
-    await Product.create({ name, price, category, description, images });
+    await Product.create({ name, price, category, description, images, canBeSold: true });
     return res.status(201).json({ success: true, message: '새로운 상품이 등록되었습니다!' });
   } catch (error) {
     console.log(error);
