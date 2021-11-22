@@ -52,12 +52,7 @@ function ProductDetail() {
     console.log(items.filter((item) => item.productId === productId).length);
     let existence = items.filter((item) => item.productId === productId).length > 0 ? true : false;
     if (existence) {
-      let confirm = window.confirm(
-        '이미 장바구니에 있는 상품입니다. 그래도 상품을 장바구니에 넣을까요?'
-      );
-      if (confirm) {
-        dispatch(addToCart(loginInfo._id, productObj));
-      }
+      alert('이미 장바구니에 있는 상품입니다.');
     } else {
       let confirm = window.confirm(
         `다음과 같은 상품을 장바구니에 넣으시겠습니까?\n${product.name} ${quantity}개 ${

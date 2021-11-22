@@ -36,6 +36,9 @@ export const userAPI = {
   changQtyInCart: (userId, product) => {
     return api.put(`/users/${userId}/cart`, product);
   },
+  deleteItem: (userId, productId) => {
+    return api.delete(`/users/${userId}/cart/${productId}`);
+  },
 };
 
 export const productAPI = {

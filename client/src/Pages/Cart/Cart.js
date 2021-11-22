@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { changeQuantity, getCartInfo } from '../../actions/cartAction';
+import { changeQuantity, deleteItem } from '../../actions/cartAction';
 import Loading from '../../Components/Loading';
 import Message from '../../Components/Message';
 import { v4 as uuidv4 } from 'uuid';
@@ -15,11 +15,12 @@ function Cart() {
     loginInfo: { _id: userId },
   } = user;
 
-  useEffect(() => {
-    dispatch(getCartInfo(userId));
-  }, [dispatch, userId]);
-
-  const handleDelete = () => {};
+  const handleDelete = (productId, quantity) => {
+    let confirm = window.confirm('해당 상품을 장바구니에서 삭제하시겠습니까?');
+    if (confirm) {
+      dispatch(deleteItem(userId, productId));
+    }
+  };
 
   const handleChange = (event, item) => {
     const { value } = event.target;
