@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 function PrivateRoute({ component: Component, ...rest }) {
@@ -7,7 +7,7 @@ function PrivateRoute({ component: Component, ...rest }) {
   return (
     <Route
       {...rest}
-      render={(props) => (loginInfo ? <Component {...props} /> : <Redirect to='/login' />)}
+      render={(props) => (loginInfo ? <Component {...props} /> : <Navigate to='/login' />)}
     ></Route>
   );
 }

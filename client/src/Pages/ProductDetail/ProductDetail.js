@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useParams } from 'react-router';
+import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router';
 import { getProduct } from '../../reducers/productReducers';
 import Loading from '../../Components/Loading';
 import styled from 'styled-components';
@@ -21,7 +22,7 @@ const Container = styled.div`
 function ProductDetail() {
   const dispatch = useDispatch();
   let { id: productId } = useParams();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getProduct(productId));
@@ -42,7 +43,7 @@ function ProductDetail() {
   const handleCartClick = () => {
     if (!loginInfo) {
       alert('장바구니는 로그인하셔야 이용하실 수 있습니다. 로그인 페이지로 이동합니다.');
-      history.push('/login');
+      navigate('/login');
       return;
     }
     let productObj = {

@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getAllUsers, removeUser } from '../../reducers/userReducers';
 import Loading from '../../Components/Loading';
 import { REMOVE_USER_REFRESH } from '../../actions/types';
 
 function AdminUsers() {
-  const history = useHistory();
   const dispatch = useDispatch();
   const { list: usersList, loading: usersListLoading } = useSelector((state) => state.usersList);
   const { success: removeUserSuccess } = useSelector((state) => state.userRemoved); // 에러처리
@@ -17,7 +15,7 @@ function AdminUsers() {
     }
 
     dispatch(getAllUsers());
-  }, [history, dispatch, removeUserSuccess]);
+  }, [dispatch, removeUserSuccess]);
 
   const handleDelete = (username, userId) => {
     let confirm = window.confirm(`${username} 유저를 삭제하시겠습니까?`);

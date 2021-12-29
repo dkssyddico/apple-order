@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getProductsAll, removeProduct } from '../../reducers/productReducers';
 import { REMOVE_PRODUCT_REFRESH } from '../../actions/types';
@@ -15,7 +15,7 @@ const Container = styled.div`
 function AdminProducts() {
   const { list, loading } = useSelector((state) => state.productsList);
   const { success: successRemove } = useSelector((state) => state.productRemove);
-  const history = useHistory();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -68,7 +68,7 @@ function AdminProducts() {
                     <td>$ {item.price}</td>
                     <td>{item.description}</td>
                     <td>
-                      <button onClick={() => history.push(`/admin/products/${item._id}/edit`)}>
+                      <button onClick={() => navigate(`/admin/products/${item._id}/edit`)}>
                         Edit
                       </button>
                     </td>

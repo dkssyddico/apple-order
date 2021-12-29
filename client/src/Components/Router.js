@@ -1,7 +1,6 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
-import AdminRoute from '../hoc/AdminRoute';
-import PrivateRoute from '../hoc/PrivateRoute';
+import { useSelector } from 'react-redux';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import AdminMain from '../Pages/AdminMain/AdminMain';
 import AdminOrders from '../Pages/AdminOrders/AdminOrders';
 import AdminProducts from '../Pages/AdminProducts/AdminProducts';
@@ -17,32 +16,43 @@ import Profile from '../Pages/Profile/Profile';
 import NavBar from './NavBar';
 
 function Router() {
+  const { loginInfo } = useSelector((state) => state.user);
   return (
     <BrowserRouter>
       <NavBar />
-      <Switch>
-        <Route path='/' exact>
-          <Home />
-        </Route>
-        <Route path='/login' exact>
-          <Login />
-        </Route>
-        <Route path='/join' exact>
-          <Join />
-        </Route>
-        <Route path='/product/:id'>
-          <ProductDetail />
-        </Route>
-        <PrivateRoute path='/cart' exact component={Cart} />
-        <PrivateRoute path="/profile" exact component={Profile} />
-        <AdminRoute path='/admin' exact component={AdminMain} />
-        <AdminRoute path='/admin/users' exact component={AdminUsers} />
-        <AdminRoute path='/admin/orders' exact component={AdminOrders} />
-        <AdminRoute path='/admin/products' exact component={AdminProducts} />
-        <AdminRoute path='/admin/products/:id/edit' exact component={AdminProductEdit} />
-        <AdminRoute path='/admin/products/upload' exact component={UploadProduct} />
-        <Redirect from='*' to='/' />
-      </Switch>
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/join' element={<Join />} />
+        <Route path='/join' element={<ProductDetail />} />
+        <Route path='/cart' element={loginInfo ? <Cart /> : <Navigate to='/login' />} />
+        <Route path='/profile' element={loginInfo ? <Profile /> : <Navigate to='/login' />} />
+        <Route
+          path='/admin'
+          element={loginInfo && loginInfo.isAdmin ? <AdminMain /> : <Navigate to='/login' />}
+        />
+        <Route
+          path='/admin/users'
+          element={loginInfo && loginInfo.isAdmin ? <AdminUsers /> : <Navigate to='/login' />}
+        />
+        <Route
+          path='/admin/orders'
+          element={loginInfo && loginInfo.isAdmin ? <AdminOrders /> : <Navigate to='/login' />}
+        />
+        <Route
+          path='/admin/products'
+          element={loginInfo && loginInfo.isAdmin ? <AdminProducts /> : <Navigate to='/login' />}
+        />
+        <Route
+          path='/admin/products/:id/edit'
+          element={loginInfo && loginInfo.isAdmin ? <AdminProductEdit /> : <Navigate to='/login' />}
+        />
+        <Route
+          path='/admin/products/upload'
+          element={loginInfo && loginInfo.isAdmin ? <UploadProduct /> : <Navigate to='/login' />}
+        />
+        <Route path='*' element={<Navigate to='/' replace={true} />} />
+      </Routes>
     </BrowserRouter>
   );
 }

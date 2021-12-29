@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../reducers/userReducers';
@@ -26,7 +26,7 @@ const Form = styled.form`
 
 function Login() {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const { error, loginInfo } = user;
 
@@ -54,9 +54,9 @@ function Login() {
 
   useEffect(() => {
     if (loginInfo && loginInfo.success) {
-      history.push('/');
+      navigate('/');
     }
-  }, [dispatch, history, loginInfo]);
+  }, [dispatch, navigate, loginInfo]);
 
   return (
     <LoginContainer>

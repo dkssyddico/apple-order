@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Dropzone from 'react-dropzone';
 import Message from '../../../Components/Message';
@@ -46,7 +46,7 @@ function UploadProduct() {
     success: successUploadImages,
   } = useSelector((state) => state.productImageUpload);
   const { success } = useSelector((state) => state.productUpload);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
@@ -57,10 +57,10 @@ function UploadProduct() {
   useEffect(() => {
     if (success) {
       alert('상품 등록에 성공했습니다!');
-      history.push('/admin/products');
+      navigate('/admin/products');
       dispatch({ type: UPLOAD_PRODUCT_REFRESH });
     }
-  }, [history, success, dispatch]);
+  }, [navigate, success, dispatch]);
 
   useEffect(() => {
     if (successUploadImages) {

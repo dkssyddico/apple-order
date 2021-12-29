@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Dropzone from 'react-dropzone';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getProduct, updateProduct } from '../../reducers/productReducers';
 import {
@@ -46,7 +46,7 @@ const Previews = styled.div`
 // 로딩 처리
 function AdminProductEdit() {
   let { id } = useParams();
-  const history = useHistory();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { product } = useSelector((state) => state.productInfo);
   const { success: successUpdateProduct, error: updateError } = useSelector(
@@ -76,7 +76,7 @@ function AdminProductEdit() {
       setDescription(product.description);
       setImages(product.images);
     }
-  }, [history, dispatch, product, id]);
+  }, [dispatch, product, id]);
 
   useEffect(() => {
     if (successUploadImages) {
@@ -88,10 +88,10 @@ function AdminProductEdit() {
   useEffect(() => {
     if (successUpdateProduct) {
       alert('상품 업데이트에 성공했습니다!');
-      history.push('/admin/products');
+      navigate('/admin/products');
       dispatch({ type: UPDATE_PRODUCT_REFRESH });
     }
-  }, [dispatch, history, successUpdateProduct]);
+  }, [dispatch, navigate, successUpdateProduct]);
 
   const handleDrop = (files) => {
     let formData = new FormData();

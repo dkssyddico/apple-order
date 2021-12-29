@@ -4,6 +4,7 @@ import { changeQuantity, deleteItem, getCartInfo } from '../../actions/cartActio
 import Loading from '../../Components/Loading';
 import Message from '../../Components/Message';
 import { v4 as uuidv4 } from 'uuid';
+import { PayPalButton } from 'react-paypal-button-v2';
 
 function Cart() {
   const dispatch = useDispatch();
