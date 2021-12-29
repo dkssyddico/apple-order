@@ -72,3 +72,7 @@ export const CHANGE_ITEM_QUANTITY = 'cart/CHANGE_ITEM_QUANTITY';
 export const DELETE_ITEM_REQUEST = 'cart/DELETE_ITEM_REQUEST';
 export const DELETE_ITEM_SUCCESS = 'cart/DELETE_ITEM_SUCCESS';
 export const DELETE_ITEM_FAILURE = 'cart/DELETE_ITEM_FAILURE';
+
+// Checkout
+
+export const ADD_TO_CHECKOUT = 'checkout/ADD_TO_CHECKOUT';

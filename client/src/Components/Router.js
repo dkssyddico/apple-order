@@ -8,6 +8,7 @@ import UploadProduct from '../Pages/AdminProducts/sections/UploadProduct';
 import AdminProductEdit from '../Pages/AdminProductsEdit/AdminProductEdit';
 import AdminUsers from '../Pages/AdminUsers/AdminUsers';
 import Cart from '../Pages/Cart/Cart';
+import Checkout from '../Pages/Checkout/Checkout';
 import Home from '../Pages/Home/Home';
 import Join from '../Pages/Join/Join';
 import Login from '../Pages/Login/Login';
@@ -24,8 +25,9 @@ function Router() {
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
         <Route path='/join' element={<Join />} />
-        <Route path='/join' element={<ProductDetail />} />
+        <Route path='/product/:id' element={<ProductDetail />} />
         <Route path='/cart' element={loginInfo ? <Cart /> : <Navigate to='/login' />} />
+        <Route path='/checkout' element={loginInfo ? <Checkout /> : <Navigate to='/login' />} />
         <Route path='/profile' element={loginInfo ? <Profile /> : <Navigate to='/login' />} />
         <Route
           path='/admin'

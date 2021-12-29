@@ -8,11 +8,13 @@ import {
   updateProductReducer,
 } from './productReducers';
 import { cartReducer } from './cartReducer';
+import { checkoutReducer } from './checkoutReducer';
 
 const rootReducer = combineReducers({
   user: userReducer,
   usersList: getUsersReducer,
   cart: cartReducer,
+  checkout: checkoutReducer,
   userRemoved: removeUserReducer,
   productImageUpload: productImagesReducer,
   productUpload: productUploadReducer,

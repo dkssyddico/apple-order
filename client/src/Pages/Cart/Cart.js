@@ -4,11 +4,12 @@ import { changeQuantity, deleteItem, getCartInfo } from '../../actions/cartActio
 import Loading from '../../Components/Loading';
 import Message from '../../Components/Message';
 import { v4 as uuidv4 } from 'uuid';
-import { PayPalButton } from 'react-paypal-button-v2';
+import { useNavigate } from 'react-router-dom';
+import { addToCheckout } from '../../actions/checkoutAction';
 
 function Cart() {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const cart = useSelector((state) => state.cart);
   const {
@@ -35,6 +36,11 @@ function Cart() {
       quantity: parseInt(value),
     };
     dispatch(changeQuantity(userId, productObj));
+  };
+
+  const handleCheckoutClick = () => {
+    dispatch(addToCheckout(items));
+    navigate('/checkout');
   };
 
   return (
@@ -110,7 +116,10 @@ function Cart() {
       <div>
         <h1>Total price: {items.reduce((a, b) => b.canBeSold && a + b.price * b.quantity, 0)}</h1>
         <h1>Total items: {items ? items.filter((item) => item.canBeSold).length : 0}</h1>
-        <button disabled={items.filter((item) => !item.canBeSold).length > 0}>
+        <button
+          onClick={handleCheckoutClick}
+          disabled={items.filter((item) => !item.canBeSold).length > 0}
+        >
           Proceed to checkout
         </button>
       </div>
