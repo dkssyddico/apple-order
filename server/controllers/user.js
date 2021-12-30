@@ -3,6 +3,7 @@ import Product from '../models/Product';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import Order from '../models/Order';
 dotenv.config();
 
 export const join = async (req, res) => {
@@ -209,5 +210,35 @@ export const deleteItem = async (req, res) => {
     return res
       .status(400)
       .json({ success: false, message: '장바구니에서 상품을 삭제하는데 실패했습니다.' });
+  }
+};
+
+export const addOrder = async (req, res) => {
+  const items = req.body;
+  const {
+    user,
+    params: { userId },
+  } = req;
+  // 유저가 맞는지 확인.
+  const currentUser = await User.findById(userId);
+  if (String(user._id) !== String(currentUser._id)) {
+    return res.status(400).json({ success: false, message: '유저 정보가 맞지 않습니다.' });
+  }
+  // 새로운 order 만들어서 유저의 order에 넣어주기
+  try {
+    let newOrder = await Order.create({ user: userId, items });
+    currentUser.orders.push(newOrder._id);
+    await currentUser.save((err, user) => {
+      if (err) {
+        console.log(err);
+        return res
+          .status(400)
+          .json({ success: false, errorMessage: '유저 정보에 새로운 주문 저장을 실패했습니다.' });
+      }
+    });
+    return res.status(200).json({ success: true });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ success: false, errorMessage: '주문 생성에 실패했습니다.' });
   }
 };

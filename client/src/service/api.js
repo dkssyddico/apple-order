@@ -39,6 +39,9 @@ export const userAPI = {
   deleteItem: (userId, productId) => {
     return api.delete(`/users/${userId}/cart/${productId}`);
   },
+  addOrder: (userId, items) => {
+    return api.post(`/users/${userId}/orders`, items);
+  },
 };
 
 export const productAPI = {

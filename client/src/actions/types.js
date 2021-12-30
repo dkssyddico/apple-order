@@ -76,3 +76,9 @@ export const DELETE_ITEM_FAILURE = 'cart/DELETE_ITEM_FAILURE';
 // Checkout
 
 export const ADD_TO_CHECKOUT = 'checkout/ADD_TO_CHECKOUT';
+
+// Order
+
+export const ADD_ORDER_REQUEST = 'order/ADD_ORDER_REQUEST';
+export const ADD_ORDER_SUCCESS = 'order/ADD_ORDER_SUCCESS';
+export const ADD_ORDER_FAILURE = 'order/ADD_ORDER_FAILURE';

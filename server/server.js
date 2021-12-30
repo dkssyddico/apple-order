@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import './db.js';
 import userRouter from './routers/user.js';
 import productRouter from './routers/product.js';
+import orderRouter from './routers/order.js';
 
 const app = express();
 const port = 4000;
@@ -25,6 +26,7 @@ app.use('/uploads', express.static('uploads'));
 
 app.use('/api/users', userRouter);
 app.use('/api/products', productRouter);
+app.use('/api/orders', orderRouter);
 
 app.get('/', (req, res) => {
   res.send('Hello World!');

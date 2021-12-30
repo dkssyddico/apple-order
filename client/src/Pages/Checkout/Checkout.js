@@ -1,11 +1,34 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+import { addOrder } from '../../actions/orderAction';
 
 function Checkout() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const user = useSelector((state) => state.user);
+  const {
+    loginInfo: { _id: userId },
+  } = user;
+
   const checkout = useSelector((state) => state.checkout);
   const { items } = checkout;
-  console.log(items);
+
+  const orderHistory = useSelector((state) => state.orderHistory);
+  const { addOrderSuccess } = orderHistory;
+
+  const handlePaymentClick = () => {
+    dispatch(addOrder(userId, items));
+  };
+
+  useEffect(() => {
+    if (addOrderSuccess) {
+      navigate(`/orderSuccess/`);
+    }
+  });
+
   return (
     <div className='container'>
       <h1>Checkout</h1>
@@ -43,7 +66,7 @@ function Checkout() {
       <div>
         <h1>Total price: {items.reduce((a, b) => b.canBeSold && a + b.price * b.quantity, 0)}</h1>
         <h1>Total items: {items ? items.filter((item) => item.canBeSold).length : 0}</h1>
-        <button>Payment</button>
+        <button onClick={handlePaymentClick}>Payment</button>
       </div>
     </div>
   );
