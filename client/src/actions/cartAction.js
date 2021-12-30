@@ -10,6 +10,9 @@ import {
   DELETE_ITEM_REQUEST,
   DELETE_ITEM_SUCCESS,
   DELETE_ITEM_FAILURE,
+  REFRESH_CART_REQUEST,
+  REFRESH_CART_SUCCESS,
+  REFRESH_CART_FAILURE,
 } from './types';
 
 export const getCartInfo = (id) => async (dispatch, getState) => {
@@ -75,4 +78,18 @@ export const deleteItem = (userId, productId) => {
       });
     }
   };
+};
+
+export const refreshCart = (userId) => async (dispatch) => {
+  dispatch({ type: REFRESH_CART_REQUEST });
+  try {
+    const { data } = await userAPI.refreshCart(userId);
+    dispatch({ type: REFRESH_CART_SUCCESS, payload: data.cart });
+  } catch (error) {
+    dispatch({
+      type: REFRESH_CART_FAILURE,
+      payload:
+        error.response && error.response.data.message ? error.response.data.message : error.message,
+    });
+  }
 };

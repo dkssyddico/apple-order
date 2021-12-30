@@ -24,8 +24,8 @@ export const userAPI = {
   getAll: () => {
     return api.get('/users');
   },
-  remove: (id) => {
-    return api.delete(`/users/${id}`);
+  remove: (userId) => {
+    return api.delete(`/users/${userId}`);
   },
   getCartInfo: (userId) => {
     return api.get(`/users/${userId}/cart`);
@@ -35,6 +35,9 @@ export const userAPI = {
   },
   changQtyInCart: (userId, product) => {
     return api.put(`/users/${userId}/cart`, product);
+  },
+  refreshCart: (userId) => {
+    return api.delete(`/users/${userId}/cart`);
   },
   deleteItem: (userId, productId) => {
     return api.delete(`/users/${userId}/cart/${productId}`);

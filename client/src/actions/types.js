@@ -60,12 +60,14 @@ export const UPDATE_PRODUCT_REFRESH = 'product/UPDATE_PRODUCT_REFRESH';
 export const ADD_CART_REQUEST = 'cart/ADD_CART_REQUEST';
 export const ADD_CART_SUCCESS = 'cart/ADD_CART_SUCCESS';
 export const ADD_CART_FAILURE = 'cart/ADD_CART_FAILURE';
-export const ADD_CART_REFRESH = 'cart/ADD_CART_REFRESH';
 
 export const GET_CART_REQUEST = 'cart/GET_CART_REQUEST';
 export const GET_CART_SUCCESS = 'cart/GET_CART_SUCCESS';
 export const GET_CART_FAILURE = 'cart/GET_CART_FAILURE';
-export const GET_CART_REFRESH = 'cart/GET_CART_REFRESH';
+
+export const REFRESH_CART_REQUEST = 'cart/REFRESH_CART_REQUEST';
+export const REFRESH_CART_SUCCESS = 'cart/REFRESH_CART_SUCCESS';
+export const REFRESH_CART_FAILURE = 'cart/REFRESH_CART_FAILURE';
 
 export const CHANGE_ITEM_QUANTITY = 'cart/CHANGE_ITEM_QUANTITY';
 
@@ -76,6 +78,7 @@ export const DELETE_ITEM_FAILURE = 'cart/DELETE_ITEM_FAILURE';
 // Checkout
 
 export const ADD_TO_CHECKOUT = 'checkout/ADD_TO_CHECKOUT';
+export const REFRESH_CHECKOUT = 'checkout/REFRESH_CHECKOUT';
 
 // Order
 

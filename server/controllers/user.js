@@ -213,6 +213,28 @@ export const deleteItem = async (req, res) => {
   }
 };
 
+export const refreshCart = async (req, res) => {
+  const { _id: userIdInReq } = req.user;
+  const { userId } = req.params;
+  const currentUser = await User.findById(userId);
+  if (!currentUser) {
+    return res.status(400).json({ success: false, message: '유저 정보가 없습니다.' });
+  }
+  if (String(userIdInReq) !== String(currentUser._id)) {
+    return res.status(400).json({ success: false, message: '유저 정보가 맞지 않습니다.' });
+  }
+  currentUser.cart = [];
+  await currentUser.save((err, user) => {
+    if (err) {
+      console.log(err);
+      return res
+        .status(400)
+        .json({ success: false, errorMessage: '유저 정보에 카트 정보를 지우는데 실패했습니다.' });
+    }
+  });
+  return res.status(200).json({ success: true, cart: [] });
+};
+
 export const addOrder = async (req, res) => {
   const items = req.body;
   const {
@@ -221,6 +243,9 @@ export const addOrder = async (req, res) => {
   } = req;
   // 유저가 맞는지 확인.
   const currentUser = await User.findById(userId);
+  if (!currentUser) {
+    return res.status(400).json({ success: false, message: '유저 정보가 없습니다.' });
+  }
   if (String(user._id) !== String(currentUser._id)) {
     return res.status(400).json({ success: false, message: '유저 정보가 맞지 않습니다.' });
   }

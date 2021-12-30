@@ -9,6 +9,7 @@ import {
   join,
   login,
   logout,
+  refreshCart,
   removeUser,
 } from '../controllers/user';
 import { auth } from '../middleware/auth';
@@ -28,6 +29,8 @@ userRouter.delete('/:id', auth, isAdmin, removeUser);
 userRouter.get('/:id/cart', auth, getCartInfo);
 userRouter.post('/:id/cart', auth, addItemToCart);
 userRouter.put('/:id/cart', auth, changeQuantityInCart);
+userRouter.delete('/:userId/cart', auth, refreshCart);
+
 userRouter.delete('/:id/cart/:productId', auth, deleteItem);
 
 // user order

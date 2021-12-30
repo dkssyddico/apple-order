@@ -2,7 +2,9 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+import { refreshCart } from '../../actions/cartAction';
 import { addOrder } from '../../actions/orderAction';
+import { REFRESH_CHECKOUT } from '../../actions/types';
 
 function Checkout() {
   const dispatch = useDispatch();
@@ -25,9 +27,17 @@ function Checkout() {
 
   useEffect(() => {
     if (addOrderSuccess) {
+      dispatch({ type: REFRESH_CHECKOUT });
+      dispatch(refreshCart(userId));
       navigate(`/orderSuccess/`);
     }
-  });
+  }, [addOrderSuccess, dispatch, navigate, userId]);
+
+  useEffect(() => {
+    if (items.length < 1) {
+      navigate('/');
+    }
+  }, [items, navigate]);
 
   return (
     <div className='container'>
