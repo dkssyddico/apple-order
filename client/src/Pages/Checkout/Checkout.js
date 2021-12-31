@@ -76,7 +76,7 @@ function Checkout() {
       <div>
         <h1>Total price: {items.reduce((a, b) => b.canBeSold && a + b.price * b.quantity, 0)}</h1>
         <h1>Total items: {items ? items.filter((item) => item.canBeSold).length : 0}</h1>
-        <button onClick={handlePaymentClick}>Payment</button>
+        <button onClick={() => handlePaymentClick()}>Payment</button>
       </div>
     </div>
   );

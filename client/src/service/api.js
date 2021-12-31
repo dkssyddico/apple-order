@@ -67,3 +67,9 @@ export const productAPI = {
     return api.put(`/products/${id}`, productUpdatedObj);
   },
 };
+
+export const orderAPI = {
+  getAll: () => {
+    return api.get('/orders');
+  },
+};

@@ -103,7 +103,6 @@ export const getAll = async (req, res) => {
 };
 
 export const removeUser = async (req, res) => {
-  console.log(req.params);
   const { id } = req.params;
   await User.findByIdAndDelete(id).exec((err, result) => {
     if (err) {

@@ -85,3 +85,7 @@ export const REFRESH_CHECKOUT = 'checkout/REFRESH_CHECKOUT';
 export const ADD_ORDER_REQUEST = 'order/ADD_ORDER_REQUEST';
 export const ADD_ORDER_SUCCESS = 'order/ADD_ORDER_SUCCESS';
 export const ADD_ORDER_FAILURE = 'order/ADD_ORDER_FAILURE';
+
+export const GET_ORDERS_REQUEST = 'orders/GET_ORDERS_REQUEST';
+export const GET_ORDERS_SUCCESS = 'orders/GET_ORDERS_SUCCESS';
+export const GET_ORDERS_FAILURE = 'orders/GET_ORDERS_FAILURE';
