@@ -9,14 +9,13 @@ import {
 } from './productReducers';
 import { cartReducer } from './cartReducer';
 import { checkoutReducer } from './checkoutReducer';
-import { orderListReducer, orderReducer } from './orderReducer';
+import { orderListReducer, orderHistoryReducer } from './orderReducer';
 
 const rootReducer = combineReducers({
   user: userReducer,
   usersList: getUsersReducer,
   cart: cartReducer,
   checkout: checkoutReducer,
-  orderHistory: orderReducer,
   userRemoved: removeUserReducer,
   productImageUpload: productImagesReducer,
   productUpload: productUploadReducer,
@@ -25,6 +24,7 @@ const rootReducer = combineReducers({
   productInfo: productInfoReducer,
   updatedProduct: updateProductReducer,
   orderList: orderListReducer,
+  orderHistory: orderHistoryReducer,
 });
 
 export default rootReducer;

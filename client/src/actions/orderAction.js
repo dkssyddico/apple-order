@@ -6,6 +6,9 @@ import {
   GET_ORDERS_REQUEST,
   GET_ORDERS_SUCCESS,
   GET_ORDERS_FAILURE,
+  GET_ORDER_REQUEST,
+  GET_ORDER_SUCCESS,
+  GET_ORDER_FAILURE,
 } from './types';
 
 export const addOrder = (userId, items) => async (dispatch) => {

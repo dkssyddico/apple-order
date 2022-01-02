@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import AdminMain from '../Pages/AdminMain/AdminMain';
+import AdminOrderDetail from '../Pages/AdminOrderDetail/AdminOrderDetail';
 import AdminOrders from '../Pages/AdminOrders/AdminOrders';
 import AdminProducts from '../Pages/AdminProducts/AdminProducts';
 import UploadProduct from '../Pages/AdminProducts/sections/UploadProduct';
@@ -47,6 +48,10 @@ function Router() {
         <Route
           path='/admin/orders'
           element={loginInfo && loginInfo.isAdmin ? <AdminOrders /> : <Navigate to='/login' />}
+        />
+        <Route
+          path='/admin/orders/:orderId'
+          element={loginInfo && loginInfo.isAdmin ? <AdminOrderDetail /> : <Navigate to='/login' />}
         />
         <Route
           path='/admin/products'

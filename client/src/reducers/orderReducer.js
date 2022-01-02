@@ -7,9 +7,11 @@ import {
   GET_ORDERS_FAILURE,
 } from '../actions/types';
 
-export const orderReducer = (
+export const orderHistoryReducer = (
   state = {
     orders: [],
+    order: [],
+    orderLoading: false,
     addOrderSuccess: false,
   },
   action

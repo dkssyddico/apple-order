@@ -72,4 +72,7 @@ export const orderAPI = {
   getAll: () => {
     return api.get('/orders');
   },
+  getOrder: (orderId) => {
+    return api.get(`/orders/${orderId}`);
+  },
 };
