@@ -6,6 +6,7 @@ import {
   deleteItem,
   getAll,
   getCartInfo,
+  getOrders,
   join,
   login,
   logout,
@@ -34,6 +35,7 @@ userRouter.delete('/:userId/cart', auth, refreshCart);
 userRouter.delete('/:id/cart/:productId', auth, deleteItem);
 
 // user order
+userRouter.get('/:userId/orders', auth, getOrders);
 userRouter.post('/:userId/orders', auth, addOrder);
 
 export default userRouter;

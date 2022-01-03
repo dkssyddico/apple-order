@@ -119,7 +119,7 @@ function Cart() {
         <h1>Total price: {items.reduce((a, b) => b.canBeSold && a + b.price * b.quantity, 0)}</h1>
         <h1>Total items: {items ? items.filter((item) => item.canBeSold).length : 0}</h1>
         <button
-          onClick={handleCheckoutClick}
+          onClick={() => handleCheckoutClick()}
           disabled={items.filter((item) => !item.canBeSold).length > 0}
         >
           Proceed to checkout

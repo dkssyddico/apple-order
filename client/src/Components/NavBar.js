@@ -67,6 +67,9 @@ function NavBar() {
               <Link to='/profile'>Profile</Link>
             </li>
             <li>
+              <Link to='/orders'>Order</Link>
+            </li>
+            <li>
               <button onClick={onLogoutClick}>Log out</button>
             </li>
           </>

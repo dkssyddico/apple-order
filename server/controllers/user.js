@@ -266,3 +266,21 @@ export const addOrder = async (req, res) => {
     return res.status(400).json({ success: false, errorMessage: '주문 생성에 실패했습니다.' });
   }
 };
+
+export const getOrders = async (req, res) => {
+  const { userId } = req.params;
+  const { user } = req;
+  if (String(userId) !== String(user._id)) {
+    return res.status(400).json({ success: false, message: '유저 정보가 일치하지 않습니다.' });
+  }
+  try {
+    let currentUser = await User.findById(userId).populate('orders');
+    let orders = currentUser.orders.sort((a, b) => b.createdAt - a.createdAt);
+    return res.status(200).json({ success: true, orders });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(400)
+      .json({ success: false, message: '주문 정보를 불러오는데 실패했습니다.' });
+  }
+};

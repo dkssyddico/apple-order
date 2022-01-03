@@ -1,4 +1,5 @@
 import Order from '../models/Order';
+import User from '../models/User';
 
 export const getAll = async (req, res) => {
   try {
@@ -36,9 +37,11 @@ export const getOrder = async (req, res) => {
     } else if (user && String(user._id) === String(order.user)) {
       return res.status(200).json({ success: true, order });
     } else {
+      console.log('error');
       return res.status(400).json({ success: false, message: '잘못된 접근입니다.' });
     }
   } catch (error) {
+    console.log('error2');
     return res
       .status(400)
       .json({ success: false, message: '주문 정보를 불러오는데 실패했습니다.' });

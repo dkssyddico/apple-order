@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom';
 
 function AdminOrders() {
   const dispatch = useDispatch();
-  const orderList = useSelector((state) => state.orderList);
-  const { loading, orders } = orderList;
+  const adminOrderList = useSelector((state) => state.adminOrderList);
+  const { loading, orders } = adminOrderList;
 
   useEffect(() => {
     dispatch(getOrders());

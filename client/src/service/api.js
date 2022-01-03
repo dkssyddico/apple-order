@@ -45,6 +45,9 @@ export const userAPI = {
   addOrder: (userId, items) => {
     return api.post(`/users/${userId}/orders`, items);
   },
+  getOrder: (userId) => {
+    return api.get(`/users/${userId}/orders`);
+  },
 };
 
 export const productAPI = {

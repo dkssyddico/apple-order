@@ -1,5 +1,5 @@
 import express from 'express';
-import { getAll, getOrder } from '../controllers/order';
+import { getAll, getOrder, getPersonalOrder } from '../controllers/order';
 
 import { auth } from '../middleware/auth';
 import isAdmin from '../middleware/isAdmin';

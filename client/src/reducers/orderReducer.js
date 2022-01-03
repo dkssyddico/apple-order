@@ -10,8 +10,6 @@ import {
 export const orderHistoryReducer = (
   state = {
     orders: [],
-    order: [],
-    orderLoading: false,
     addOrderSuccess: false,
   },
   action
@@ -34,7 +32,7 @@ export const orderHistoryReducer = (
   }
 };
 
-export const orderListReducer = (
+export const adminOrderReducer = (
   state = {
     orders: [],
     loading: false,

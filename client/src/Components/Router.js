@@ -13,6 +13,8 @@ import Checkout from '../Pages/Checkout/Checkout';
 import Home from '../Pages/Home/Home';
 import Join from '../Pages/Join/Join';
 import Login from '../Pages/Login/Login';
+import OrderDetail from '../Pages/OrderDetail/OrderDetail';
+import OrderHistory from '../Pages/OrderHistory/OrderHistory';
 import OrderSuccess from '../Pages/OrderSuccess/OrderSuccess';
 import ProductDetail from '../Pages/ProductDetail/ProductDetail';
 import Profile from '../Pages/Profile/Profile';
@@ -27,11 +29,16 @@ function Router() {
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
         <Route path='/join' element={<Join />} />
-
         <Route path='/product/:id' element={<ProductDetail />} />
+
         <Route path='/cart' element={loginInfo ? <Cart /> : <Navigate to='/login' />} />
         <Route path='/checkout' element={loginInfo ? <Checkout /> : <Navigate to='/login' />} />
         <Route path='/profile' element={loginInfo ? <Profile /> : <Navigate to='/login' />} />
+        <Route path='/orders' element={loginInfo ? <OrderHistory /> : <Navigate to='/login' />} />
+        <Route
+          path='/orders/:orderId'
+          element={loginInfo ? <OrderDetail /> : <Navigate to='/login' />}
+        />
         <Route
           path='/orderSuccess'
           element={loginInfo ? <OrderSuccess /> : <Navigate to='/login' />}

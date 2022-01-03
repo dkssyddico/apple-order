@@ -9,7 +9,7 @@ import {
 } from './productReducers';
 import { cartReducer } from './cartReducer';
 import { checkoutReducer } from './checkoutReducer';
-import { orderListReducer, orderHistoryReducer } from './orderReducer';
+import { adminOrderReducer, orderHistoryReducer } from './orderReducer';
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -23,7 +23,7 @@ const rootReducer = combineReducers({
   productRemove: productRemoveReducer,
   productInfo: productInfoReducer,
   updatedProduct: updateProductReducer,
-  orderList: orderListReducer,
+  adminOrderList: adminOrderReducer,
   orderHistory: orderHistoryReducer,
 });
 

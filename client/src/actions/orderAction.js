@@ -38,3 +38,5 @@ export const getOrders = () => async (dispatch) => {
     });
   }
 };
+
+export const getPersonalOrders = (userId) => async (dispatch) => {};
