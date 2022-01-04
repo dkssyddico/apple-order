@@ -1,5 +1,10 @@
 import { combineReducers } from 'redux';
-import { getUsersReducer, removeUserReducer, userReducer } from './userReducers';
+import {
+  getUsersReducer,
+  removeUserReducer,
+  userProfileReducer,
+  userReducer,
+} from './userReducers';
 import { productImagesReducer, productUploadReducer } from './productUploadReducer';
 import {
   productsListReducer,
@@ -14,9 +19,10 @@ import { adminOrderReducer, orderHistoryReducer } from './orderReducer';
 const rootReducer = combineReducers({
   user: userReducer,
   usersList: getUsersReducer,
+  userRemoved: removeUserReducer,
+  userProfile: userProfileReducer,
   cart: cartReducer,
   checkout: checkoutReducer,
-  userRemoved: removeUserReducer,
   productImageUpload: productImagesReducer,
   productUpload: productUploadReducer,
   productsList: productsListReducer,

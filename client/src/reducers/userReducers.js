@@ -16,6 +16,9 @@ import {
   REMOVE_USER_SUCCESS,
   REMOVE_USER_FAILURE,
   REMOVE_USER_REFRESH,
+  GET_USER_PROFILE_REQUEST,
+  GET_USER_PROFILE_SUCCESS,
+  GET_USER_PROFILE_FAILURE,
 } from '../actions/types';
 import {
   userJoinThunk,
@@ -147,6 +150,37 @@ export const removeUserReducer = (state = {}, action) => {
       };
     case REMOVE_USER_REFRESH:
       return {};
+    default:
+      return state;
+  }
+};
+
+export const userProfileReducer = (
+  state = {
+    info: null,
+    loading: false,
+    error: '',
+  },
+  action
+) => {
+  switch (action.type) {
+    case GET_USER_PROFILE_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case GET_USER_PROFILE_SUCCESS:
+      return {
+        ...state,
+        info: action.payload,
+        loading: false,
+      };
+    case GET_USER_PROFILE_FAILURE:
+      return {
+        ...state,
+        loading: true,
+        error: action.payload,
+      };
     default:
       return state;
   }

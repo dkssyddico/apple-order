@@ -2,11 +2,14 @@ import express from 'express';
 import {
   addItemToCart,
   addOrder,
+  changePassword,
   changeQuantityInCart,
+  changeUsername,
   deleteItem,
   getAll,
   getCartInfo,
   getOrders,
+  getUserInfo,
   join,
   login,
   logout,
@@ -24,6 +27,12 @@ userRouter.get('/logout', auth, logout);
 
 userRouter.get('/', auth, isAdmin, getAll);
 
+userRouter.get('/:userId', auth, getUserInfo);
+
+userRouter.put('/:userId/username', auth, changeUsername);
+
+userRouter.put('/:userId/password', auth, changePassword);
+
 userRouter.delete('/:id', auth, isAdmin, removeUser);
 
 // user cart
@@ -31,7 +40,6 @@ userRouter.get('/:id/cart', auth, getCartInfo);
 userRouter.post('/:id/cart', auth, addItemToCart);
 userRouter.put('/:id/cart', auth, changeQuantityInCart);
 userRouter.delete('/:userId/cart', auth, refreshCart);
-
 userRouter.delete('/:id/cart/:productId', auth, deleteItem);
 
 // user order

@@ -284,3 +284,82 @@ export const getOrders = async (req, res) => {
       .json({ success: false, message: '주문 정보를 불러오는데 실패했습니다.' });
   }
 };
+
+export const getUserInfo = async (req, res) => {
+  const { userId } = req.params;
+  const { user } = req;
+  if (String(userId) !== String(user._id)) {
+    return res.status(400).json({ success: false, message: '유저 정보가 일치하지 않습니다.' });
+  }
+  try {
+    let currentUser = await User.findById(userId);
+    let info = {
+      username: currentUser.username,
+      email: currentUser.email,
+    };
+    return res.status(200).json({ success: true, info });
+  } catch (error) {
+    return res.status(400).json({ success: false, message: '찾는 유저 정보가 없습니다.' });
+  }
+};
+
+export const changeUsername = async (req, res) => {
+  const { user } = req;
+  const { userId } = req.params;
+  const { username } = req.body;
+  if (String(userId) !== String(user._id)) {
+    return res.status(400).json({ success: false, message: '유저 정보가 일치하지 않습니다.' });
+  }
+  // 유저 찾기
+  const currentUser = await User.findById(userId);
+  if (!currentUser) {
+    console.log('error');
+    return res.status(400).json({ success: false, errorMessage: '유저정보가 없습니다.' });
+  }
+
+  if (username) {
+    const usernameCheck = await User.exists({ username });
+    if (usernameCheck) {
+      return res.status(400).json({ success: false, message: '이미 존재하는 유저네임입니다.' });
+    } else {
+      try {
+        await User.findByIdAndUpdate(userId, { username });
+        return res.status(200).json({ success: true });
+      } catch (error) {
+        console.log('error4');
+        return res
+          .status(400)
+          .json({ success: false, message: '유저네임 업데이트에 실패했습니다.' });
+      }
+    }
+  }
+};
+
+export const changePassword = async (req, res) => {
+  const { user } = req;
+  const { userId } = req.params;
+  const { currentPassword, newPassword } = req.body;
+  if (String(userId) !== String(user._id)) {
+    return res.status(400).json({ success: false, message: '유저 정보가 일치하지 않습니다.' });
+  }
+
+  const currentUser = await User.findById(userId);
+  if (!currentUser) {
+    console.log('error');
+    return res.status(400).json({ success: false, message: '유저정보가 없습니다.' });
+  }
+
+  // 기존 비밀번호와 동일한지 확인
+  const passwordComparison = await bcrypt.compare(currentPassword, currentUser.password);
+  if (!passwordComparison) {
+    return res.status(400).json({ success: false, message: '기존 비밀번호와 다릅니다!' });
+  } else {
+    // 동일하면 비밀번호 변경해주기
+    currentUser.password = newPassword;
+    await currentUser.save((err, user) => {
+      if (err)
+        return res.status(400).json({ success: false, message: '비밀번호 변경에 실패했습니다!' });
+      return res.status(200).json({ success: true });
+    });
+  }
+};

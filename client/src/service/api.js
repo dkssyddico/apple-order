@@ -48,6 +48,15 @@ export const userAPI = {
   getOrder: (userId) => {
     return api.get(`/users/${userId}/orders`);
   },
+  getProfile: (userId) => {
+    return api.get(`/users/${userId}`);
+  },
+  changeUsername: (userId, usernameObj) => {
+    return api.put(`/users/${userId}/username`, usernameObj);
+  },
+  changePassword: (userId, passwordObj) => {
+    return api.put(`/users/${userId}/password`, passwordObj);
+  },
 };
 
 export const productAPI = {
