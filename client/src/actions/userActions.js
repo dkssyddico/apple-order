@@ -5,29 +5,6 @@ import {
   GET_USER_PROFILE_REQUEST,
 } from './types';
 
-export function userJoinThunk(type, request) {
-  const SUCCESS = `${type}_SUCCESS`;
-  const FAILURE = `${type}_FAILURE`;
-  return (params) => async (dispatch) => {
-    dispatch({ type });
-    try {
-      const { data } = await request(params);
-      dispatch({
-        type: SUCCESS,
-        payload: data,
-      });
-    } catch (error) {
-      dispatch({
-        type: FAILURE,
-        payload:
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message,
-      });
-    }
-  };
-}
-
 export function userLoginThunk(type, request) {
   const SUCCESS = `${type}_SUCCESS`;
   const FAILURE = `${type}_FAILURE`;

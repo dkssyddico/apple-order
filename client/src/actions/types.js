@@ -14,10 +14,6 @@ export const LOGOUT_USER = 'user/LOGOUT_USER';
 export const LOGOUT_USER_SUCCESS = 'user/LOGOUT_USER_SUCCESS';
 export const LOGOUT_USER_FAILURE = 'user/LOGOUT_USER_FAILURE';
 
-export const JOIN_USER = 'user/JOIN_USER';
-export const JOIN_USER_SUCCESS = 'user/JOIN_USER_SUCCESS';
-export const JOIN_USER_FAILURE = 'user/JOIN_USER_FAILURE';
-
 export const REMOVE_USER = 'user/REMOVE_USER';
 export const REMOVE_USER_SUCCESS = 'user/REMOVE_USER_SUCCESS';
 export const REMOVE_USER_FAILURE = 'user/REMOVE_USER_FAILURE';

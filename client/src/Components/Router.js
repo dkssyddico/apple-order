@@ -28,7 +28,7 @@ function Router() {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
-        <Route path='/join' element={<Join />} />
+        <Route path='/join' element={loginInfo ? <Navigate to='/' /> : <Join />} />
         <Route path='/product/:id' element={<ProductDetail />} />
 
         <Route path='/cart' element={loginInfo ? <Cart /> : <Navigate to='/login' />} />

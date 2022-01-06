@@ -7,9 +7,9 @@ import Order from '../models/Order';
 dotenv.config();
 
 export const join = async (req, res) => {
-  const { username, email, password, passwordConfirm } = req.body;
+  const { username, email, password, passwordConfirmation } = req.body;
   // 비밀번호와 비밀번호 확인이 같은지 확인
-  if (passwordConfirm !== password) {
+  if (passwordConfirmation !== password) {
     return res.status(400).json({ success: false, message: '비밀번호가 같지 않습니다.' });
   }
   // 이미 있는 username, email인지 확인
@@ -26,6 +26,10 @@ export const join = async (req, res) => {
   } catch (error) {
     return res.status(400).json({ success: false, message: '회원가입에 문제가 발생했습니다.' });
   }
+};
+
+const createToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET);
 };
 
 export const login = async (req, res) => {
@@ -64,10 +68,6 @@ export const login = async (req, res) => {
         isAdmin: user.role === 0 ? true : false,
       });
   });
-};
-
-const createToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET);
 };
 
 export const logout = async (req, res) => {

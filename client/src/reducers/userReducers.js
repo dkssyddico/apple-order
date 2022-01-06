@@ -5,9 +5,6 @@ import {
   LOGOUT_USER,
   LOGOUT_USER_SUCCESS,
   LOGOUT_USER_FAILURE,
-  JOIN_USER,
-  JOIN_USER_SUCCESS,
-  JOIN_USER_FAILURE,
   GET_USERS,
   GET_USERS_SUCCESS,
   GET_USERS_FAILURE,
@@ -21,7 +18,6 @@ import {
   GET_USER_PROFILE_FAILURE,
 } from '../actions/types';
 import {
-  userJoinThunk,
   userLoginThunk,
   userLogoutThunk,
   getAllUsersThunk,
@@ -31,30 +27,18 @@ import { userAPI } from '../service/api';
 
 export const loginUser = userLoginThunk(LOGIN_USER, userAPI.login);
 export const logoutUser = userLogoutThunk(LOGOUT_USER, userAPI.logout);
-export const joinUser = userJoinThunk(JOIN_USER, userAPI.join);
 export const getAllUsers = getAllUsersThunk(GET_USERS, userAPI.getAll);
 export const removeUser = removeUserThunk(REMOVE_USER, userAPI.remove);
 
-export const userReducer = (state = {}, action) => {
+export const userReducer = (
+  state = {
+    error: '',
+    loading: true,
+    loginInfo: null,
+  },
+  action
+) => {
   switch (action.type) {
-    case JOIN_USER:
-      return {
-        ...state,
-        loading: true,
-      };
-    case JOIN_USER_SUCCESS:
-      return {
-        ...state,
-        joinInfo: action.payload,
-        loading: false,
-        error: '',
-      };
-    case JOIN_USER_FAILURE:
-      return {
-        ...state,
-        loading: false,
-        error: action.payload,
-      };
     case LOGIN_USER:
       return {
         ...state,
@@ -88,6 +72,7 @@ export const userReducer = (state = {}, action) => {
     case LOGOUT_USER_FAILURE:
       return {
         ...state,
+        loginInfo: null,
         loading: false,
         error: action.payload,
       };
