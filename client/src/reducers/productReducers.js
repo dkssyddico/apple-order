@@ -1,13 +1,9 @@
 import {
-  getProductsThunk,
   getProductThunk,
   removeProductsThunk,
   updateProductThunk,
 } from '../actions/productsAction';
 import {
-  GET_PRODUCTS,
-  GET_PRODUCTS_SUCCESS,
-  GET_PRODUCTS_FAILURE,
   REMOVE_PRODUCT,
   REMOVE_PRODUCT_SUCCESS,
   REMOVE_PRODUCT_FAILURE,
@@ -23,30 +19,9 @@ import {
 } from '../actions/types';
 import { productAPI } from '../service/api';
 
-export const getProductsAll = getProductsThunk(GET_PRODUCTS, productAPI.getAll);
 export const removeProduct = removeProductsThunk(REMOVE_PRODUCT, productAPI.remove);
 export const getProduct = getProductThunk(GET_PRODUCT, productAPI.getInfo);
 export const updateProduct = updateProductThunk(UPDATE_PRODUCT, productAPI.update);
-
-export const productsListReducer = (state = {}, action) => {
-  switch (action.type) {
-    case GET_PRODUCTS:
-      return {
-        ...state,
-        loading: true,
-      };
-    case GET_PRODUCTS_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        list: [...action.payload.products],
-      };
-    case GET_PRODUCTS_FAILURE:
-      return { ...state, loading: false, error: action.payload };
-    default:
-      return state;
-  }
-};
 
 export const productRemoveReducer = (state = {}, action) => {
   switch (action.type) {

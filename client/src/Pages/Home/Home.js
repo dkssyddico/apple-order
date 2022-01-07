@@ -1,10 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import Loading from '../../Components/Loading';
+import { productAPI } from '../../service/api';
 
 function Home() {
-  const { list, loading } = useSelector((state) => state.productsList);
+  const [loading, setLoading] = useState(false);
+  const [products, setProducts] = useState([]);
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const getProducts = async () => {
+    try {
+      let {
+        data: { products },
+      } = await productAPI.getAll();
+      setProducts(products);
+    } catch (error) {
+      let {
+        response: {
+          data: { message },
+        },
+      } = error;
+      setError(true);
+      setErrorMessage(message ? message : error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getProducts();
+  }, []);
 
   return (
     <div className='container'>
@@ -13,9 +39,11 @@ function Home() {
         <h2>Products</h2>
         {loading ? (
           <Loading />
+        ) : error ? (
+          <h1>{errorMessage}</h1>
         ) : (
-          list &&
-          list.map((item) => (
+          products &&
+          products.map((item) => (
             <div key={item._id}>
               <Link to={`/product/${item._id}`}>
                 <div className='imgContainer'>

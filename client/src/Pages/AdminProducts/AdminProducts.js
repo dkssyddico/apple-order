@@ -1,10 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { getProductsAll, removeProduct } from '../../reducers/productReducers';
-import { REMOVE_PRODUCT_REFRESH } from '../../actions/types';
 import Loading from '../../Components/Loading';
+import { productAPI } from '../../service/api';
 
 const Container = styled.div`
   padding-top: 12vh;
@@ -13,22 +11,38 @@ const Container = styled.div`
 `;
 
 function AdminProducts() {
-  const { list, loading } = useSelector((state) => state.productsList);
-  const { success: successRemove } = useSelector((state) => state.productRemove);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+  const [products, setProducts] = useState([]);
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const getProducts = async () => {
+    try {
+      let {
+        data: { products },
+      } = await productAPI.getAll();
+      setProducts(products);
+    } catch (error) {
+      let {
+        response: {
+          data: { message },
+        },
+      } = error;
+      setError(true);
+      setErrorMessage(message ? message : error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    if (successRemove) {
-      dispatch({ type: REMOVE_PRODUCT_REFRESH });
-    }
-    dispatch(getProductsAll());
-  }, [dispatch, successRemove]);
+    getProducts();
+  }, []);
 
   const handleDelete = (itemName, itemId) => {
     let confirm = window.confirm(`${itemName} 을/를 지우시겠습니까?`);
     if (confirm) {
-      dispatch(removeProduct(itemId));
     }
   };
 
@@ -41,6 +55,8 @@ function AdminProducts() {
       <div>
         {loading ? (
           <Loading />
+        ) : error ? (
+          <h1>{errorMessage}</h1>
         ) : (
           <table>
             <thead>
@@ -54,8 +70,8 @@ function AdminProducts() {
               </tr>
             </thead>
             <tbody>
-              {list &&
-                list.map((item) => (
+              {products &&
+                products.map((item) => (
                   <tr key={item._id}>
                     <td>
                       <img

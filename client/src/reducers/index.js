@@ -6,12 +6,7 @@ import {
   userReducer,
 } from './userReducers';
 import { productImagesReducer, productUploadReducer } from './productUploadReducer';
-import {
-  productsListReducer,
-  productRemoveReducer,
-  productInfoReducer,
-  updateProductReducer,
-} from './productReducers';
+import { productRemoveReducer, productInfoReducer, updateProductReducer } from './productReducers';
 import { cartReducer } from './cartReducer';
 import { checkoutReducer } from './checkoutReducer';
 import { adminOrderReducer, orderHistoryReducer } from './orderReducer';
@@ -25,7 +20,6 @@ const rootReducer = combineReducers({
   checkout: checkoutReducer,
   productImageUpload: productImagesReducer,
   productUpload: productUploadReducer,
-  productsList: productsListReducer,
   productRemove: productRemoveReducer,
   productInfo: productInfoReducer,
   updatedProduct: updateProductReducer,

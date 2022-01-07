@@ -2,19 +2,43 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import Loading from '../../Components/Loading';
-import { getProductsAll } from '../../reducers/productReducers';
 import { getAllUsers } from '../../reducers/userReducers';
+import { useState } from 'react';
+import { productAPI } from '../../service/api';
 
 function AdminMain() {
   const dispatch = useDispatch();
-  const { list: productsList, loading: productsListLoading } = useSelector(
-    (state) => state.productsList
-  );
   const { list: usersList, loading: usersListLoading } = useSelector((state) => state.usersList);
+  const [productListLoading, setProductListLoading] = useState(false);
+  const [products, setProducts] = useState([]);
+  const [productsError, setProductsError] = useState(false);
+  const [productsErrorMessage, setProductsErrorMessage] = useState('');
+
+  const getProducts = async () => {
+    try {
+      let {
+        data: { products },
+      } = await productAPI.getAll();
+      setProducts(products);
+    } catch (error) {
+      let {
+        response: {
+          data: { message },
+        },
+      } = error;
+      setProductsError(true);
+      setProductsErrorMessage(message ? message : error.message);
+    } finally {
+      setProductListLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getProducts();
+  }, []);
 
   useEffect(() => {
     dispatch(getAllUsers());
-    dispatch(getProductsAll());
   }, [dispatch]);
 
   return (
@@ -36,10 +60,12 @@ function AdminMain() {
         </div>
         <div className='card'>
           <h2>Products</h2>
-          {productsListLoading ? (
+          {productListLoading ? (
             <Loading />
+          ) : productsError ? (
+            <h1>{productsErrorMessage}</h1>
           ) : (
-            <h3>Total: {productsList && productsList.length}</h3>
+            <h3>Total: {products && products.length}</h3>
           )}
           <button>
             <Link to='/admin/products'>go to products</Link>
