@@ -7,6 +7,7 @@ import Loading from '../../Components/Loading';
 import styled from 'styled-components';
 import Message from '../../Components/Message';
 import { addToCart } from '../../actions/cartAction';
+import { productAPI } from '../../service/api';
 
 // const ImageContainer = styled.div`
 //   width: 100%;
@@ -24,20 +25,40 @@ function ProductDetail() {
   let { id: productId } = useParams();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    dispatch(getProduct(productId));
-  }, [dispatch, productId]);
-
-  const productInfo = useSelector((state) => state.productInfo);
-  const { loading, error, product } = productInfo;
-
   const user = useSelector((state) => state.user);
   const { loginInfo } = user;
-
   const cart = useSelector((state) => state.cart);
   const { items } = cart;
 
   const [quantity, setQuantity] = useState(1);
+
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const getProduct = async (productId) => {
+    try {
+      let {
+        data: { product },
+      } = await productAPI.getInfo(productId);
+      setProduct(product);
+    } catch (error) {
+      let {
+        response: {
+          data: { message },
+        },
+      } = error;
+      setError(true);
+      setErrorMessage(message ? message : error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getProduct(productId);
+  }, [productId]);
 
   // 객체 형태로 줘야함.
   const handleCartClick = () => {
@@ -50,7 +71,6 @@ function ProductDetail() {
       productId,
       quantity,
     };
-    console.log(items.filter((item) => item.productId === productId).length);
     let existence = items.filter((item) => item.productId === productId).length > 0 ? true : false;
     if (existence) {
       alert('이미 장바구니에 있는 상품입니다.');
@@ -76,7 +96,7 @@ function ProductDetail() {
       {loading ? (
         <Loading />
       ) : error ? (
-        <Message>{error}</Message>
+        <Message>{errorMessage}</Message>
       ) : (
         product && (
           <>

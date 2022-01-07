@@ -3,14 +3,11 @@ import styled from 'styled-components';
 import Dropzone from 'react-dropzone';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { getProduct, updateProduct } from '../../reducers/productReducers';
-import {
-  GET_PRODUCT_REFRESH,
-  UPDATE_PRODUCT_REFRESH,
-  UPLOAD_PRODUCT_IMG_REFRESH,
-} from '../../actions/types';
+import { updateProduct } from '../../reducers/productReducers';
+import { UPDATE_PRODUCT_REFRESH, UPLOAD_PRODUCT_IMG_REFRESH } from '../../actions/types';
 import { uploadProductImg } from '../../reducers/productUploadReducer';
 import Message from '../../Components/Message';
+import { productAPI } from '../../service/api';
 
 const categories = [
   { key: 1, value: 'Family' },
@@ -45,10 +42,9 @@ const Previews = styled.div`
 
 // 로딩 처리
 function AdminProductEdit() {
-  let { id } = useParams();
+  let { id: productId } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { product } = useSelector((state) => state.productInfo);
   const { success: successUpdateProduct, error: updateError } = useSelector(
     (state) => state.updatedProduct
   );
@@ -65,10 +61,37 @@ function AdminProductEdit() {
   const [description, setDescription] = useState('');
   const [images, setImages] = useState([]);
 
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const getProduct = async (productId) => {
+    try {
+      let {
+        data: { product },
+      } = await productAPI.getInfo(productId);
+      setProduct(product);
+    } catch (error) {
+      let {
+        response: {
+          data: { message },
+        },
+      } = error;
+      setError(true);
+      setErrorMessage(message ? message : error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    if (!product || id !== product._id) {
-      dispatch({ type: GET_PRODUCT_REFRESH });
-      dispatch(getProduct(id));
+    getProduct(productId);
+  }, [productId]);
+
+  useEffect(() => {
+    if (!product || productId !== product._id) {
+      getProduct(productId);
     } else {
       setName(product.name);
       setPrice(product.price);
@@ -76,7 +99,7 @@ function AdminProductEdit() {
       setDescription(product.description);
       setImages(product.images);
     }
-  }, [dispatch, product, id]);
+  }, [dispatch, product, productId]);
 
   useEffect(() => {
     if (successUploadImages) {
@@ -134,7 +157,7 @@ function AdminProductEdit() {
           description,
           images,
         };
-        dispatch(updateProduct(id, newProduct));
+        dispatch(updateProduct(productId, newProduct));
       }
     }
   };

@@ -21,7 +21,6 @@ const rootReducer = combineReducers({
   productImageUpload: productImagesReducer,
   productUpload: productUploadReducer,
   productRemove: productRemoveReducer,
-  productInfo: productInfoReducer,
   updatedProduct: updateProductReducer,
   adminOrderList: adminOrderReducer,
   orderHistory: orderHistoryReducer,
