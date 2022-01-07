@@ -1,107 +1,40 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import Dropzone from 'react-dropzone';
-import Message from '../../../Components/Message';
-import { uploadProductImg, uploadProduct } from '../../../reducers/productUploadReducer';
-import { UPLOAD_PRODUCT_IMG_REFRESH, UPLOAD_PRODUCT_REFRESH } from '../../../actions/types';
+import { useForm } from 'react-hook-form';
 
-const categories = [
-  { key: 1, value: 'Family' },
-  {
-    key: 2,
-    value: 'Present',
-  },
-  { key: 3, value: 'etc' },
-];
+import { productAPI } from '../../../service/api';
+import categories from '../../../utils/category';
+import FileUpload from '../../../Components/FileUpload';
 
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
 `;
 
-const Previews = styled.div`
-  display: flex;
-  width: 350px;
-  height: 240px;
-  overflow-x: scroll;
-  background-color: beige;
-`;
-
-const Zone = styled.div`
-  width: 300px;
-  height: 240px;
-  border: 1px solid lightgray;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
 function UploadProduct() {
-  const dispatch = useDispatch();
-  const {
-    images: uploadedImages,
-    error,
-    success: successUploadImages,
-  } = useSelector((state) => state.productImageUpload);
-  const { success } = useSelector((state) => state.productUpload);
   const navigate = useNavigate();
 
-  const [name, setName] = useState('');
-  const [price, setPrice] = useState(0);
-  const [category, setCategory] = useState(1);
-  const [description, setDescription] = useState('');
   const [images, setImages] = useState([]);
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
-  useEffect(() => {
-    if (success) {
-      alert('상품 등록에 성공했습니다!');
-      navigate('/admin/products');
-      dispatch({ type: UPLOAD_PRODUCT_REFRESH });
-    }
-  }, [navigate, success, dispatch]);
+  const {
+    register,
+    handleSubmit,
+    formState: { isValid },
+    watch,
+  } = useForm({
+    mode: 'onChange',
+  });
+  const watchFields = watch();
 
-  useEffect(() => {
-    if (successUploadImages) {
-      setImages((prev) => [...uploadedImages, ...prev]);
-      dispatch({ type: UPLOAD_PRODUCT_IMG_REFRESH });
-    }
-  }, [dispatch, successUploadImages, uploadedImages]);
-
-  const handleDrop = (files) => {
-    let formData = new FormData();
-    formData.append('image', files[0]);
-    dispatch(uploadProductImg(formData));
-  };
-
-  const handleChange = (e) => {
-    let { name, value } = e.target;
-    value = value.trim();
-    switch (name) {
-      case 'name':
-        setName(value);
-        break;
-      case 'category':
-        setCategory(value);
-        break;
-      case 'price':
-        setPrice(value);
-        break;
-      case 'description':
-        setDescription(value);
-        break;
-      default:
-        break;
-    }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleUploadSubmit = (data) => {
+    const { name, category, price, description } = data;
     if (images.length === 0) {
       alert('상품 이미지는 한 개 이상 필요합니다.');
     } else {
-      let confirm = window.confirm(`새로운 ${name} 상품을 등록하시겠습니까?`);
+      let confirm = window.confirm('상품 등록 하시겠습니까?');
       if (confirm) {
         const newProduct = {
           name,
@@ -110,52 +43,62 @@ function UploadProduct() {
           description,
           images,
         };
-        dispatch(uploadProduct(newProduct));
+        productAPI
+          .add(newProduct)
+          .then((res) => {
+            let {
+              data: { success, message },
+            } = res;
+            if (success) {
+              alert(message);
+              navigate('/admin/products');
+            }
+          })
+          .catch((error) => {
+            let {
+              response: {
+                data: { message },
+              },
+            } = error;
+            setError(true);
+            setErrorMessage(message ? message : error.message);
+          });
       }
     }
   };
 
-  const handleDelete = (image) => {
-    const currentIdx = images.indexOf(image);
-    let newImages = [...images];
-    newImages.splice(currentIdx, 1);
-    setImages(newImages);
+  const refreshImages = (images) => {
+    setImages(images);
   };
 
   return (
     <div className='container'>
       <h1>Upload product</h1>
+      {error && <p>{errorMessage}</p>}
       <Container>
-        <Dropzone onDrop={handleDrop}>
-          {({ getRootProps, getInputProps }) => (
-            <section>
-              <Zone {...getRootProps()}>
-                <input {...getInputProps()} />
-                <p>Drag 'n' drop some files here, or click to select files</p>
-              </Zone>
-            </section>
-          )}
-        </Dropzone>
-        <Previews>
-          {images &&
-            images.map((image, index) => (
-              <div onClick={() => handleDelete(image)} key={index}>
-                <img
-                  style={{ maxWidth: '350px' }}
-                  src={`http://localhost:4000/${image.filePath}`}
-                  alt='product'
-                />
-              </div>
-            ))}
-        </Previews>
+        <FileUpload originalImages={images} refreshImages={refreshImages} />
       </Container>
-      <form onSubmit={handleSubmit}>
-        {error && <Message>{error}</Message>}
+      <form onSubmit={handleSubmit(handleUploadSubmit)}>
         <label>상품명</label>
-        <input onChange={handleChange} name='name' type='text' required />
+        {watchFields.name && watchFields.name.length < 2 && <p>2글자 이상 입력하세요</p>}
+        <input
+          {...register('name', {
+            minLength: {
+              value: 2,
+              message: '2글자 이상 입력하세요.',
+            },
+            required: true,
+          })}
+          type='text'
+        />
         <br />
         <br />
-        <select name='category' onChange={handleChange} required>
+        <select
+          name='category'
+          {...register('category', {
+            required: true,
+          })}
+        >
           {categories.map((item) => {
             return (
               <option key={item.key} value={item.key}>
@@ -167,14 +110,43 @@ function UploadProduct() {
         <br />
         <br />
         <label>상품 가격</label>
-        <input onChange={handleChange} name='price' type='number' required />
+        {watchFields.price && watchFields.price < 1 && <p>1이상의 가격을 입력하세요</p>}
+        {watchFields.price && watchFields.price > 9999 && (
+          <p>9999 이상의 가격을 입력할 수 없습니다.</p>
+        )}
+        <input
+          {...register('price', {
+            min: {
+              value: 1,
+              message: '상품 가격은 1달러 이상 입력하세요.',
+            },
+            max: {
+              value: 9999,
+              message: '상품 가격은 9999 달러를 초과할 수 없습니다.',
+            },
+            required: true,
+          })}
+          type='number'
+        />
         <br />
         <br />
         <label>상품 설명</label>
-        <textarea onChange={handleChange} name='description' required />
+        <textarea
+          {...register('description', {
+            minLength: {
+              value: 2,
+              message: '2글자 이상 입력하세요.',
+            },
+            required: true,
+          })}
+          name='description'
+        />
+        {watchFields.description && watchFields.description.length < 2 && (
+          <p>2글자 이상 입력하세요</p>
+        )}
         <br />
         <br />
-        <input type='submit' />
+        <input disabled={!isValid || images.length === 0} type='submit' />
       </form>
     </div>
   );

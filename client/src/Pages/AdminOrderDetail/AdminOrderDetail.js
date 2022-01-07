@@ -8,6 +8,7 @@ function AdminOrderDetail() {
   const [order, setOrder] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const getOrder = async (orderId) => {
     try {
@@ -15,7 +16,13 @@ function AdminOrderDetail() {
       let { data } = await orderAPI.getOrder(orderId);
       setOrder(data.order);
     } catch (error) {
-      setError(error);
+      let {
+        response: {
+          data: { message },
+        },
+      } = error;
+      setError(true);
+      setErrorMessage(message ? message : error.message);
     } finally {
       setLoading(false);
     }
@@ -30,6 +37,8 @@ function AdminOrderDetail() {
       <h1>Order Detail</h1>
       {loading ? (
         <h1>Now Loading</h1>
+      ) : error ? (
+        <h1>{errorMessage}</h1>
       ) : (
         <div>
           <div>

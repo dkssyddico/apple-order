@@ -75,8 +75,8 @@ export const productAPI = {
   getInfo: (id) => {
     return api.get(`/products/${id}`);
   },
-  update: (id, productUpdatedObj) => {
-    return api.put(`/products/${id}`, productUpdatedObj);
+  update: (productId, productUpdatedObj) => {
+    return api.put(`/products/${productId}`, productUpdatedObj);
   },
 };
 

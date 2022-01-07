@@ -1,73 +1,41 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Dropzone from 'react-dropzone';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { updateProduct } from '../../reducers/productReducers';
-import { UPDATE_PRODUCT_REFRESH, UPLOAD_PRODUCT_IMG_REFRESH } from '../../actions/types';
-import { uploadProductImg } from '../../reducers/productUploadReducer';
-import Message from '../../Components/Message';
 import { productAPI } from '../../service/api';
-
-const categories = [
-  { key: 1, value: 'Family' },
-  {
-    key: 2,
-    value: 'Present',
-  },
-  { key: 3, value: 'etc' },
-];
+import { useForm } from 'react-hook-form';
+import FileUpload from '../../Components/FileUpload';
+import categories from '../../utils/category';
 
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
 `;
 
-const Zone = styled.div`
-  width: 300px;
-  height: 240px;
-  border: 1px solid lightgray;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const Previews = styled.div`
-  display: flex;
-  width: 350px;
-  height: 240px;
-  overflow-x: scroll;
-  background-color: beige;
-`;
-
 // 로딩 처리
 function AdminProductEdit() {
   let { id: productId } = useParams();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { success: successUpdateProduct, error: updateError } = useSelector(
-    (state) => state.updatedProduct
-  );
 
-  const {
-    images: uploadedImages,
-    error: uploadImagesError,
-    success: successUploadImages,
-  } = useSelector((state) => state.productImageUpload);
-
-  const [name, setName] = useState('');
-  const [price, setPrice] = useState(0);
-  const [category, setCategory] = useState(1);
-  const [description, setDescription] = useState('');
   const [images, setImages] = useState([]);
-
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
+  const {
+    register,
+    handleSubmit,
+    formState: { isValid },
+    watch,
+    reset,
+  } = useForm({
+    mode: 'onChange',
+  });
+  const watchFields = watch();
+
   const getProduct = async (productId) => {
     try {
+      setLoading(true);
       let {
         data: { product },
       } = await productAPI.getInfo(productId);
@@ -85,66 +53,28 @@ function AdminProductEdit() {
     }
   };
 
+  const refreshImages = (images) => {
+    setImages(images);
+  };
+
   useEffect(() => {
     getProduct(productId);
   }, [productId]);
 
   useEffect(() => {
-    if (!product || productId !== product._id) {
-      getProduct(productId);
-    } else {
-      setName(product.name);
-      setPrice(product.price);
-      setCategory(product.category);
-      setDescription(product.description);
+    if (product) {
+      reset({
+        name: product.name,
+        category: product.category,
+        price: product.price,
+        description: product.description,
+      });
       setImages(product.images);
     }
-  }, [dispatch, product, productId]);
+  }, [reset, product]);
 
-  useEffect(() => {
-    if (successUploadImages) {
-      setImages((prev) => [...uploadedImages, ...prev]);
-      dispatch({ type: UPLOAD_PRODUCT_IMG_REFRESH });
-    }
-  }, [dispatch, successUploadImages, uploadedImages]);
-
-  useEffect(() => {
-    if (successUpdateProduct) {
-      alert('상품 업데이트에 성공했습니다!');
-      navigate('/admin/products');
-      dispatch({ type: UPDATE_PRODUCT_REFRESH });
-    }
-  }, [dispatch, navigate, successUpdateProduct]);
-
-  const handleDrop = (files) => {
-    let formData = new FormData();
-    formData.append('image', files[0]);
-    dispatch(uploadProductImg(formData));
-  };
-
-  const handleChange = (e) => {
-    let { name, value } = e.target;
-    value = value.trim();
-    switch (name) {
-      case 'name':
-        setName(value);
-        break;
-      case 'category':
-        setCategory(value);
-        break;
-      case 'price':
-        setPrice(value);
-        break;
-      case 'description':
-        setDescription(value);
-        break;
-      default:
-        break;
-    }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleEditSubmit = (data) => {
+    const { name, category, price, description } = data;
     if (images.length === 0) {
       alert('상품 이미지는 한 개 이상 필요합니다.');
     } else {
@@ -157,72 +87,105 @@ function AdminProductEdit() {
           description,
           images,
         };
-        dispatch(updateProduct(productId, newProduct));
+        productAPI
+          .update(productId, newProduct)
+          .then((res) => {
+            let {
+              data: { success },
+            } = res;
+            if (success) {
+              alert('상품 업데이트에 성공했습니다!');
+              navigate('/admin/products');
+            }
+          })
+          .catch((error) => console.log(error));
       }
     }
   };
 
-  const handleDelete = (image) => {
-    const currentIdx = images.indexOf(image);
-    let newImages = [...images];
-    newImages.splice(currentIdx, 1);
-    setImages(newImages);
-  };
-
   return (
     <div className='container'>
-      <Container>
-        <Dropzone onDrop={handleDrop}>
-          {({ getRootProps, getInputProps }) => (
-            <section>
-              <Zone {...getRootProps()}>
-                <input {...getInputProps()} />
-                <p>Drag 'n' drop some files here, or click to select files</p>
-              </Zone>
-            </section>
-          )}
-        </Dropzone>
-        <Previews>
-          {images &&
-            images.map((image, index) => (
-              <div onClick={() => handleDelete(image)} key={index}>
-                <img
-                  style={{ maxWidth: '350px' }}
-                  src={`http://localhost:4000/${image.filePath}`}
-                  alt='product'
-                />
-              </div>
-            ))}
-        </Previews>
-      </Container>
-      <form onSubmit={handleSubmit}>
-        {uploadImagesError && <Message>{uploadImagesError}</Message>}
-        {updateError && <Message>{updateError}</Message>}
-        <label>상품명</label>
-        <input onChange={handleChange} name='name' type='text' value={name} required />
-        <br />
-        <br />
-        <select name='category' value={category} onChange={handleChange} required>
-          {categories.map((item) => {
-            return (
-              <option key={item.key} value={item.key}>
-                {item.value}
-              </option>
-            );
-          })}
-        </select>
-        <br />
-        <br />
-        <label>상품 가격</label>
-        <input onChange={handleChange} name='price' type='number' value={price} required />
-        <br />
-        <br />
-        <label>상품 설명</label>
-        <textarea onChange={handleChange} name='description' value={description} required />
-        <br />
-        <br />
-        <input type='submit' />
-      </form>
+      {loading ? (
+        <h1>Loading</h1>
+      ) : error ? (
+        <h1>{errorMessage}</h1>
+      ) : (
+        <>
+          <Container>
+            <FileUpload originalImages={images} refreshImages={refreshImages} />
+          </Container>
+          <form onSubmit={handleSubmit(handleEditSubmit)}>
+            <label>상품명</label>
+            {watchFields.name && watchFields.name.length < 2 && <p>2글자 이상 입력하세요</p>}
+            <input
+              {...register('name', {
+                minLength: {
+                  value: 2,
+                  message: '2글자 이상 입력하세요.',
+                },
+                required: true,
+              })}
+              type='text'
+            />
+            <br />
+            <br />
+            <select
+              name='category'
+              {...register('category', {
+                required: true,
+              })}
+            >
+              {categories.map((item) => {
+                return (
+                  <option key={item.key} value={item.key}>
+                    {item.value}
+                  </option>
+                );
+              })}
+            </select>
+            <br />
+            <br />
+            <label>상품 가격</label>
+            {watchFields.price && watchFields.price < 1 && <p>1이상의 가격을 입력하세요</p>}
+            {watchFields.price && watchFields.price > 9999 && (
+              <p>9999 이상의 가격을 입력할 수 없습니다.</p>
+            )}
+            <input
+              {...register('price', {
+                min: {
+                  value: 1,
+                  message: '상품 가격은 1달러 이상 입력하세요.',
+                },
+                max: {
+                  value: 9999,
+                  message: '상품 가격은 9999 달러를 초과할 수 없습니다.',
+                },
+                required: true,
+              })}
+              type='number'
+            />
+            <br />
+            <br />
+            <label>상품 설명</label>
+            <textarea
+              {...register('description', {
+                minLength: {
+                  value: 2,
+                  message: '2글자 이상 입력하세요.',
+                },
+                required: true,
+              })}
+              name='description'
+            />
+            {watchFields.description && watchFields.description.length < 2 && (
+              <p>2글자 이상 입력하세요</p>
+            )}
+            <br />
+            <br />
+            <input disabled={!isValid || images.length === 0} type='submit' />
+          </form>
+        </>
+      )}
     </div>
   );
 }

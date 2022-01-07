@@ -15,6 +15,6 @@ productRouter.get('/:id', getInfo);
 
 productRouter.delete('/:id', auth, isAdmin, remove);
 
-productRouter.put('/:id', auth, isAdmin, update);
+productRouter.put('/:productId', auth, isAdmin, update);
 
 export default productRouter;

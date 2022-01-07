@@ -81,12 +81,12 @@ export const getInfo = async (req, res) => {
 };
 
 export const update = async (req, res) => {
-  const { id } = req.params;
+  const { productId } = req.params;
   let { name, price, category, description, images } = req.body;
   price = parseInt(price);
   category = parseInt(category);
   try {
-    await Product.findByIdAndUpdate(id, { name, price, category, description, images });
+    await Product.findByIdAndUpdate(productId, { name, price, category, description, images });
     return res.status(200).json({ success: true });
   } catch (error) {
     return res.status(400).json({ success: false, message: '상품 정보 업데이트에 실패했습니다.' });

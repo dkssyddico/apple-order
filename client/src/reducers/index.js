@@ -6,7 +6,7 @@ import {
   userReducer,
 } from './userReducers';
 import { productImagesReducer, productUploadReducer } from './productUploadReducer';
-import { productRemoveReducer, productInfoReducer, updateProductReducer } from './productReducers';
+import { productRemoveReducer, updateProductReducer } from './productReducers';
 import { cartReducer } from './cartReducer';
 import { checkoutReducer } from './checkoutReducer';
 import { adminOrderReducer, orderHistoryReducer } from './orderReducer';

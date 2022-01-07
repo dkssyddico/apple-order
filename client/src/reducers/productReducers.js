@@ -1,8 +1,4 @@
-import {
-  getProductThunk,
-  removeProductsThunk,
-  updateProductThunk,
-} from '../actions/productsAction';
+import { removeProductsThunk, updateProductThunk } from '../actions/productsAction';
 import {
   REMOVE_PRODUCT,
   REMOVE_PRODUCT_SUCCESS,

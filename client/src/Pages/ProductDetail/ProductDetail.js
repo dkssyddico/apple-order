@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router';
-import { getProduct } from '../../reducers/productReducers';
 import Loading from '../../Components/Loading';
 import styled from 'styled-components';
 import Message from '../../Components/Message';
