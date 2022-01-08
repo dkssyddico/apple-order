@@ -92,6 +92,7 @@ export const getAll = async (req, res) => {
         email: user.email,
         role: user.role,
         createdAt: user.createdAt,
+        ordersCount: user.orders.length,
       };
     });
     return res.status(200).json({ success: true, users });
@@ -288,6 +289,19 @@ export const getOrders = async (req, res) => {
 export const getUserInfo = async (req, res) => {
   const { userId } = req.params;
   const { user } = req;
+  if (user.role === 0) {
+    try {
+      let currentUser = await User.findById(userId).populate('orders');
+      let info = {
+        username: currentUser.username,
+        email: currentUser.email,
+        orders: currentUser.orders,
+      };
+      return res.status(200).json({ success: true, info });
+    } catch (error) {
+      return res.status(400).json({ success: false, message: '찾는 유저 정보가 없습니다.' });
+    }
+  }
   if (String(userId) !== String(user._id)) {
     return res.status(400).json({ success: false, message: '유저 정보가 일치하지 않습니다.' });
   }

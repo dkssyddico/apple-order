@@ -7,6 +7,7 @@ import AdminOrders from '../Pages/AdminOrders/AdminOrders';
 import AdminProductDetail from '../Pages/AdminProductDetail/AdminProductDetail';
 import AdminProducts from '../Pages/AdminProducts/AdminProducts';
 import UploadProduct from '../Pages/AdminProducts/sections/UploadProduct';
+import AdminUserDetail from '../Pages/AdminUserDetail/AdminUserDetail';
 import AdminUsers from '../Pages/AdminUsers/AdminUsers';
 import Cart from '../Pages/Cart/Cart';
 import Checkout from '../Pages/Checkout/Checkout';
@@ -51,6 +52,10 @@ function Router() {
         <Route
           path='/admin/users'
           element={loginInfo && loginInfo.isAdmin ? <AdminUsers /> : <Navigate to='/login' />}
+        />
+        <Route
+          path='/admin/users/:userId'
+          element={loginInfo && loginInfo.isAdmin ? <AdminUserDetail /> : <Navigate to='/login' />}
         />
         <Route
           path='/admin/orders'

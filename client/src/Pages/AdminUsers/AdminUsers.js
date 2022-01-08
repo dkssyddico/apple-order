@@ -1,61 +1,35 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { getAllUsers, removeUser } from '../../reducers/userReducers';
-import Loading from '../../Components/Loading';
-import { REMOVE_USER_REFRESH } from '../../actions/types';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { useQuery } from 'react-query';
+import { userAPI } from '../../service/api';
 
 function AdminUsers() {
-  const dispatch = useDispatch();
-  const { list: usersList, loading: usersListLoading } = useSelector((state) => state.usersList);
-  const { success: removeUserSuccess } = useSelector((state) => state.userRemoved); // 에러처리
-
-  useEffect(() => {
-    if (removeUserSuccess) {
-      dispatch({ type: REMOVE_USER_REFRESH });
-    }
-
-    dispatch(getAllUsers());
-  }, [dispatch, removeUserSuccess]);
-
-  const handleDelete = (username, userId) => {
-    let confirm = window.confirm(`${username} 유저를 삭제하시겠습니까?`);
-    if (confirm) {
-      dispatch(removeUser(userId));
-    }
-  };
+  const { isLoading, isError, data, error } = useQuery('user', async () => {
+    let { data } = await userAPI.getAll();
+    return data;
+  });
+  if (isLoading) {
+    return <h1>Now Loading</h1>;
+  }
+  if (isError) {
+    return <span>Error: {error.message}</span>;
+  }
 
   return (
     <div className='container'>
       <h1>Admin Users</h1>
-      <div>
-        {usersListLoading ? (
-          <Loading />
-        ) : (
-          <table>
-            <thead>
-              <tr>
-                <th>User Name</th>
-                <th>User Email</th>
-                <th>Orders</th>
-                <th>Remove</th>
-              </tr>
-            </thead>
-            <tbody>
-              {usersList &&
-                usersList.map((user) => (
-                  <tr key={user._id}>
-                    <td>{user.username}</td>
-                    <td>{user.email}</td>
-                    <td>order</td>
-                    <td>
-                      <button onClick={() => handleDelete(user.username, user._id)}>Remove</button>
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
-        )}
-      </div>
+      <section>
+        {data.users &&
+          data.users.map((user) => (
+            <div key={user._id}>
+              <Link to={`/admin/users/${user._id}`}>
+                <span>{user.username}</span>
+                <span>{user.email}</span>
+                <span>{user.ordersCount}order</span>
+              </Link>
+            </div>
+          ))}
+      </section>
     </div>
   );
 }
