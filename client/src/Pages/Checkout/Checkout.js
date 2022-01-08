@@ -9,12 +9,10 @@ import { REFRESH_CHECKOUT } from '../../actions/types';
 function Checkout() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const user = useSelector((state) => state.user);
   const {
     loginInfo: { _id: userId },
   } = user;
-
   const checkout = useSelector((state) => state.checkout);
   const { items } = checkout;
 
