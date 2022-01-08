@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
@@ -15,17 +15,30 @@ function Checkout() {
   const {
     loginInfo: { _id: userId },
   } = user;
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handlePaymentClick = () => {
-    userAPI.addOrder(userId, items).then((res) => {
-      let {
-        data: { success, orderId },
-      } = res;
-      if (success) {
-        navigate('/orderSuccess', { state: { orderId } });
-        dispatch(refreshCart(userId));
-      }
-    });
+    userAPI
+      .addOrder(userId, items)
+      .then((res) => {
+        let {
+          data: { success, orderId },
+        } = res;
+        if (success) {
+          navigate('/orderSuccess', { state: { orderId } });
+          dispatch(refreshCart(userId));
+        }
+      })
+      .catch((error) => {
+        let {
+          response: {
+            data: { message },
+          },
+        } = error;
+        setError(true);
+        setErrorMessage(message ? message : error.message);
+      });
   };
 
   useEffect(() => {
@@ -37,6 +50,7 @@ function Checkout() {
   return (
     <div className='container'>
       <h1>Checkout</h1>
+      {error && <h1>{errorMessage}</h1>}
       <div>
         <table>
           <thead>

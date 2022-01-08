@@ -18,7 +18,10 @@ function AdminProductDetail() {
   const [images, setImages] = useState([]);
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [productsError, setProductsError] = useState(false);
+  const [productsErrorMessage, setProductsErrorMessage] = useState('');
+  const [deleteError, setDeleteError] = useState(false);
+  const [editError, setEditError] = useState(false);
   const [editErrorMessage, setEditErrorMessage] = useState('');
   const [deleteErrorMessage, setDeleteErrorMessage] = useState('');
 
@@ -46,8 +49,8 @@ function AdminProductDetail() {
           data: { message },
         },
       } = error;
-      setError(true);
-      setEditErrorMessage(message ? message : error.message);
+      setProductsError(true);
+      setProductsErrorMessage(message ? message : error.message);
     } finally {
       setLoading(false);
     }
@@ -98,7 +101,15 @@ function AdminProductDetail() {
               navigate('/admin/products');
             }
           })
-          .catch((error) => console.log(error));
+          .catch((error) => {
+            let {
+              response: {
+                data: { message },
+              },
+            } = error;
+            setEditError(true);
+            setEditErrorMessage(message ? message : error.message);
+          });
       }
     }
   };
@@ -123,7 +134,7 @@ function AdminProductDetail() {
               data: { message },
             },
           } = error;
-          setError(true);
+          setDeleteError(true);
           setDeleteErrorMessage(message ? message : error.message);
         });
     }
@@ -133,10 +144,12 @@ function AdminProductDetail() {
     <div className='container'>
       {loading ? (
         <h1>Loading</h1>
-      ) : error ? (
-        <h1>{editErrorMessage}</h1>
+      ) : productsError ? (
+        <h1>{productsErrorMessage}</h1>
       ) : (
         <>
+          {editError && <h1>{editErrorMessage}</h1>}
+          {deleteError && <h1>{deleteErrorMessage}</h1>}
           <Container>
             <FileUpload originalImages={images} refreshImages={refreshImages} />
           </Container>

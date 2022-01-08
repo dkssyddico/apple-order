@@ -7,7 +7,6 @@ import AdminOrders from '../Pages/AdminOrders/AdminOrders';
 import AdminProductDetail from '../Pages/AdminProductDetail/AdminProductDetail';
 import AdminProducts from '../Pages/AdminProducts/AdminProducts';
 import UploadProduct from '../Pages/AdminProducts/sections/UploadProduct';
-import AdminProductEdit from '../Pages/AdminProductsEdit/AdminProductEdit';
 import AdminUsers from '../Pages/AdminUsers/AdminUsers';
 import Cart from '../Pages/Cart/Cart';
 import Checkout from '../Pages/Checkout/Checkout';

@@ -8,6 +8,9 @@ import ReduxThunk from 'redux-thunk';
 import promiseMiddleware from 'redux-promise';
 import logger from 'redux-logger';
 import rootReducer from './reducers';
+import { QueryClient, QueryClientProvider } from 'react-query';
+
+const queryClient = new QueryClient();
 
 const preloadedState = {
   user: {
@@ -25,7 +28,9 @@ export const store = configureStore({
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <QueryClientProvider client={queryClient}>
+      <App />
+    </QueryClientProvider>
   </Provider>,
   document.getElementById('root')
 );
