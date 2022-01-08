@@ -5,8 +5,6 @@ import {
   userProfileReducer,
   userReducer,
 } from './userReducers';
-import { productImagesReducer, productUploadReducer } from './productUploadReducer';
-import { productRemoveReducer, updateProductReducer } from './productReducers';
 import { cartReducer } from './cartReducer';
 import { checkoutReducer } from './checkoutReducer';
 import { adminOrderReducer, orderHistoryReducer } from './orderReducer';
@@ -18,10 +16,6 @@ const rootReducer = combineReducers({
   userProfile: userProfileReducer,
   cart: cartReducer,
   checkout: checkoutReducer,
-  productImageUpload: productImagesReducer,
-  productUpload: productUploadReducer,
-  productRemove: productRemoveReducer,
-  updatedProduct: updateProductReducer,
   adminOrderList: adminOrderReducer,
   orderHistory: orderHistoryReducer,
 });

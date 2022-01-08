@@ -11,16 +11,16 @@ const Container = styled.div`
   justify-content: space-between;
 `;
 
-// 로딩 처리
-function AdminProductEdit() {
-  let { id: productId } = useParams();
+function AdminProductDetail() {
+  let { productId } = useParams();
   const navigate = useNavigate();
 
   const [images, setImages] = useState([]);
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [editErrorMessage, setEditErrorMessage] = useState('');
+  const [deleteErrorMessage, setDeleteErrorMessage] = useState('');
 
   const {
     register,
@@ -47,7 +47,7 @@ function AdminProductEdit() {
         },
       } = error;
       setError(true);
-      setErrorMessage(message ? message : error.message);
+      setEditErrorMessage(message ? message : error.message);
     } finally {
       setLoading(false);
     }
@@ -103,12 +103,38 @@ function AdminProductEdit() {
     }
   };
 
+  const handleDelete = (itemId) => {
+    let confirm = window.confirm('상품을 삭제하시겠습니까?');
+    if (confirm) {
+      productAPI
+        .remove(itemId)
+        .then((res) => {
+          let {
+            data: { success },
+          } = res;
+          if (success) {
+            alert('상품 삭제에 성공했습니다!');
+            navigate('/admin/products');
+          }
+        })
+        .catch((error) => {
+          let {
+            response: {
+              data: { message },
+            },
+          } = error;
+          setError(true);
+          setDeleteErrorMessage(message ? message : error.message);
+        });
+    }
+  };
+
   return (
     <div className='container'>
       {loading ? (
         <h1>Loading</h1>
       ) : error ? (
-        <h1>{errorMessage}</h1>
+        <h1>{editErrorMessage}</h1>
       ) : (
         <>
           <Container>
@@ -184,10 +210,13 @@ function AdminProductEdit() {
             <br />
             <input disabled={!isValid || images.length === 0} type='submit' />
           </form>
+          <div>
+            <button onClick={() => handleDelete(productId)}>Delete</button>
+          </div>
         </>
       )}
     </div>
   );
 }
 
-export default AdminProductEdit;
+export default AdminProductDetail;

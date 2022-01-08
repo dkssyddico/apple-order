@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import AdminMain from '../Pages/AdminMain/AdminMain';
 import AdminOrderDetail from '../Pages/AdminOrderDetail/AdminOrderDetail';
 import AdminOrders from '../Pages/AdminOrders/AdminOrders';
+import AdminProductDetail from '../Pages/AdminProductDetail/AdminProductDetail';
 import AdminProducts from '../Pages/AdminProducts/AdminProducts';
 import UploadProduct from '../Pages/AdminProducts/sections/UploadProduct';
 import AdminProductEdit from '../Pages/AdminProductsEdit/AdminProductEdit';
@@ -65,8 +66,10 @@ function Router() {
           element={loginInfo && loginInfo.isAdmin ? <AdminProducts /> : <Navigate to='/login' />}
         />
         <Route
-          path='/admin/products/:id/edit'
-          element={loginInfo && loginInfo.isAdmin ? <AdminProductEdit /> : <Navigate to='/login' />}
+          path='/admin/products/:productId'
+          element={
+            loginInfo && loginInfo.isAdmin ? <AdminProductDetail /> : <Navigate to='/login' />
+          }
         />
         <Route
           path='/admin/products/upload'

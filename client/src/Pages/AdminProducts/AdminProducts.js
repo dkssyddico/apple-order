@@ -11,7 +11,6 @@ const Container = styled.div`
 `;
 
 function AdminProducts() {
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState([]);
   const [error, setError] = useState(false);
@@ -40,12 +39,6 @@ function AdminProducts() {
     getProducts();
   }, []);
 
-  const handleDelete = (itemName, itemId) => {
-    let confirm = window.confirm(`${itemName} 을/를 지우시겠습니까?`);
-    if (confirm) {
-    }
-  };
-
   return (
     <Container>
       <h1>AdminProducts</h1>
@@ -58,43 +51,29 @@ function AdminProducts() {
         ) : error ? (
           <h1>{errorMessage}</h1>
         ) : (
-          <table>
-            <thead>
-              <tr>
-                <th>Product Image</th>
-                <th>Product Name</th>
-                <th>Product Price</th>
-                <th>Product Description</th>
-                <th>Edit</th>
-                <th>Remove</th>
-              </tr>
-            </thead>
-            <tbody>
-              {products &&
-                products.map((item) => (
-                  <tr key={item._id}>
-                    <td>
-                      <img
-                        style={{ width: '70px' }}
-                        alt='item'
-                        src={`http://localhost:4000/${item.images[0].filePath}`}
-                      />
-                    </td>
-                    <td>{item.name}</td>
-                    <td>$ {item.price}</td>
-                    <td>{item.description}</td>
-                    <td>
-                      <button onClick={() => navigate(`/admin/products/${item._id}/edit`)}>
-                        Edit
-                      </button>
-                    </td>
-                    <td>
-                      <button onClick={() => handleDelete(item.name, item._id)}>Remove</button>
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
+          <section>
+            {products &&
+              products.map((item) => (
+                <div key={item._id}>
+                  <Link to={`/admin/products/${item._id}`}>
+                    <div>
+                      <div>
+                        <img
+                          style={{ width: '70px' }}
+                          alt='item'
+                          src={`http://localhost:4000/${item.images[0].filePath}`}
+                        />
+                      </div>
+                      <div>
+                        <span>{item.name}</span>
+                        <span>$ {item.price}</span>
+                        <span>{item.description}</span>
+                      </div>
+                    </div>
+                  </Link>
+                </div>
+              ))}
+          </section>
         )}
       </div>
     </Container>
