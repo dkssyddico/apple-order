@@ -1,35 +1,32 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { refreshCart } from '../../actions/cartAction';
-import { addOrder } from '../../actions/orderAction';
-import { REFRESH_CHECKOUT } from '../../actions/types';
+import { userAPI } from '../../service/api';
 
 function Checkout() {
+  const {
+    state: { items },
+  } = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const {
     loginInfo: { _id: userId },
   } = user;
-  const checkout = useSelector((state) => state.checkout);
-  const { items } = checkout;
-
-  const orderHistory = useSelector((state) => state.orderHistory);
-  const { addOrderSuccess } = orderHistory;
 
   const handlePaymentClick = () => {
-    dispatch(addOrder(userId, items));
+    userAPI.addOrder(userId, items).then((res) => {
+      let {
+        data: { success, orderId },
+      } = res;
+      if (success) {
+        navigate('/orderSuccess', { state: { orderId } });
+        dispatch(refreshCart(userId));
+      }
+    });
   };
-
-  useEffect(() => {
-    if (addOrderSuccess) {
-      dispatch({ type: REFRESH_CHECKOUT });
-      dispatch(refreshCart(userId));
-      navigate(`/orderSuccess/`);
-    }
-  }, [addOrderSuccess, dispatch, navigate, userId]);
 
   useEffect(() => {
     if (items.length < 1) {

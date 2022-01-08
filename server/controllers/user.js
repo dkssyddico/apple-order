@@ -260,7 +260,7 @@ export const addOrder = async (req, res) => {
           .json({ success: false, errorMessage: '유저 정보에 새로운 주문 저장을 실패했습니다.' });
       }
     });
-    return res.status(200).json({ success: true });
+    return res.status(200).json({ success: true, orderId: newOrder._id });
   } catch (error) {
     console.log(error);
     return res.status(400).json({ success: false, errorMessage: '주문 생성에 실패했습니다.' });

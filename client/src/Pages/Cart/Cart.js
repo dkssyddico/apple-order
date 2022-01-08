@@ -5,7 +5,6 @@ import Loading from '../../Components/Loading';
 import Message from '../../Components/Message';
 import { v4 as uuidv4 } from 'uuid';
 import { useNavigate } from 'react-router-dom';
-import { addToCheckout } from '../../actions/checkoutAction';
 
 function Cart() {
   const dispatch = useDispatch();
@@ -39,8 +38,7 @@ function Cart() {
   };
 
   const handleCheckoutClick = () => {
-    dispatch(addToCheckout(items));
-    navigate('/checkout');
+    navigate('/checkout', { state: { items } });
   };
 
   return (
