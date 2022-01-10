@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { logoutUser } from '../reducers/userReducers';
+import { logoutUser, refreshUser } from '../reducers/userReducers';
 
 const Nav = styled.nav`
   width: 100%;
@@ -28,6 +28,11 @@ function NavBar() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const { login } = user;
+  const isRToken = localStorage.getItem('r_token');
+
+  useEffect(() => {
+    if (!login && isRToken) dispatch(refreshUser());
+  }, [dispatch, isRToken, login]);
 
   const onLogoutClick = () => {
     dispatch(logoutUser());

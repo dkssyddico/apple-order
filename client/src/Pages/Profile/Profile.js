@@ -94,6 +94,7 @@ function Profile() {
                   },
                 })}
                 placeholder='current password'
+                type='password'
               />
               {errors2.newPassword && <p>{errors2.newPassword.message}</p>}
               {watchFields.newPassword &&
@@ -109,6 +110,7 @@ function Profile() {
                   },
                 })}
                 placeholder='new password'
+                type='password'
               />
               {watchFields.newPassword !== watchFields.newPasswordConfirmation && (
                 <p>동일한 비밀번호를 입력해주세요.</p>
@@ -122,6 +124,7 @@ function Profile() {
                   },
                 })}
                 placeholder='new password confirmation'
+                type='password'
               />
               <button type='submit'>Update</button>
             </form>

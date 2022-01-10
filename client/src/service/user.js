@@ -11,6 +11,10 @@ class User {
     return this.user.post('/users/login', userInfo);
   };
 
+  refresh = () => {
+    return this.user.get('/users/refresh');
+  };
+
   logout = () => {
     return this.user.get('/users/logout');
   };

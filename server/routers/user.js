@@ -17,15 +17,16 @@ import {
   removeUser,
 } from '../controllers/user';
 import { auth } from '../middleware/auth';
+import { checkByRefreshToken } from '../middleware/checkByRefreshToken';
 import isAdmin from '../middleware/isAdmin';
 
 const userRouter = express.Router();
 
+userRouter.get('/', auth, isAdmin, getAll);
 userRouter.post('/join', join);
 userRouter.post('/login', login);
 userRouter.get('/logout', auth, logout);
-
-userRouter.get('/', auth, isAdmin, getAll);
+userRouter.get('/refresh', checkByRefreshToken);
 
 userRouter.get('/:userId', auth, getUserInfo);
 

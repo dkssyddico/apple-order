@@ -25,9 +25,6 @@ const userSchema = new mongoose.Schema(
       default: 1, // 1은 고객 0은 admin
       required: true,
     },
-    token: {
-      type: String,
-    },
     cart: {
       type: Array,
       default: [],
@@ -63,9 +60,15 @@ userSchema.methods.generateAccessToken = function () {
 
 userSchema.methods.generateRefreshToken = function () {
   const user = this;
-  const refreshToken = jwt.sign({}, process.env.JWT_SECRET, {
-    expiresIn: '2d',
-  });
+  const refreshToken = jwt.sign(
+    {
+      _id: user._id,
+    },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: '2d',
+    }
+  );
   return refreshToken;
 };
 

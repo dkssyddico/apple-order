@@ -38,10 +38,11 @@ function FileUpload({ refreshImages, originalImages }) {
 
   const saveImage = async (formData) => {
     try {
-      let { data } = await productService.saveImage(formData);
+      let { data } = await productService.saveImages(formData);
       setImages((prevImages) => [data, ...prevImages]);
       refreshImages([data, ...images]);
     } catch (error) {
+      console.log(error);
       let {
         response: {
           data: { message },

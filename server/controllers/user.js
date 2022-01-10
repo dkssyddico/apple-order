@@ -51,22 +51,16 @@ export const login = async (req, res) => {
   const accessToken = user.generateAccessToken();
   const refreshToken = user.generateRefreshToken();
 
-  user.token = accessToken;
-  await user.save((error, user) => {
-    if (error) {
-      return res.status(400).json({ success: false, error, message: '로그인에 실패했습니다.' });
-    }
-    return res
-      .cookie('r_token', refreshToken)
-      .status(200)
-      .json({
-        success: true,
-        id: user._id,
-        username: user.username,
-        isAdmin: user.role === 0 ? true : false,
-        accessToken: accessToken,
-      });
-  });
+  return res
+    .cookie('r_token', refreshToken)
+    .status(200)
+    .json({
+      success: true,
+      _id: user._id,
+      username: user.username,
+      isAdmin: user.role === 0 ? true : false,
+      accessToken: accessToken,
+    });
 };
 
 export const logout = async (req, res) => {

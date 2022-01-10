@@ -27,7 +27,7 @@ function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
-  const { login } = user;
+  const { login, error } = user;
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -61,7 +61,7 @@ function Login() {
     <LoginContainer>
       <LoginCard>
         <h1>Glad to see you again</h1>
-        {/* {error && <h2>{error}</h2>} */}
+        {error && <h2>{error}</h2>}
         <Form onSubmit={onSubmit}>
           <input onChange={onChange} name='email' type='email' placeholder='Email' />
           <input
