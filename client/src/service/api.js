@@ -30,16 +30,19 @@ export const userAPI = {
   getCartInfo: (userId) => {
     return api.get(`/users/${userId}/cart`);
   },
-  addItemToCart: (userId, product) => {
-    return api.post(`/users/${userId}/cart`, product);
+  addItemToCart: (userData) => {
+    let { userId, productId, quantity } = userData;
+    return api.post(`/users/${userId}/cart`, { productId, quantity });
   },
-  changQtyInCart: (userId, product) => {
-    return api.put(`/users/${userId}/cart`, product);
+  changQtyInCart: (userData) => {
+    let { userId, productId, quantity } = userData;
+    return api.put(`/users/${userId}/cart`, { productId, quantity });
   },
   refreshCart: (userId) => {
     return api.delete(`/users/${userId}/cart`);
   },
-  deleteItem: (userId, productId) => {
+  deleteItem: (userData) => {
+    let { userId, productId } = userData;
     return api.delete(`/users/${userId}/cart/${productId}`);
   },
   addOrder: (userId, items) => {

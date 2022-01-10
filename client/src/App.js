@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCartInfo } from './actions/cartAction';
 import GlobalStyles from './Components/GlobalStyles';
 import Router from './Components/Router';
+import { getCart } from './reducers/cartReducer';
 
 function App() {
   const dispatch = useDispatch();
@@ -11,7 +11,7 @@ function App() {
 
   useEffect(() => {
     if (login) {
-      dispatch(getCartInfo(userId));
+      dispatch(getCart(userId));
     }
   }, [dispatch, login, userId]);
 

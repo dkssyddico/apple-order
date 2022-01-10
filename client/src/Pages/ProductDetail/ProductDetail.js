@@ -5,8 +5,8 @@ import { useParams } from 'react-router';
 import Loading from '../../Components/Loading';
 import styled from 'styled-components';
 import Message from '../../Components/Message';
-import { addToCart } from '../../actions/cartAction';
 import { productAPI } from '../../service/api';
+import { addToCart } from '../../reducers/cartReducer';
 
 // const ImageContainer = styled.div`
 //   width: 100%;
@@ -23,14 +23,12 @@ function ProductDetail() {
   const dispatch = useDispatch();
   let { id: productId } = useParams();
   const navigate = useNavigate();
-
   const user = useSelector((state) => state.user);
   const { login, userId } = user;
   const cart = useSelector((state) => state.cart);
   const { items } = cart;
 
   const [quantity, setQuantity] = useState(1);
-
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -66,7 +64,8 @@ function ProductDetail() {
       navigate('/login');
       return;
     }
-    let productObj = {
+    let userData = {
+      userId,
       productId,
       quantity,
     };
@@ -80,7 +79,7 @@ function ProductDetail() {
         }`
       );
       if (confirm) {
-        dispatch(addToCart(userId, productObj));
+        dispatch(addToCart(userData));
       }
     }
   };

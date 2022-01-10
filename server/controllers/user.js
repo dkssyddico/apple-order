@@ -63,8 +63,8 @@ export const login = async (req, res) => {
       .status(200)
       .json({
         success: true,
-        _id: user._id,
-        token: token,
+        id: user._id,
+        username: user.username,
         isAdmin: user.role === 0 ? true : false,
       });
   });
@@ -144,6 +144,7 @@ export const getCartInfo = async (req, res) => {
 
 export const addItemToCart = async (req, res) => {
   const { _id: userId } = req.user;
+  console.log(req.body);
   const { productId, quantity } = req.body;
   const user = await User.findById(userId);
   if (!user) {

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import { refreshCart } from '../../actions/cartAction';
+import { refreshCart } from '../../reducers/cartReducer';
 import { userAPI } from '../../service/api';
 
 function Checkout() {
