@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from 'react-query';
-import { userAPI } from '../../service/api';
+import userService from '../../service/user';
 
 function AdminUsers() {
   const { isLoading, isError, data, error } = useQuery('user', async () => {
-    let { data } = await userAPI.getAll();
+    let { data } = await userService.getAll();
     return data;
   });
   if (isLoading) {

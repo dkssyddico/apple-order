@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import Message from '../../Components/Message';
-import { userAPI } from '../../service/api';
 import { useForm } from 'react-hook-form';
+import userService from '../../service/user';
 
 const JoinContainer = styled.div`
   padding-top: 12vh;
@@ -49,7 +49,7 @@ function Join() {
       `아래와 같은 정보로 회원가입을 진행하시겠습니까?\nUsername: ${data.username}\nEmail: ${data.email}`
     );
     if (confirm) {
-      userAPI
+      userService
         .join(data)
         .then((response) => {
           let {

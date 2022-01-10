@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-import { userAPI } from '../../service/api';
+import userService from '../../service/user';
 
 function Profile() {
   const user = useSelector((state) => state.user);
@@ -23,8 +23,8 @@ function Profile() {
 
   const changeUsername = (data) => {
     const { username } = data;
-    userAPI
-      .changeUsername(userId, { username })
+    userService
+      .changeUsername({ userId, username })
       .then((res) => {
         let {
           data: { success },
@@ -44,8 +44,8 @@ function Profile() {
       if (newPassword !== newPasswordConfirmation) {
         alert('새 비밀번호과 같은 비밀번호를 입력해주세요');
       } else {
-        userAPI
-          .changePassword(userId, { currentPassword, newPassword })
+        userService
+          .changePassword({ userId, currentPassword, newPassword })
           .then((res) => {
             let {
               data: { success },

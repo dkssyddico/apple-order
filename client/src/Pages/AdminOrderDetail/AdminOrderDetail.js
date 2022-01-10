@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { orderAPI } from '../../service/api';
 import { v4 as uuidv4 } from 'uuid';
+import orderService from '../../service/order';
 
 function AdminOrderDetail() {
   const { orderId } = useParams();
@@ -13,7 +13,7 @@ function AdminOrderDetail() {
   const getOrder = async (orderId) => {
     try {
       setLoading(true);
-      let { data } = await orderAPI.getOrder(orderId);
+      let { data } = await orderService.getOrderByOrderId(orderId);
       setOrder(data.order);
     } catch (error) {
       let {

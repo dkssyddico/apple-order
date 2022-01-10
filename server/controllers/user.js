@@ -28,10 +28,6 @@ export const join = async (req, res) => {
   }
 };
 
-const createToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET);
-};
-
 export const login = async (req, res) => {
   const { email, password } = req.body;
   // 유저가 있는지 이메일로 확인
@@ -52,20 +48,23 @@ export const login = async (req, res) => {
   }
 
   // 다 통과했다면 토큰 생성
-  const token = createToken(user.id);
-  user.token = token;
+  const accessToken = user.generateAccessToken();
+  const refreshToken = user.generateRefreshToken();
+
+  user.token = accessToken;
   await user.save((error, user) => {
     if (error) {
       return res.status(400).json({ success: false, error, message: '로그인에 실패했습니다.' });
     }
     return res
-      .cookie('auth_token', token)
+      .cookie('r_token', refreshToken)
       .status(200)
       .json({
         success: true,
         id: user._id,
         username: user.username,
         isAdmin: user.role === 0 ? true : false,
+        accessToken: accessToken,
       });
   });
 };
@@ -74,7 +73,7 @@ export const logout = async (req, res) => {
   const { _id: userId } = req.user;
   try {
     await User.findByIdAndUpdate(userId, { token: '' });
-    res.clearCookie('auth_token');
+    res.clearCookie('r_token');
     return res.status(200).json({ success: true, message: '로그아웃에 성공했습니다.' });
   } catch (error) {
     return res.status(400).json({ success: false, error, message: '로그아웃에 실패했습니다.' });
@@ -144,7 +143,6 @@ export const getCartInfo = async (req, res) => {
 
 export const addItemToCart = async (req, res) => {
   const { _id: userId } = req.user;
-  console.log(req.body);
   const { productId, quantity } = req.body;
   const user = await User.findById(userId);
   if (!user) {

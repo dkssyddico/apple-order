@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { refreshCart } from '../../reducers/cartReducer';
-import { userAPI } from '../../service/api';
+import orderService from '../../service/order';
 
 function Checkout() {
   const {
@@ -17,7 +17,7 @@ function Checkout() {
   const [errorMessage, setErrorMessage] = useState('');
 
   const handlePaymentClick = () => {
-    userAPI
+    orderService
       .addOrder(userId, items)
       .then((res) => {
         let {

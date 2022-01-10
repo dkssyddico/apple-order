@@ -1,11 +1,11 @@
 import React from 'react';
 import { useQuery } from 'react-query';
 import { Link } from 'react-router-dom';
-import { productAPI } from '../service/api';
+import productService from '../service/product';
 
 function AdminProductsCard() {
   const { isLoading, isError, data, error } = useQuery('products', async () => {
-    let { data } = await productAPI.getAll();
+    let { data } = await productService.getAllProducts();
     return data;
   });
   if (isLoading) {

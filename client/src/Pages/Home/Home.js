@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Loading from '../../Components/Loading';
-import { productAPI } from '../../service/api';
+import productService from '../../service/product';
 
 function Home() {
   const [loading, setLoading] = useState(false);
@@ -13,7 +13,7 @@ function Home() {
     try {
       let {
         data: { products },
-      } = await productAPI.getAll();
+      } = await productService.getAllProducts();
       setProducts(products);
     } catch (error) {
       let {

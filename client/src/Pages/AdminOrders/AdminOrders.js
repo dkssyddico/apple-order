@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { orderAPI } from '../../service/api';
+import orderService from '../../service/order';
 
 function AdminOrders() {
   const [orders, setOrders] = useState([]);
@@ -12,7 +12,7 @@ function AdminOrders() {
     try {
       let {
         data: { orders },
-      } = await orderAPI.getAll();
+      } = await orderService.getAllOrders();
       setOrders(orders);
     } catch (error) {
       let {

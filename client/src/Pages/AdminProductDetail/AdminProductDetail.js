@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
-import { productAPI } from '../../service/api';
 import { useForm } from 'react-hook-form';
 import FileUpload from '../../Components/FileUpload';
 import categories from '../../utils/category';
+import productService from '../../service/product';
 
 const Container = styled.div`
   display: flex;
@@ -41,7 +41,7 @@ function AdminProductDetail() {
       setLoading(true);
       let {
         data: { product },
-      } = await productAPI.getInfo(productId);
+      } = await productService.getInfo(productId);
       setProduct(product);
     } catch (error) {
       let {
@@ -90,7 +90,7 @@ function AdminProductDetail() {
           description,
           images,
         };
-        productAPI
+        productService
           .update(productId, newProduct)
           .then((res) => {
             let {
@@ -117,7 +117,7 @@ function AdminProductDetail() {
   const handleDelete = (itemId) => {
     let confirm = window.confirm('상품을 삭제하시겠습니까?');
     if (confirm) {
-      productAPI
+      productService
         .remove(itemId)
         .then((res) => {
           let {

@@ -5,8 +5,8 @@ import { useParams } from 'react-router';
 import Loading from '../../Components/Loading';
 import styled from 'styled-components';
 import Message from '../../Components/Message';
-import { productAPI } from '../../service/api';
 import { addToCart } from '../../reducers/cartReducer';
+import productService from '../../service/product';
 
 // const ImageContainer = styled.div`
 //   width: 100%;
@@ -38,7 +38,7 @@ function ProductDetail() {
     try {
       let {
         data: { product },
-      } = await productAPI.getInfo(productId);
+      } = await productService.getInfo(productId);
       setProduct(product);
     } catch (error) {
       let {

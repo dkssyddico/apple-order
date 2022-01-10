@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Dropzone from 'react-dropzone';
-import { productAPI } from '../service/api';
+import productService from '../service/product';
 
 const Container = styled.div`
   display: flex;
@@ -38,7 +38,7 @@ function FileUpload({ refreshImages, originalImages }) {
 
   const saveImage = async (formData) => {
     try {
-      let { data } = await productAPI.saveImage(formData);
+      let { data } = await productService.saveImage(formData);
       setImages((prevImages) => [data, ...prevImages]);
       refreshImages([data, ...images]);
     } catch (error) {

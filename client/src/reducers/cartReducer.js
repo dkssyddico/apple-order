@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, createAction } from '@reduxjs/toolkit';
-import { userAPI } from '../service/api';
+import cartService from '../service/cart';
 
 const getCartAction = createAction('cart/getCart');
 const addToCartAction = createAction('cart/addToCart');
@@ -9,7 +9,7 @@ const refreshCartAction = createAction('cart/refreshCart');
 
 const getCart = createAsyncThunk(getCartAction, async (userId, { rejectWithValue }) => {
   try {
-    const { data } = await userAPI.getCartInfo(userId);
+    const { data } = await cartService.getInfo(userId);
     return data;
   } catch (error) {
     return rejectWithValue(error.response.data);
@@ -18,7 +18,7 @@ const getCart = createAsyncThunk(getCartAction, async (userId, { rejectWithValue
 
 const addToCart = createAsyncThunk(addToCartAction, async (userData, { rejectWithValue }) => {
   try {
-    const { data } = await userAPI.addItemToCart(userData);
+    const { data } = await cartService.addItem(userData);
     return data;
   } catch (error) {
     return rejectWithValue(error.response.data);
@@ -27,7 +27,7 @@ const addToCart = createAsyncThunk(addToCartAction, async (userData, { rejectWit
 
 const changeQty = createAsyncThunk(changeQtyInCartAction, async (userData, { rejectWithValue }) => {
   try {
-    const { data } = await userAPI.changQtyInCart(userData);
+    const { data } = await cartService.changQty(userData);
     return data;
   } catch (error) {
     return rejectWithValue(error.response.data);
@@ -38,7 +38,7 @@ const deleteItemInCart = createAsyncThunk(
   deleteItemInCartAction,
   async (userData, { rejectWithValue }) => {
     try {
-      const { data } = await userAPI.deleteItem(userData);
+      const { data } = await cartService.deleteItem(userData);
       return data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -48,7 +48,7 @@ const deleteItemInCart = createAsyncThunk(
 
 const refreshCart = createAsyncThunk(refreshCartAction, async (userId, { rejectWithValue }) => {
   try {
-    const { data } = await userAPI.refreshCart(userId);
+    const { data } = await cartService.refresh(userId);
     return data;
   } catch (error) {
     return rejectWithValue(error.response.data);

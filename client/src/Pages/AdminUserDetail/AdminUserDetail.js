@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { userAPI } from '../../service/api';
+import userService from '../../service/user';
 
 function AdminUserDetail() {
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ function AdminUserDetail() {
       setLoading(true);
       let {
         data: { info },
-      } = await userAPI.getProfile(userId);
+      } = await userService.getProfile(userId);
       setInfo(info);
     } catch (error) {
       let {
@@ -39,7 +39,7 @@ function AdminUserDetail() {
   const handleDelete = (userId) => {
     const confirm = window.confirm('정말 이 유저를 삭제합니까?');
     if (confirm) {
-      userAPI
+      userService
         .remove(userId)
         .then((response) => {
           let {

@@ -1,11 +1,11 @@
 import React from 'react';
 import { useQuery } from 'react-query';
 import { Link } from 'react-router-dom';
-import { orderAPI } from '../service/api';
+import orderService from '../service/order';
 
 function AdminOrdersCard() {
   const { isLoading, isError, data, error } = useQuery('orders', async () => {
-    let { data } = await orderAPI.getAll();
+    let { data } = await orderService.getAllOrders();
     return data;
   });
 

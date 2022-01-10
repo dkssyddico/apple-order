@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk, createAction } from '@reduxjs/toolkit';
-import { userAPI } from '../service/api';
+import httpClient from '../service/httpClient';
+import userService from '../service/user';
 
 const loginUserAction = createAction('user/loginUser');
 const logoutUserAction = createAction('user/logoutUser');
@@ -9,20 +10,24 @@ const initialState = {
   userId: undefined,
   login: false,
   isAdmin: false,
+  accessToken: undefined,
 };
 
 const loginUser = createAsyncThunk(loginUserAction, async (userInfo, { rejectWithValue }) => {
-  try {
-    const { data } = await userAPI.login(userInfo);
-    return data;
-  } catch (error) {
-    return rejectWithValue(error.response.data);
+  const { data } = await userService.login(userInfo);
+  console.log(data);
+  const accessToken = data.accessToken;
+  if (data.success) {
+    httpClient.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+  } else {
+    return rejectWithValue(data.success);
   }
+  return data;
 });
 
 const logoutUser = createAsyncThunk(logoutUserAction, async (userInfo, { rejectWithValue }) => {
   try {
-    const { data } = await userAPI.logout();
+    const { data } = await userService.logout();
     return data;
   } catch (error) {
     return rejectWithValue(error.response.data);
@@ -40,6 +45,7 @@ const userSlice = createSlice({
       userId: payload.id,
       isAdmin: payload.isAdmin,
       login: true,
+      accessToken: payload.accessToken,
     }),
     [logoutUser.fulfilled]: (state) => initialState,
   },

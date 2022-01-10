@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
-import { productAPI } from '../../../service/api';
 import categories from '../../../utils/category';
 import FileUpload from '../../../Components/FileUpload';
+import productService from '../../../service/product';
 
 const Container = styled.div`
   display: flex;
@@ -42,7 +42,7 @@ function UploadProduct() {
           description,
           images,
         };
-        productAPI
+        productService
           .add(newProduct)
           .then((res) => {
             let {

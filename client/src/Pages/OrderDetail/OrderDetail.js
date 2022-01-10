@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { orderAPI } from '../../service/api';
 import { v4 as uuidv4 } from 'uuid';
+import orderService from '../../service/order';
 
 function OrderDetail() {
   const { orderId } = useParams();
@@ -11,8 +11,8 @@ function OrderDetail() {
 
   const getOrder = (orderId) => {
     setLoading(true);
-    orderAPI
-      .getOrder(orderId)
+    orderService
+      .getOrderByOrderId(orderId)
       .then((response) => {
         let {
           data: { order },

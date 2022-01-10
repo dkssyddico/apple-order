@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
+import jwt from 'jsonwebtoken';
 dotenv.config();
 
 const userSchema = new mongoose.Schema(
@@ -42,6 +43,31 @@ userSchema.pre('save', async function () {
     user.password = await bcrypt.hash(user.password, parseInt(process.env.SALT_ROUNDS));
   }
 });
+
+userSchema.methods.generateAccessToken = function () {
+  const user = this;
+  const accessToken = jwt.sign(
+    {
+      _id: user._id,
+      username: user.username,
+      email: user.email,
+      role: user.role,
+    },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: '1h',
+    }
+  );
+  return accessToken;
+};
+
+userSchema.methods.generateRefreshToken = function () {
+  const user = this;
+  const refreshToken = jwt.sign({}, process.env.JWT_SECRET, {
+    expiresIn: '2d',
+  });
+  return refreshToken;
+};
 
 const User = mongoose.model('User', userSchema);
 

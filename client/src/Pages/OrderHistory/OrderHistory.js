@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { userAPI } from '../../service/api';
+import orderService from '../../service/order';
 
 function OrderHistory() {
   const [orders, setOrders] = useState([]);
@@ -15,7 +15,7 @@ function OrderHistory() {
   const getOrders = async (userId) => {
     try {
       setLoading(true);
-      let { data } = await userAPI.getOrder(userId);
+      let { data } = await orderService.getOrderByUserId(userId);
       setOrders(data.orders);
     } catch (error) {
       let {
