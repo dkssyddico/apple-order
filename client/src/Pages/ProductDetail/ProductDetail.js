@@ -25,7 +25,7 @@ function ProductDetail() {
   const navigate = useNavigate();
 
   const user = useSelector((state) => state.user);
-  const { loginInfo } = user;
+  const { login, userId } = user;
   const cart = useSelector((state) => state.cart);
   const { items } = cart;
 
@@ -61,7 +61,7 @@ function ProductDetail() {
 
   // 객체 형태로 줘야함.
   const handleCartClick = () => {
-    if (!loginInfo) {
+    if (!login) {
       alert('장바구니는 로그인하셔야 이용하실 수 있습니다. 로그인 페이지로 이동합니다.');
       navigate('/login');
       return;
@@ -80,7 +80,7 @@ function ProductDetail() {
         }`
       );
       if (confirm) {
-        dispatch(addToCart(loginInfo._id, productObj));
+        dispatch(addToCart(userId, productObj));
       }
     }
   };

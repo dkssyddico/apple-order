@@ -1,19 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import { getUserProfile } from '../../actions/userActions';
+import { useSelector } from 'react-redux';
 import { userAPI } from '../../service/api';
 
 function Profile() {
-  const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  const profile = useSelector((state) => state.userProfile);
-  const [changeUsernameSuccess, setChangeUsernameSuccess] = useState(false);
-  const [changePassWordSuccess, setChangePasswordSuccess] = useState(false);
-  const { loading, info } = profile;
+  const { userId, username } = user;
   const {
     register,
-    reset,
     handleSubmit,
     formState: { errors },
   } = useForm();
@@ -27,10 +21,6 @@ function Profile() {
 
   const watchFields = watch();
 
-  const {
-    loginInfo: { _id: userId },
-  } = user;
-
   const changeUsername = (data) => {
     const { username } = data;
     userAPI
@@ -39,7 +29,9 @@ function Profile() {
         let {
           data: { success },
         } = res;
-        setChangeUsernameSuccess(success);
+        if (success) {
+          alert('유저네임이 변경되었습니다.');
+        }
       })
       .catch((error) => console.log(error));
   };
@@ -58,110 +50,83 @@ function Profile() {
             let {
               data: { success },
             } = res;
-            setChangePasswordSuccess(success);
-            setValue('currentPassword', '');
-            setValue('newPassword', '');
-            setValue('newPasswordConfirmation', '');
+            if (success) {
+              alert('비밀번호가 변경되었습니다.');
+              setValue('currentPassword', '');
+              setValue('newPassword', '');
+              setValue('newPasswordConfirmation', '');
+            }
           })
           .catch((error) => console.log(error));
       }
     }
   };
 
-  useEffect(() => {
-    dispatch(getUserProfile(userId));
-  }, [dispatch, userId]);
-
-  useEffect(() => {
-    if (info) {
-      reset({
-        username: info.username,
-      });
-    }
-  }, [info, reset]);
-
-  useEffect(() => {
-    if (changeUsernameSuccess) {
-      alert('유저네임 변경에 성공했습니다.');
-    }
-  }, [changeUsernameSuccess]);
-
-  useEffect(() => {
-    if (changePassWordSuccess) {
-      alert('비밀번호 변경에 성공했습니다.');
-    }
-  }, [changePassWordSuccess]);
-
   return (
     <div className='container'>
       <h1>Profile</h1>
       <section>
-        {loading ? (
-          <h1>loading..</h1>
-        ) : (
+        <div>
           <div>
-            <div>
-              <form onSubmit={handleSubmit(changeUsername)}>
-                {errors.username && <p>{errors.username.message}</p>}
-                <input
-                  {...register('username', {
-                    minLength: {
-                      value: 3,
-                      message: '3글자 이상 입력하세요.',
-                    },
-                  })}
-                />
-                <button type='submit'>수정</button>
-              </form>
-            </div>
-            <div>
-              <h1>비밀번호 변경</h1>
-              <form onSubmit={handleSubmit2(changePassword)}>
-                {errors2.currentPassword && <p>{errors2.currentPassword.message}</p>}
-                <input
-                  {...register2('currentPassword', {
-                    minLength: {
-                      value: 5,
-                      message: '5글자 이상 입력하세요.',
-                    },
-                  })}
-                  placeholder='current password'
-                />
-                {errors2.newPassword && <p>{errors2.newPassword.message}</p>}
-                {watchFields.newPassword &&
-                  watchFields.currentPassword &&
-                  watchFields.newPassword === watchFields.currentPassword && (
-                    <p>현재 비밀번호와 동일합니다.</p>
-                  )}
-                <input
-                  {...register2('newPassword', {
-                    minLength: {
-                      value: 5,
-                      message: '5글자 이상 입력하세요.',
-                    },
-                  })}
-                  placeholder='new password'
-                />
-                {watchFields.newPassword !== watchFields.newPasswordConfirmation && (
-                  <p>동일한 비밀번호를 입력해주세요.</p>
-                )}
-                {errors2.newPasswordConfirmation && (
-                  <p>{errors2.newPasswordConfirmation.message}</p>
-                )}
-                <input
-                  {...register2('newPasswordConfirmation', {
-                    minLength: {
-                      value: 5,
-                      message: '5글자 이상 입력하세요.',
-                    },
-                  })}
-                  placeholder='new password confirmation'
-                />
-                <button type='submit'>Update</button>
-              </form>
-            </div>
+            <form onSubmit={handleSubmit(changeUsername)}>
+              {errors.username && <p>{errors.username.message}</p>}
+              <input
+                {...register('username', {
+                  minLength: {
+                    value: 3,
+                    message: '3글자 이상 입력하세요.',
+                  },
+                  value: username,
+                })}
+              />
+              <button type='submit'>수정</button>
+            </form>
           </div>
-        )}
+          <div>
+            <h1>비밀번호 변경</h1>
+            <form onSubmit={handleSubmit2(changePassword)}>
+              {errors2.currentPassword && <p>{errors2.currentPassword.message}</p>}
+              <input
+                {...register2('currentPassword', {
+                  minLength: {
+                    value: 5,
+                    message: '5글자 이상 입력하세요.',
+                  },
+                })}
+                placeholder='current password'
+              />
+              {errors2.newPassword && <p>{errors2.newPassword.message}</p>}
+              {watchFields.newPassword &&
+                watchFields.currentPassword &&
+                watchFields.newPassword === watchFields.currentPassword && (
+                  <p>현재 비밀번호와 동일합니다.</p>
+                )}
+              <input
+                {...register2('newPassword', {
+                  minLength: {
+                    value: 5,
+                    message: '5글자 이상 입력하세요.',
+                  },
+                })}
+                placeholder='new password'
+              />
+              {watchFields.newPassword !== watchFields.newPasswordConfirmation && (
+                <p>동일한 비밀번호를 입력해주세요.</p>
+              )}
+              {errors2.newPasswordConfirmation && <p>{errors2.newPasswordConfirmation.message}</p>}
+              <input
+                {...register2('newPasswordConfirmation', {
+                  minLength: {
+                    value: 5,
+                    message: '5글자 이상 입력하세요.',
+                  },
+                })}
+                placeholder='new password confirmation'
+              />
+              <button type='submit'>Update</button>
+            </form>
+          </div>
+        </div>
       </section>
     </div>
   );

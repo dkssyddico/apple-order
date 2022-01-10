@@ -12,18 +12,18 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 
 const queryClient = new QueryClient();
 
-const preloadedState = {
-  user: {
-    loginInfo: localStorage.getItem('userInfo')
-      ? JSON.parse(localStorage.getItem('userInfo'))
-      : null,
-  },
-};
+// const preloadedState = {
+//   user: {
+//     loginInfo: localStorage.getItem('userInfo')
+//       ? JSON.parse(localStorage.getItem('userInfo'))
+//       : null,
+//   },
+// };
 
 export const store = configureStore({
   reducer: rootReducer,
   middleware: [logger, ReduxThunk, promiseMiddleware],
-  preloadedState,
+  // preloadedState,
 });
 
 ReactDOM.render(

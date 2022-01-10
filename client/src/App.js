@@ -7,13 +7,13 @@ import Router from './Components/Router';
 function App() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  const { loginInfo } = user;
+  const { login, userId } = user;
 
   useEffect(() => {
-    if (loginInfo && loginInfo.success) {
-      dispatch(getCartInfo(loginInfo._id));
+    if (login) {
+      dispatch(getCartInfo(userId));
     }
-  }, [dispatch, loginInfo]);
+  }, [dispatch, login, userId]);
 
   return (
     <>

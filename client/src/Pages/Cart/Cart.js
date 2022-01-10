@@ -11,9 +11,7 @@ function Cart() {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const cart = useSelector((state) => state.cart);
-  const {
-    loginInfo: { _id: userId },
-  } = user;
+  const { userId } = user;
 
   let { items, cartLoading, error } = cart;
 

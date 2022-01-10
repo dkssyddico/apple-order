@@ -12,9 +12,7 @@ function Checkout() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
-  const {
-    loginInfo: { _id: userId },
-  } = user;
+  const { userId } = user;
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 

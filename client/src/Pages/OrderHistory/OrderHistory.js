@@ -10,9 +10,7 @@ function OrderHistory() {
   const [errorMessage, setErrorMessage] = useState('');
 
   const user = useSelector((state) => state.user);
-  const {
-    loginInfo: { _id: userId },
-  } = user;
+  const { userId } = user;
 
   const getOrders = async (userId) => {
     try {

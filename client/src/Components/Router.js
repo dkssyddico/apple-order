@@ -22,62 +22,57 @@ import Profile from '../Pages/Profile/Profile';
 import NavBar from './NavBar';
 
 function Router() {
-  const { loginInfo } = useSelector((state) => state.user);
+  const { login, isAdmin } = useSelector((state) => state.user);
   return (
     <BrowserRouter>
       <NavBar />
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/join' element={loginInfo ? <Navigate to='/' /> : <Join />} />
+        <Route path='/login' element={login ? <Navigate to='/' /> : <Login />} />
+        <Route path='/join' element={login ? <Navigate to='/' /> : <Join />} />
         <Route path='/product/:id' element={<ProductDetail />} />
 
-        <Route path='/cart' element={loginInfo ? <Cart /> : <Navigate to='/login' />} />
-        <Route path='/checkout' element={loginInfo ? <Checkout /> : <Navigate to='/login' />} />
-        <Route path='/profile' element={loginInfo ? <Profile /> : <Navigate to='/login' />} />
-        <Route path='/orders' element={loginInfo ? <OrderHistory /> : <Navigate to='/login' />} />
+        <Route path='/cart' element={login ? <Cart /> : <Navigate to='/login' />} />
+        <Route path='/checkout' element={login ? <Checkout /> : <Navigate to='/login' />} />
+        <Route path='/profile' element={login ? <Profile /> : <Navigate to='/login' />} />
+        <Route path='/orders' element={login ? <OrderHistory /> : <Navigate to='/login' />} />
         <Route
           path='/orders/:orderId'
-          element={loginInfo ? <OrderDetail /> : <Navigate to='/login' />}
+          element={login ? <OrderDetail /> : <Navigate to='/login' />}
         />
-        <Route
-          path='/orderSuccess'
-          element={loginInfo ? <OrderSuccess /> : <Navigate to='/login' />}
-        />
+        <Route path='/orderSuccess' element={login ? <OrderSuccess /> : <Navigate to='/login' />} />
 
         <Route
           path='/admin'
-          element={loginInfo && loginInfo.isAdmin ? <AdminMain /> : <Navigate to='/login' />}
+          element={login && isAdmin ? <AdminMain /> : <Navigate to='/login' />}
         />
         <Route
           path='/admin/users'
-          element={loginInfo && loginInfo.isAdmin ? <AdminUsers /> : <Navigate to='/login' />}
+          element={login && isAdmin ? <AdminUsers /> : <Navigate to='/login' />}
         />
         <Route
           path='/admin/users/:userId'
-          element={loginInfo && loginInfo.isAdmin ? <AdminUserDetail /> : <Navigate to='/login' />}
+          element={login && isAdmin ? <AdminUserDetail /> : <Navigate to='/login' />}
         />
         <Route
           path='/admin/orders'
-          element={loginInfo && loginInfo.isAdmin ? <AdminOrders /> : <Navigate to='/login' />}
+          element={login && isAdmin ? <AdminOrders /> : <Navigate to='/login' />}
         />
         <Route
           path='/admin/orders/:orderId'
-          element={loginInfo && loginInfo.isAdmin ? <AdminOrderDetail /> : <Navigate to='/login' />}
+          element={login && isAdmin ? <AdminOrderDetail /> : <Navigate to='/login' />}
         />
         <Route
           path='/admin/products'
-          element={loginInfo && loginInfo.isAdmin ? <AdminProducts /> : <Navigate to='/login' />}
+          element={login && isAdmin ? <AdminProducts /> : <Navigate to='/login' />}
         />
         <Route
           path='/admin/products/:productId'
-          element={
-            loginInfo && loginInfo.isAdmin ? <AdminProductDetail /> : <Navigate to='/login' />
-          }
+          element={login && login ? <AdminProductDetail /> : <Navigate to='/login' />}
         />
         <Route
           path='/admin/products/upload'
-          element={loginInfo && loginInfo.isAdmin ? <UploadProduct /> : <Navigate to='/login' />}
+          element={login && login ? <UploadProduct /> : <Navigate to='/login' />}
         />
         <Route path='*' element={<Navigate to='/' replace={true} />} />
       </Routes>

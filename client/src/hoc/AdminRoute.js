@@ -4,13 +4,11 @@ import { useSelector } from 'react-redux';
 
 function AdminRoute({ component: Component, ...rest }) {
   console.log(...rest);
-  const { loginInfo } = useSelector((state) => state.user);
+  const { login, isAdmin } = useSelector((state) => state.user);
   return (
     <Route
       {...rest}
-      element={(props) =>
-        loginInfo && loginInfo.isAdmin ? <Component {...props} /> : <Navigate to='/login' />
-      }
+      element={(props) => (login && isAdmin ? <Component {...props} /> : <Navigate to='/login' />)}
     ></Route>
   );
 }

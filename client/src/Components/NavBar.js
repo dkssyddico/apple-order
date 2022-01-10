@@ -26,9 +26,8 @@ const RightMenu = styled.ul`
 
 function NavBar() {
   const dispatch = useDispatch();
-
   const user = useSelector((state) => state.user);
-  const { loginInfo } = user;
+  const { login } = user;
 
   const onLogoutClick = () => {
     dispatch(logoutUser());
@@ -40,7 +39,7 @@ function NavBar() {
         <Link to='/'>Home</Link>
       </div>
       <RightMenu>
-        {loginInfo && loginInfo.isAdmin ? (
+        {login && login ? (
           <>
             <li>
               <Link to='/admin'>Admin</Link>
@@ -58,7 +57,7 @@ function NavBar() {
         ) : (
           ''
         )}
-        {loginInfo && loginInfo.success ? (
+        {login && login ? (
           <>
             <li>
               <Link to='/cart'>Cart</Link>

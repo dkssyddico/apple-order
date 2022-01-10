@@ -27,7 +27,7 @@ function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
-  const { error, loginInfo } = user;
+  const { login } = user;
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -52,16 +52,16 @@ function Login() {
   };
 
   useEffect(() => {
-    if (loginInfo && loginInfo.success) {
+    if (login) {
       navigate('/');
     }
-  }, [dispatch, navigate, loginInfo]);
+  }, [login, navigate]);
 
   return (
     <LoginContainer>
       <LoginCard>
         <h1>Glad to see you again</h1>
-        {error && <h2>{error}</h2>}
+        {/* {error && <h2>{error}</h2>} */}
         <Form onSubmit={onSubmit}>
           <input onChange={onChange} name='email' type='email' placeholder='Email' />
           <input
