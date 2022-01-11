@@ -52,7 +52,10 @@ export const login = async (req, res) => {
   const refreshToken = user.generateRefreshToken();
 
   return res
-    .cookie('r_token', refreshToken)
+    .cookie('r_token', refreshToken, {
+      // httpOnly: true,
+      // sameSite: 'none',
+    })
     .status(200)
     .json({
       success: true,

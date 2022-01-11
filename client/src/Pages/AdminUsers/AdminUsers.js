@@ -12,6 +12,7 @@ function AdminUsers() {
     return <h1>Now Loading</h1>;
   }
   if (isError) {
+    console.log(error.response);
     return <span>Error: {error.message}</span>;
   }
 

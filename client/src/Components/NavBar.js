@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { logoutUser, refreshUser } from '../reducers/userReducers';
+import { clearUser, logoutUser, refreshUser } from '../reducers/userReducers';
+import { toast } from 'react-toastify';
 
 const Nav = styled.nav`
   width: 100%;
@@ -26,13 +27,23 @@ const RightMenu = styled.ul`
 
 function NavBar() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const { login } = user;
   const isRToken = localStorage.getItem('r_token');
 
   useEffect(() => {
-    if (!login && isRToken) dispatch(refreshUser());
-  }, [dispatch, isRToken, login]);
+    // 새로고침해서 로그인은 풀렸는데 리프레쉬 토큰이 남아있는 경우
+    if (!login && isRToken) {
+      dispatch(refreshUser())
+        .then((res) => {})
+        .catch((err) => {
+          navigate('/login'); // 토큰이 만료된 경우 새로 로그인 유도.
+          localStorage.removeItem('r_token');
+          dispatch(clearUser());
+        });
+    }
+  }, [dispatch, isRToken, login, navigate]);
 
   const onLogoutClick = () => {
     dispatch(logoutUser());

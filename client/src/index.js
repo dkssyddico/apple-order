@@ -9,6 +9,7 @@ import promiseMiddleware from 'redux-promise';
 import logger from 'redux-logger';
 import rootReducer from './reducers';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { ToastContainer } from 'react-toastify';
 
 const queryClient = new QueryClient();
 
