@@ -1,35 +1,14 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
-import { clearUser, logoutUser, refreshUser } from '../reducers/userReducers';
-import { toast } from 'react-toastify';
-
-const Nav = styled.nav`
-  width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1;
-  display: flex;
-  justify-content: space-between;
-  padding: 30px;
-  background-color: #f4f3e7;
-  max-height: 10vh;
-`;
-
-const RightMenu = styled.ul`
-  display: flex;
-  li {
-    margin-left: 30px;
-  }
-`;
+import styles from './NavBar.module.css';
+import { clearUser, logoutUser, refreshUser } from '../../reducers/userReducers';
 
 function NavBar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
-  const { login } = user;
+  const { login, isAdmin } = user;
   const isRToken = localStorage.getItem('r_token');
 
   useEffect(() => {
@@ -50,12 +29,12 @@ function NavBar() {
   };
 
   return (
-    <Nav>
-      <div>
+    <nav className={styles.navbar}>
+      <div className={styles.navbar__left}>
         <Link to='/'>Home</Link>
       </div>
-      <RightMenu>
-        {login && login ? (
+      <div className={styles.navbar__right}>
+        {login && isAdmin && (
           <>
             <li>
               <Link to='/admin'>Admin</Link>
@@ -70,10 +49,8 @@ function NavBar() {
               <Link to='/admin/products'>Products</Link>
             </li>
           </>
-        ) : (
-          ''
         )}
-        {login && login ? (
+        {login ? (
           <>
             <li>
               <Link to='/cart'>Cart</Link>
@@ -89,12 +66,19 @@ function NavBar() {
             </li>
           </>
         ) : (
-          <li>
-            <Link to='/login'>Login</Link>
-          </li>
+          <>
+            <li>
+              <Link to='/login'>Login</Link>
+            </li>
+            <li>
+              <Link to='/join'>
+                <span className={styles.join}>Join</span>
+              </Link>
+            </li>
+          </>
         )}
-      </RightMenu>
-    </Nav>
+      </div>
+    </nav>
   );
 }
 

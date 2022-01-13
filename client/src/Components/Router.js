@@ -19,7 +19,7 @@ import OrderHistory from '../Pages/OrderHistory/OrderHistory';
 import OrderSuccess from '../Pages/OrderSuccess/OrderSuccess';
 import ProductDetail from '../Pages/ProductDetail/ProductDetail';
 import Profile from '../Pages/Profile/Profile';
-import NavBar from './NavBar';
+import NavBar from './Navbar/NavBar';
 
 function Router() {
   const { login, isAdmin } = useSelector((state) => state.user);
