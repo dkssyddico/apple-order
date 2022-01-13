@@ -3,12 +3,46 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './NavBar.module.css';
 import { clearUser, logoutUser, refreshUser } from '../../reducers/userReducers';
+import styled from 'styled-components';
+
+const DropdownMenu = styled.div`
+  display: none;
+  position: absolute;
+  top: 8vh;
+  left: 0;
+  ul {
+    background-color: whitesmoke;
+    padding: 16px;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    li {
+      margin: 0;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid black;
+      &:last-child {
+        border: none;
+      }
+    }
+  }
+`;
+
+const Dropdown = styled.li`
+  position: relative;
+  padding: 16px;
+  &:hover {
+    ${DropdownMenu} {
+      display: block;
+    }
+  }
+`;
 
 function NavBar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
-  const { login, isAdmin } = user;
+  const { login, isAdmin, username } = user;
   const isRToken = localStorage.getItem('r_token');
 
   useEffect(() => {
@@ -36,18 +70,22 @@ function NavBar() {
       <div className={styles.navbar__right}>
         {login && isAdmin && (
           <>
-            <li>
+            <Dropdown>
               <Link to='/admin'>Admin</Link>
-            </li>
-            <li>
-              <Link to='/admin/users'>Users</Link>
-            </li>
-            <li>
-              <Link to='/admin/orders'>Orders</Link>
-            </li>
-            <li>
-              <Link to='/admin/products'>Products</Link>
-            </li>
+              <DropdownMenu>
+                <ul>
+                  <li>
+                    <Link to='/admin/users'>Users</Link>
+                  </li>
+                  <li>
+                    <Link to='/admin/orders'>Orders</Link>
+                  </li>
+                  <li>
+                    <Link to='/admin/products'>Products</Link>
+                  </li>
+                </ul>
+              </DropdownMenu>
+            </Dropdown>
           </>
         )}
         {login ? (
@@ -55,12 +93,19 @@ function NavBar() {
             <li>
               <Link to='/cart'>Cart</Link>
             </li>
-            <li>
-              <Link to='/profile'>Profile</Link>
-            </li>
-            <li>
-              <Link to='/orders'>Order</Link>
-            </li>
+            <Dropdown>
+              <Link to='/profile'>{username}</Link>
+              <DropdownMenu>
+                <ul>
+                  <li>
+                    <Link to='/profile'>Profile</Link>
+                  </li>
+                  <li>
+                    <Link to='/orders'>Order</Link>
+                  </li>
+                </ul>
+              </DropdownMenu>
+            </Dropdown>
             <li>
               <button onClick={onLogoutClick}>Log out</button>
             </li>
