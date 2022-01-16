@@ -21,14 +21,17 @@ const GlobalStyles = createGlobalStyle`
   body {
     width: 100%;
     height: 100vh;
-    padding: 0 30px;
     font-family: 'Montserrat', sans-serif;
   }
 
   .container {
     margin-top:15vh;
+    padding: 0 10vw;
   }
 
+  input {
+    all: unset;
+  }
 
   input[type="number" i] {
     padding: 0;

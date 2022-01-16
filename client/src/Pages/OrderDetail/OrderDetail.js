@@ -1,78 +1,64 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
+import React from 'react';
+import { useParams } from 'react-router-dom';
+import { useQuery } from 'react-query';
 import orderService from '../../service/order';
+import styles from './OrderDetail.module.css';
+import OrderItemCard from '../../Components/OrderItemCard/OrderItemCard';
 
 function OrderDetail() {
   const { orderId } = useParams();
-  const [order, setOrder] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
 
-  const getOrder = (orderId) => {
-    setLoading(true);
-    orderService
-      .getOrderByOrderId(orderId)
-      .then((response) => {
-        let {
-          data: { order },
-        } = response;
-        setOrder(order);
-      })
-      .catch((error) => {
-        console.log(error);
-        setError(
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message
-        );
-      });
-    setLoading(false);
-  };
+  const { isLoading, isError, data, error } = useQuery('orderDetail', async () => {
+    let { data } = await orderService.getOrderByOrderId(orderId);
+    return data;
+  });
 
-  useEffect(() => {
-    getOrder(orderId);
-  }, [orderId]);
+  if (isLoading) {
+    return (
+      <div className={styles.orderDetail}>
+        <p>Now Loading...</p>
+      </div>
+    );
+  }
+  if (isError) {
+    return (
+      <div className={styles.orderDetail}>
+        <p>Error: {error.message}</p>
+      </div>
+    );
+  }
 
   return (
-    <div className='container'>
-      <h1>Order Detail</h1>
-      {loading ? (
-        <h1>Now Loading</h1>
-      ) : error ? (
-        <h1>{error}</h1>
-      ) : (
-        <div>
-          <div>
-            <h3>Order No. {order._id}</h3>
-            <h3>Order Date {order.createdAt}</h3>
-            <h3>
-              Total price:
-              {`$ ${
-                order.items &&
-                order.items.reduce((prev, curr) => prev + curr.quantity * curr.price, 0)
-              }`}
-            </h3>
-          </div>
-          <div>
-            {order.items &&
-              order.items.map((item) => {
-                return (
-                  <div key={uuidv4()}>
-                    <Link to={`/product/${item.productId}`}>
-                      <div>
-                        <h4>{item.name}</h4>
-                        <p>
-                          {item.quantity * item.price} | {item.quantity}ea
-                        </p>
-                      </div>
-                    </Link>
-                  </div>
-                );
-              })}
-          </div>
+    <div className={styles.orderDetail}>
+      <h1 className={styles.title}>Order Detail</h1>
+      <div className={styles.wholeContainer}>
+        <div className={styles.metaContainer}>
+          <h3>Order No. {data.order._id}</h3>
+          <h3>Order Date: {data.order.createdAt}</h3>
+          <h3>
+            Total price:
+            {` $${
+              data.order.items &&
+              data.order.items.reduce((prev, curr) => prev + curr.quantity * curr.price, 0)
+            }`}
+          </h3>
         </div>
-      )}
+        <div className={styles.itemsContainer}>
+          {data.order.items &&
+            data.order.items.map((item) => {
+              return (
+                <OrderItemCard
+                  key={item.productId}
+                  images={item.images}
+                  productId={item.productId}
+                  name={item.name}
+                  quantity={item.quantity}
+                  price={item.price}
+                />
+              );
+            })}
+        </div>
+      </div>
     </div>
   );
 }

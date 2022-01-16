@@ -4,7 +4,7 @@ import styles from './OrderHistory.module.css';
 
 function OrderHistory() {
   return (
-    <div className='container'>
+    <div className={styles.orderHistory}>
       <h1 className={styles.title}>Order history</h1>
       <Orders />
     </div>

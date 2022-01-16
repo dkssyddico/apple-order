@@ -1,0 +1,32 @@
+.orderDetail {
+}
+
+.title {
+  font-size: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 3px solid black;
+  margin-bottom: 2rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+.wholeContainer {
+  padding: 1rem 0;
+}
+
+.metaContainer {
+  height: 100px;
+  padding: 1rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  border: 1px solid lightgray;
+  /* border-bottom: none; */
+  background-color: whitesmoke;
+}
+
+.itemsContainer {
+  border: 1px solid lightgray;
+  border-top: none;
+  border-bottom: none;
+}

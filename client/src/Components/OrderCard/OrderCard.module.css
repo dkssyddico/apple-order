@@ -52,30 +52,3 @@
   font-weight: 500;
   font-size: 1rem;
 }
-
-/*
-
-
-
-const InfoContainer = styled.div`
-  padding-top: 1rem;
-  display: flex;
-`;
-
-const Image = styled.img`
-  width: 100px;
-  height: 100px;
-`;
-
-const InfoBox = styled.div`
-  padding: 0.8rem;
-  h4 {
-    font-size: 15px;
-    margin-bottom: 0.8rem;
-  }
-`;
-
-const Bold = styled.span`
-  font-weight: 500;
-  font-size: 16px;
-`; */
