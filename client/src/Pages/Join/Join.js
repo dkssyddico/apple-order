@@ -1,27 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import Message from '../../Components/Message';
 import { useForm } from 'react-hook-form';
 import userService from '../../service/user';
-
-const JoinContainer = styled.div`
-  padding-top: 12vh;
-  display: flex;
-  justify-content: center;
-`;
-
-const JoinCard = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
+import styles from './Join.module.css';
 
 function Join() {
   const navigate = useNavigate();
@@ -70,15 +52,16 @@ function Join() {
   };
 
   return (
-    <JoinContainer>
-      <JoinCard>
-        <h1>Welcome !</h1>
+    <section className={styles.joinContainer}>
+      <div className={styles.joinCard}>
+        <h1 className={styles.title}>Welcome !</h1>
         {error && <Message>{errorMessage}</Message>}
-        <Form onSubmit={handleSubmit(onSubmit)}>
+        <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
           {watchFields.username && watchFields.username.length < 3 && (
-            <p>유저네임은 3글자 이상이어야합니다.</p>
+            <p className={styles.warning}>유저네임은 3글자 이상이어야합니다.</p>
           )}
           <input
+            className={styles.input}
             {...register('username', {
               minLength: {
                 value: 3,
@@ -90,6 +73,7 @@ function Join() {
             placeholder='Username'
           />
           <input
+            className={styles.input}
             {...register('email', {
               minLength: {
                 value: 3,
@@ -101,9 +85,10 @@ function Join() {
             placeholder='Email'
           />
           {watchFields.password && watchFields.password.length < 5 && (
-            <p>비밀번호는 5글자 이상이어야합니다.</p>
+            <p className={styles.warning}>비밀번호는 5글자 이상이어야합니다.</p>
           )}
           <input
+            className={styles.input}
             {...register('password', {
               minLength: {
                 value: 5,
@@ -114,7 +99,11 @@ function Join() {
             type='password'
             placeholder='Password'
           />
+          {watchFields.password !== watchFields.passwordConfirmation && (
+            <p className={styles.warning}>동일한 비밀번호를 입력해주세요.</p>
+          )}
           <input
+            className={styles.input}
             {...register('passwordConfirmation', {
               minLength: {
                 value: 5,
@@ -125,15 +114,12 @@ function Join() {
             type='password'
             placeholder='Confirm Password'
           />
-          {watchFields.password !== watchFields.passwordConfirmation && (
-            <p>동일한 비밀번호를 입력해주세요.</p>
-          )}
-          <button disabled={!isValid} type='submit'>
+          <button className={styles.joinBtn} disabled={!isValid} type='submit'>
             Create Account
           </button>
-        </Form>
-      </JoinCard>
-    </JoinContainer>
+        </form>
+      </div>
+    </section>
   );
 }
 

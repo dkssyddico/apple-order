@@ -1,0 +1,59 @@
+.joinContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.joinCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  font-size: 1.5rem;
+  margin-bottom: 3rem;
+  font-weight: 500;
+  text-align: left;
+}
+
+.form {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.label {
+  align-self: flex-start;
+  margin-bottom: 1rem;
+}
+
+.warning {
+  margin-bottom: 1rem;
+}
+
+.input {
+  width: 100%;
+  border-radius: 2rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  border: 1px solid lightgray;
+}
+
+.joinBtn {
+  width: 100%;
+  margin: 1rem 0 2rem;
+  padding: 1rem 0;
+  background-color: green;
+  font-weight: 600;
+  text-align: center;
+  color: white;
+  border-radius: 4px;
+}
+
+.joinLink {
+  font-weight: 600;
+  color: green;
+}

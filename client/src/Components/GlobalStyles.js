@@ -29,8 +29,10 @@ const GlobalStyles = createGlobalStyle`
     padding: 0 10vw;
   }
 
-  input {
-    all: unset;
+  input,
+  input::placeholder {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
   }
 
   input[type="number" i] {

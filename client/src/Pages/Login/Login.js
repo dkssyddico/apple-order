@@ -1,33 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../reducers/userReducers';
-
-const LoginContainer = styled.div`
-  width: 100%;
-  padding-top: 12vh;
-  display: flex;
-  justify-content: center;
-`;
-
-const LoginCard = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
+import styles from './Login.module.css';
 
 function Login() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const user = useSelector((state) => state.user);
-  const { login, error } = user;
+  const { error } = user;
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -51,38 +31,49 @@ function Login() {
     }
   };
 
-  useEffect(() => {
-    if (login) {
-      navigate('/');
-    }
-  }, [login, navigate]);
-
   return (
-    <LoginContainer>
-      <LoginCard>
-        <h1>Glad to see you again</h1>
+    <section className={styles.loginContainer}>
+      <div className={styles.loginCard}>
+        <h1 className={styles.title}>Glad to see you again</h1>
         {error && <h2>{error}</h2>}
-        <Form onSubmit={onSubmit}>
-          <input onChange={onChange} name='email' type='email' placeholder='Email' />
+        <form className={styles.form} onSubmit={onSubmit}>
+          <label className={styles.label} htmlFor='email'>
+            Email
+          </label>
           <input
+            className={styles.input}
+            onChange={onChange}
+            name='email'
+            type='email'
+            placeholder='apple@order.com'
+          />
+          <label className={styles.label} htmlFor='password'>
+            Password
+          </label>
+          <input
+            className={styles.input}
             onChange={onChange}
             name='password'
             type='password'
-            placeholder='Password'
+            placeholder='Enter your password'
             minLength='6'
           />
-          <button type='submit'>Sign in</button>
-        </Form>
+          <button className={styles.loginBtn} type='submit'>
+            Sign in
+          </button>
+        </form>
         <div>
           <p>
             Don't have an account?{' '}
             <span>
-              <Link to='/join'>Join Now</Link>
+              <Link className={styles.joinLink} to='/join'>
+                Join Now
+              </Link>
             </span>
           </p>
         </div>
-      </LoginCard>
-    </LoginContainer>
+      </div>
+    </section>
   );
 }
 
