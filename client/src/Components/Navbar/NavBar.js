@@ -8,7 +8,7 @@ import styled from 'styled-components';
 const DropdownMenu = styled.div`
   display: none;
   position: absolute;
-  top: 8vh;
+  top: 6vh;
   left: 0;
   ul {
     background-color: whitesmoke;
