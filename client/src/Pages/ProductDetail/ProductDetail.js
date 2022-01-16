@@ -2,60 +2,24 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router';
-import Loading from '../../Components/Loading';
-import styled from 'styled-components';
-import Message from '../../Components/Message';
+import styles from './productDetail.module.css';
 import { addToCart } from '../../reducers/cartReducer';
 import productService from '../../service/product';
-
-// const ImageContainer = styled.div`
-//   width: 100%;
-//   height: 100%;
-// `;
-
-const Container = styled.div`
-  padding-top: 12vh;
-  width: 100%;
-  height: 100%;
-`;
+import { useQuery } from 'react-query';
 
 function ProductDetail() {
   const dispatch = useDispatch();
+  const [quantity, setQuantity] = useState(1);
   let { id: productId } = useParams();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
-  const { login, userId } = user;
   const cart = useSelector((state) => state.cart);
+  const { login, userId } = user;
   const { items } = cart;
-
-  const [quantity, setQuantity] = useState(1);
-  const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-
-  const getProduct = async (productId) => {
-    try {
-      let {
-        data: { product },
-      } = await productService.getInfo(productId);
-      setProduct(product);
-    } catch (error) {
-      let {
-        response: {
-          data: { message },
-        },
-      } = error;
-      setError(true);
-      setErrorMessage(message ? message : error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    getProduct(productId);
-  }, [productId]);
+  const { isLoading, isError, data, error } = useQuery(['product', productId], async () => {
+    let { data } = await productService.getInfo(productId);
+    return data;
+  });
 
   // 객체 형태로 줘야함.
   const handleCartClick = () => {
@@ -74,8 +38,8 @@ function ProductDetail() {
       alert('이미 장바구니에 있는 상품입니다.');
     } else {
       let confirm = window.confirm(
-        `다음과 같은 상품을 장바구니에 넣으시겠습니까?\n${product.name} ${quantity}개 ${
-          quantity * product.price
+        `다음과 같은 상품을 장바구니에 넣으시겠습니까?\n${data.product.name} ${quantity}개 ${
+          quantity * data.product.price
         }`
       );
       if (confirm) {
@@ -84,49 +48,82 @@ function ProductDetail() {
     }
   };
 
+  const handleDecrement = () => {
+    setQuantity((prev) => (parseInt(prev) === 1 ? 1 : parseInt(prev) - 1));
+  };
+
+  const handleIncrement = () => {
+    setQuantity((prev) => parseInt(prev) + 1);
+  };
+
   const handleQuantityChange = (e) => {
     let { value } = e.target;
+    if (value === '') {
+      alert('수량은 최소 1이 되어야합니다!');
+      return;
+    }
     setQuantity(parseInt(value));
   };
 
+  if (isLoading) {
+    return (
+      <div className={styles.product}>
+        <p>Now Loading...</p>
+      </div>
+    );
+  }
+  if (isError) {
+    return (
+      <div className={styles.product}>
+        <p>Error: {error.message}</p>
+      </div>
+    );
+  }
+
   return (
-    <Container className='container'>
-      {loading ? (
-        <Loading />
-      ) : error ? (
-        <Message>{errorMessage}</Message>
-      ) : (
-        product && (
-          <>
-            <div className='imageContainer'>
-              <img src={`http://localhost:4000/${product.images[0].filePath}`} alt='product' />
-            </div>
-            <div className='infoContainer'>
-              <h1>{product.name}</h1>
-              <h2>{product.price}</h2>
-              <div>
-                <label>quantity</label>
-                <select onChange={handleQuantityChange} value={quantity}>
-                  <option key={1} value={1}>
-                    1
-                  </option>
-                  <option key={2} value={2}>
-                    2
-                  </option>
-                  <option key={3} value={3}>
-                    3
-                  </option>
-                </select>
-              </div>
-              <div>
-                <p>Total Price {quantity * product.price}</p>
-              </div>
-              <button onClick={handleCartClick}>Add to cart</button>
-            </div>
-          </>
-        )
-      )}
-    </Container>
+    <div className={styles.product}>
+      <div className={styles.imageContainer}>
+        <img
+          className={styles.productImg}
+          src={`http://localhost:4000/${data.product.images[0].filePath}`}
+          alt='product'
+        />
+      </div>
+      <div className={styles.infoContainer}>
+        <h1 className={styles.name}>{data.product.name}</h1>
+        <div className={styles.priceContainer}>
+          <h3>Price</h3>
+          <h3 className={styles.price}>${data.product.price}</h3>
+        </div>
+        <div className={styles.QtyContainer}>
+          <h3>Quantity</h3>
+          <div className={styles.QtyBtnContainer}>
+            <button className={styles.QtyBtn} onClick={handleDecrement}>
+              -
+            </button>
+            <input
+              className={styles.input}
+              type='number'
+              onChange={handleQuantityChange}
+              value={quantity}
+            />
+            <button className={styles.QtyBtn} onClick={handleIncrement}>
+              +
+            </button>
+          </div>
+        </div>
+        <div className={styles.totalPriceContainer}>
+          <h3>Total Price</h3>
+          <h3 className={styles.totalPrice}>${quantity * data.product.price}</h3>
+        </div>
+        <div className={styles.btnContainer}>
+          <button className={styles.cartBtn} onClick={handleCartClick}>
+            Add to cart
+          </button>
+          <button className={styles.shopNowBtn}>Shop now</button>
+        </div>
+      </div>
+    </div>
   );
 }
 

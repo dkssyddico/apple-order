@@ -29,6 +29,18 @@ const GlobalStyles = createGlobalStyle`
     margin-top:15vh;
   }
 
+
+  input[type="number" i] {
+    padding: 0;
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+  }
+
+
 `;
 
 export default GlobalStyles;

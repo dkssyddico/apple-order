@@ -1,0 +1,114 @@
+.product {
+  margin-top: 20vh;
+  padding: 0 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4%;
+}
+
+.imageContainer {
+  flex-basis: 48%;
+}
+
+.productImg {
+  width: 100%;
+  height: 350px;
+  border-radius: 16px;
+}
+
+.infoContainer {
+  height: 350px;
+  flex-basis: 48%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.name {
+  font-size: 1.2rem;
+}
+
+.priceContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+}
+
+.price {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.QtyContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.QtyBtnContainer {
+  width: 140px;
+  height: 40px;
+  border: 1px solid lightgray;
+}
+
+.QtyBtn {
+  all: unset;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  width: 30%;
+  height: 100%;
+  cursor: pointer;
+  background-color: #dddddd;
+}
+
+.input {
+  all: unset;
+  border: none;
+  text-align: center;
+  width: 40%;
+}
+
+.totalPriceContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+}
+
+.totalPrice {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: red;
+}
+
+.btnContainer {
+  display: flex;
+  gap: 4px;
+}
+
+.cartBtn,
+.shopNowBtn {
+  all: unset;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  flex: 1 1 45%;
+  padding: 12px;
+}
+
+.cartBtn {
+  background-color: green;
+  color: white;
+}
+
+.shopNowBtn {
+  border: 1px solid black;
+  transition: all 0.3s ease-in-out;
+}
+
+.shopNowBtn:hover {
+  background-color: black;
+  color: white;
+}
