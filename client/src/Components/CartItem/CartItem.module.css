@@ -1,0 +1,92 @@
+.contents {
+  width: 100%;
+  display: flex;
+  border-top: 1px solid lightgray;
+}
+
+.content {
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.head:first-child,
+.content:first-child {
+  flex-basis: 10%;
+}
+
+.head:nth-child(2),
+.content:nth-child(2) {
+  flex-basis: 40%;
+}
+
+.content:nth-child(3),
+.head:nth-child(3) {
+  flex-basis: 20%;
+}
+
+.content:last-child,
+.head:last-child {
+  flex-basis: 30%;
+}
+
+.content:nth-child(2) {
+  justify-content: flex-start;
+  padding: 1rem 2rem;
+}
+
+.content:nth-child(2),
+.content:nth-child(3) {
+  border-right: 1px solid lightgray;
+}
+
+.infoBox {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+}
+
+.image {
+  height: 100px;
+  width: 100px;
+}
+
+.itemName {
+  margin-left: 1rem;
+}
+
+.iconBox {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.qtyContainer {
+  width: 50%;
+  height: 2.5rem;
+  border: 1px solid darkgray;
+  display: flex;
+}
+
+.qtyBtn {
+  border: none;
+  width: 30%;
+  height: 100%;
+  cursor: pointer;
+  text-align: center;
+  background-color: lightgray;
+}
+
+.qtyBox {
+  border: none;
+  text-align: center;
+  width: 40%;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+}
