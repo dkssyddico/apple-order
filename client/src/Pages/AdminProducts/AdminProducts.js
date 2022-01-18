@@ -1,82 +1,83 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import Loading from '../../Components/Loading';
+import { useQuery } from 'react-query';
 import productService from '../../service/product';
-
-const Container = styled.div`
-  padding-top: 12vh;
-  width: 100%;
-  height: 100%;
-`;
+import styles from './AdminProducts.module.css';
 
 function AdminProducts() {
-  const [loading, setLoading] = useState(false);
-  const [products, setProducts] = useState([]);
-  const [error, setError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const { isLoading, isError, data, error } = useQuery('adminProducts', async () => {
+    let { data } = await productService.getAllProducts();
+    return data;
+  });
 
-  const getProducts = async () => {
-    try {
-      let {
-        data: { products },
-      } = await productService.getAllProducts();
-      setProducts(products);
-    } catch (error) {
-      let {
-        response: {
-          data: { message },
-        },
-      } = error;
-      setError(true);
-      setErrorMessage(message ? message : error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    getProducts();
-  }, []);
+  if (isLoading) {
+    return (
+      <div className={styles.adminProducts}>
+        <p>Now Loading...</p>
+      </div>
+    );
+  }
+  if (isError) {
+    return (
+      <div className={styles.adminProducts}>
+        <p>Error: {error.message}</p>
+      </div>
+    );
+  }
 
   return (
-    <Container>
-      <h1>AdminProducts</h1>
-      <button>
-        <Link to='/admin/products/upload'>Upload product</Link>
-      </button>
-      <div>
-        {loading ? (
-          <Loading />
-        ) : error ? (
-          <h1>{errorMessage}</h1>
-        ) : (
-          <section>
-            {products &&
-              products.map((item) => (
-                <div key={item._id}>
-                  <Link to={`/admin/products/${item._id}`}>
-                    <div>
-                      <div>
-                        <img
-                          style={{ width: '70px' }}
-                          alt='item'
-                          src={`http://localhost:4000/${item.images[0].filePath}`}
-                        />
-                      </div>
-                      <div>
-                        <span>{item.name}</span>
-                        <span>$ {item.price}</span>
-                        <span>{item.description}</span>
-                      </div>
-                    </div>
-                  </Link>
-                </div>
-              ))}
-          </section>
-        )}
+    <div className={styles.adminProducts}>
+      <h1 className={styles.title}>Admin Products</h1>
+      <div className={styles.btnContainer}>
+        <button>
+          <Link to='/admin/products/upload'>Upload product</Link>
+        </button>
       </div>
-    </Container>
+      <section>
+        <div className={styles.headContainer}>
+          <div className={styles.head}>
+            <h2>Image</h2>
+          </div>
+          <div className={styles.head}>
+            <h2>Product</h2>
+          </div>
+          <div className={styles.head}>
+            <h2>Price</h2>
+          </div>
+          <div className={styles.head}>
+            <h2>Description</h2>
+          </div>
+          <div className={styles.head}>
+            <h2></h2>
+          </div>
+        </div>
+        {data.products.map((item) => (
+          <div className={styles.productCard} key={item._id}>
+            <div className={styles.content}>
+              <img
+                className={styles.image}
+                alt='item'
+                src={`http://localhost:4000/${item.images[0].filePath}`}
+              />
+            </div>
+            <div className={styles.content}>
+              <span>{item.name}</span>
+            </div>
+            <div className={styles.content}>
+              <span>${item.price}</span>
+            </div>
+            <div className={styles.content}>
+              <span>{item.description.slice(0, 10)}</span>
+            </div>
+            <div className={styles.content}>
+              <Link to={`/admin/products/${item._id}`}>
+                <button className={styles.detailBtn}>Detail</button>
+              </Link>
+            </div>
+          </div>
+        ))}
+      </section>
+    </div>
   );
 }
 
