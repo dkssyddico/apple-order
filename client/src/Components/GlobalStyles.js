@@ -40,7 +40,7 @@ const GlobalStyles = createGlobalStyle`
     padding: 0;
   }
 
-  input[type="number" i].adminPriceInput {
+  input[type="number" i].priceInput {
     padding: 1rem;
   }
 

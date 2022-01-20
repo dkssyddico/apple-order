@@ -50,7 +50,7 @@ function FileUpload({ refreshImages, originalImages }) {
       {error && <h1>{errorMessage}</h1>}
       <Dropzone onDrop={handleDrop}>
         {({ getRootProps, getInputProps }) => (
-          <section className={styles.zoneContainer}>
+          <section>
             <div className={styles.zone} {...getRootProps()}>
               <input {...getInputProps()} />
               <p>Drag 'n' drop some files here, or click to select files</p>

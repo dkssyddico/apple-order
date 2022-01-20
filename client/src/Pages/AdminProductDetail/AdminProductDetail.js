@@ -154,7 +154,9 @@ function AdminProductDetail() {
                 <label className={styles.label} htmlFor='name'>
                   Name
                 </label>
-                {watchFields.name && watchFields.name.length < 2 && <p>2글자 이상 입력하세요</p>}
+                {watchFields.name && watchFields.name.length < 2 && (
+                  <p className={styles.warning}>2글자 이상 입력하세요</p>
+                )}
                 <input
                   className={styles.input}
                   {...register('name', {
@@ -192,12 +194,14 @@ function AdminProductDetail() {
                 <label className={styles.label} htmlFor='price'>
                   Price($)
                 </label>
-                {watchFields.price && watchFields.price < 1 && <p>1이상의 가격을 입력하세요</p>}
+                {watchFields.price && watchFields.price < 1 && (
+                  <p className={styles.warning}>1이상의 가격을 입력하세요</p>
+                )}
                 {watchFields.price && watchFields.price > 9999 && (
-                  <p>9999 이상의 가격을 입력할 수 없습니다.</p>
+                  <p className={styles.warning}>9999 이상의 가격을 입력할 수 없습니다.</p>
                 )}
                 <input
-                  className={`${styles.input} adminPriceInput`}
+                  className={`${styles.input} priceInput`}
                   {...register('price', {
                     min: {
                       value: 1,
@@ -218,7 +222,7 @@ function AdminProductDetail() {
                   Description
                 </label>
                 {watchFields.description && watchFields.description.length < 2 && (
-                  <p>2글자 이상 입력하세요</p>
+                  <p className={styles.warning}>2글자 이상 입력하세요</p>
                 )}
                 <textarea
                   className={styles.input}
