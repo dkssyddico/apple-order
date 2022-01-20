@@ -1,0 +1,83 @@
+.adminProductDetail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  font-size: 1.5rem;
+  margin-bottom: 3rem;
+  font-weight: 500;
+  text-align: left;
+}
+
+.infoContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.inputContainer {
+  width: 100%;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.input {
+  padding: 1rem;
+  font-family: inherit;
+  font-size: 1rem;
+  resize: none;
+  border: 1px solid lightgray;
+  border-radius: 4px;
+}
+
+.select {
+  padding: 1rem;
+  border: 1px solid lightgray;
+  font-family: inherit;
+  font-size: 1rem;
+  border-radius: 4px;
+}
+
+.btnContainer {
+  display: flex;
+  margin: 1.5rem 0;
+}
+
+.submitBtn {
+  font-weight: 600;
+  padding: 1rem 2rem;
+  background-color: green;
+  color: white;
+  border-radius: 4px;
+  margin: 0.5rem;
+}
+
+.deleteBtn {
+  margin: 0.5rem;
+  font-weight: 600;
+  padding: 1rem 2rem;
+  color: red;
+  /* border: 1px solid red; */
+  border-radius: 4px;
+  transition: all 0.3s ease-in-out;
+}
+
+.deleteBtn:hover {
+  background-color: red;
+  color: white;
+}

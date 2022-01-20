@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import categories from '../../../utils/category';
-import FileUpload from '../../../Components/FileUpload';
+
 import productService from '../../../service/product';
+import FileUpload from '../../../Components/FileUpload/FileUpload';
 
 const Container = styled.div`
   display: flex;

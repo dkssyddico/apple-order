@@ -1,29 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import Dropzone from 'react-dropzone';
-import productService from '../service/product';
-
-const Container = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-
-const Zone = styled.div`
-  width: 300px;
-  height: 240px;
-  border: 1px solid lightgray;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const Previews = styled.div`
-  display: flex;
-  width: 350px;
-  height: 240px;
-  overflow-x: scroll;
-  background-color: beige;
-`;
+import productService from '../../service/product';
+import styles from './FileUpload.module.css';
 
 function FileUpload({ refreshImages, originalImages }) {
   const [images, setImages] = useState([]);
@@ -68,31 +46,31 @@ function FileUpload({ refreshImages, originalImages }) {
   };
 
   return (
-    <Container>
+    <div className={styles.fileUploadBox}>
       {error && <h1>{errorMessage}</h1>}
       <Dropzone onDrop={handleDrop}>
         {({ getRootProps, getInputProps }) => (
-          <section>
-            <Zone {...getRootProps()}>
+          <section className={styles.zoneContainer}>
+            <div className={styles.zone} {...getRootProps()}>
               <input {...getInputProps()} />
               <p>Drag 'n' drop some files here, or click to select files</p>
-            </Zone>
+            </div>
           </section>
         )}
       </Dropzone>
-      <Previews>
+      <div className={styles.previews}>
         {images &&
           images.map((image, index) => (
             <div onClick={() => handleDelete(image)} key={index}>
               <img
-                style={{ maxWidth: '350px' }}
+                className={styles.image}
                 src={`http://localhost:4000/${image.filePath}`}
                 alt='product'
               />
             </div>
           ))}
-      </Previews>
-    </Container>
+      </div>
+    </div>
   );
 }
 

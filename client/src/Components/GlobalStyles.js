@@ -27,6 +27,7 @@ const GlobalStyles = createGlobalStyle`
   .container {
     margin-top:15vh;
     padding: 0 10vw;
+    padding-bottom:10vh;
   }
 
   input,
@@ -39,12 +40,27 @@ const GlobalStyles = createGlobalStyle`
     padding: 0;
   }
 
+  input[type="number" i].adminPriceInput {
+    padding: 1rem;
+  }
+
+
   input::-webkit-outer-spin-button,
   input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
   }
 
+  select {
+  -webkit-appearance: none;  
+  -moz-appearance: none;
+  appearance: none;
+  } 
+
+  
+  select::-ms-expand {
+    display: none;
+  }
 
 `;
 

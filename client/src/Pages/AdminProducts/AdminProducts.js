@@ -47,9 +47,7 @@ function AdminProducts() {
           <div className={styles.head}>
             <h2>Description</h2>
           </div>
-          <div className={styles.head}>
-            <h2></h2>
-          </div>
+          <div className={styles.head}></div>
         </div>
         {data.products.map((item) => (
           <div className={styles.productCard} key={item._id}>
