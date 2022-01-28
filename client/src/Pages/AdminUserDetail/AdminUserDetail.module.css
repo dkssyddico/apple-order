@@ -1,0 +1,52 @@
+.adminUserDetail {
+  padding: 0 8vw;
+}
+
+.title {
+  font-size: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 3px solid black;
+  margin-bottom: 2rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+.infoContainer {
+  margin-bottom: 2rem;
+}
+
+.infoContainer p {
+  margin-bottom: 1rem;
+}
+
+.orderContainer {
+  border-top: 3px solid black;
+}
+
+.orderContainer__title {
+  margin: 2rem 0;
+  text-align: center;
+  font-size: 1.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid lightgray;
+}
+
+.btnContainer {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+
+.deleteBtn {
+  padding: 1rem;
+  color: red;
+  border: 1px solid red;
+  border-radius: 2rem;
+  font-weight: 600;
+  transition: all 0.3s ease-in-out;
+}
+
+.deleteBtn:hover {
+  background-color: red;
+  color: white;
+}

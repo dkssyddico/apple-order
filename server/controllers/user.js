@@ -288,10 +288,11 @@ export const getUserInfo = async (req, res) => {
   if (user.role === 0) {
     try {
       let currentUser = await User.findById(userId).populate('orders');
+      let orders = currentUser.orders.sort((a, b) => b.createdAt - a.createdAt);
       let info = {
         username: currentUser.username,
         email: currentUser.email,
-        orders: currentUser.orders,
+        orders,
       };
       return res.status(200).json({ success: true, info });
     } catch (error) {

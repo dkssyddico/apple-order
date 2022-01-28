@@ -1,40 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import { useQuery } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
+import OrderCard from '../../Components/OrderCard/OrderCard';
 import userService from '../../service/user';
+import styles from './AdminUserDetail.module.css';
 
 function AdminUserDetail() {
   const navigate = useNavigate();
   const { userId } = useParams();
-  const [info, setInfo] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [infoError, setInfoError] = useState(false);
-  const [infoErrorMessage, setInfoErrorMessage] = useState('');
   const [deleteError, setDeleteError] = useState(false);
   const [deleteErrorMessage, setDeleteErrorMessage] = useState('');
-
-  const getUserInfo = async (userId) => {
-    try {
-      setLoading(true);
-      let {
-        data: { info },
-      } = await userService.getProfile(userId);
-      setInfo(info);
-    } catch (error) {
-      let {
-        response: {
-          data: { message },
-        },
-      } = error;
-      setInfoError(true);
-      setInfoErrorMessage(message ? message : error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    getUserInfo(userId);
-  }, [userId]);
 
   const handleDelete = (userId) => {
     const confirm = window.confirm('정말 이 유저를 삭제합니까?');
@@ -61,26 +36,55 @@ function AdminUserDetail() {
     }
   };
 
+  const { isLoading, isError, data, error } = useQuery('user', async () => {
+    let { data } = await userService.getProfile(userId);
+    return data;
+  });
+
+  if (isLoading) {
+    return (
+      <div className={styles.adminUserDetail}>
+        <p>Now loading...</p>
+      </div>
+    );
+  }
+  if (isError) {
+    return (
+      <div className={styles.adminUserDetail}>
+        <span>Error: {error.message}</span>
+      </div>
+    );
+  }
+
   return (
-    <div className='container'>
-      <h1>User Info</h1>
-      {loading ? (
-        <h1>Now loading</h1>
-      ) : infoError ? (
-        <h1>{infoErrorMessage}</h1>
-      ) : (
-        <section>
+    <div className={styles.adminUserDetail}>
+      <h1 className={styles.title}>User Info</h1>
+      <section>
+        <div className={styles.infoContainer}>
+          <p>Username: {data.info && data.info.username}</p>
+          <p>Email: {data.info && data.info.email}</p>
+        </div>
+        {deleteError && <p>{deleteErrorMessage}</p>}
+        <div className={styles.orderContainer}>
+          <h2 className={styles.orderContainer__title}>Order list</h2>
           <div>
-            <h2>{info && info.username}</h2>
-            <h2>{info && info.email}</h2>
+            {data.info &&
+              data.info.orders.map((order) => (
+                <OrderCard
+                  key={order._id}
+                  id={order._id}
+                  items={order.items}
+                  createdAt={order.createdAt.slice(0, 10)}
+                />
+              ))}
           </div>
-          {deleteError && <p>{deleteErrorMessage}</p>}
-          <div>
-            <button onClick={() => handleDelete(userId)}>Remove user</button>
-          </div>
-          <div>{info && info.orders.map((order) => <h3 key={order._id}>{order._id}</h3>)}</div>
-        </section>
-      )}
+        </div>
+        <div className={styles.btnContainer}>
+          <button className={styles.deleteBtn} onClick={() => handleDelete(userId)}>
+            Remove this user
+          </button>
+        </div>
+      </section>
     </div>
   );
 }

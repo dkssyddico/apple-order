@@ -4,7 +4,6 @@ import { FaArrowRight } from 'react-icons/fa';
 import styles from './OrderCard.module.css';
 
 function OrderCard({ id, items, createdAt }) {
-  console.log(items);
   return (
     <div className={styles.card}>
       <h4 className={styles.date}>{createdAt}</h4>

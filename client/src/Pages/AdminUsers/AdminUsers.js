@@ -10,11 +10,18 @@ function AdminUsers() {
     return data;
   });
   if (isLoading) {
-    return <h1>Now Loading</h1>;
+    return (
+      <div className={styles.adminUsers}>
+        <p>Now loading...</p>
+      </div>
+    );
   }
   if (isError) {
-    console.log(error.response);
-    return <span>Error: {error.message}</span>;
+    return (
+      <div className={styles.adminUsers}>
+        <span>Error: {error.message}</span>
+      </div>
+    );
   }
 
   return (
