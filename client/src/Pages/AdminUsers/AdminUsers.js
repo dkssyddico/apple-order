@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import userService from '../../service/user';
+import styles from './AdminUsers.module.css';
 
 function AdminUsers() {
   const { isLoading, isError, data, error } = useQuery('user', async () => {
@@ -17,17 +18,22 @@ function AdminUsers() {
   }
 
   return (
-    <div className='container'>
-      <h1>Admin Users</h1>
-      <section>
+    <div className={styles.adminUsers}>
+      <h1 className={styles.title}>Admin Users</h1>
+      <section className={styles.tableContainer}>
+        <div className={styles.headBox}>
+          <h2 className={styles.head}>Username</h2>
+          <h2 className={styles.head}>Email</h2>
+          <h2 className={styles.head}>Orders</h2>
+        </div>
         {data.users &&
           data.users.map((user) => (
-            <div key={user._id}>
-              <Link to={`/admin/users/${user._id}`}>
-                <span>{user.username}</span>
-                <span>{user.email}</span>
-                <span>{user.ordersCount}order</span>
-              </Link>
+            <div className={styles.contentBox} key={user._id}>
+              <p className={styles.content}>
+                <Link to={`/admin/users/${user._id}`}>{user.username}</Link>
+              </p>
+              <p className={styles.content}>{user.email}</p>
+              <p className={styles.content}>{user.ordersCount}</p>
             </div>
           ))}
       </section>
