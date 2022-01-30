@@ -11,23 +11,19 @@
   align-items: center;
 }
 
-.head:first-child,
 .content:first-child {
   flex-basis: 10%;
 }
 
-.head:nth-child(2),
 .content:nth-child(2) {
   flex-basis: 40%;
 }
 
-.content:nth-child(3),
-.head:nth-child(3) {
+.content:nth-child(3) {
   flex-basis: 20%;
 }
 
-.content:last-child,
-.head:last-child {
+.content:last-child {
   flex-basis: 30%;
 }
 
