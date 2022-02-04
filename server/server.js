@@ -30,10 +30,6 @@ app.use('/api/users', userRouter);
 app.use('/api/products', productRouter);
 app.use('/api/orders', orderRouter);
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
-
 console.log(process.env.NODE_ENV);
 
 // Have Node serve the files for our built React app
