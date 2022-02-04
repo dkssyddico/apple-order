@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 dotenv.config();
@@ -37,7 +37,10 @@ const userSchema = new mongoose.Schema(
 userSchema.pre('save', async function () {
   const user = this;
   if (user.isModified('password')) {
-    user.password = await bcrypt.hash(user.password, parseInt(process.env.SALT_ROUNDS));
+    user.password = await bcrypt.hash(
+      user.password,
+      parseInt(process.env.SALT_ROUNDS)
+    );
   }
 });
 
