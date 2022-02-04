@@ -9,7 +9,7 @@ import productRouter from './routers/product.js';
 import orderRouter from './routers/order.js';
 
 const app = express();
-const port = 4000 || process.env.PORT;
+const port = process.env.PORT || 4000;
 
 app.use(morgan('dev'));
 
