@@ -1,5 +1,4 @@
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import User from '../models/User.js';
 import Product from '../models/Product.js';
@@ -103,12 +102,10 @@ export const getAll = async (req, res) => {
     });
     return res.status(200).json({ success: true, users });
   } catch (error) {
-    return res
-      .status(400)
-      .json({
-        success: false,
-        message: '모든 유저 정보를 불러오는데 실패했습니다.',
-      });
+    return res.status(400).json({
+      success: false,
+      message: '모든 유저 정보를 불러오는데 실패했습니다.',
+    });
   }
 };
 
@@ -149,12 +146,10 @@ export const getCartInfo = async (req, res) => {
     await User.findByIdAndUpdate(id, { cart: newCart });
     return res.status(200).json({ success: true, cart: newCart });
   } catch (error) {
-    return res
-      .status(400)
-      .json({
-        success: false,
-        message: '유저 및 장바구니 정보를 불러오는데 실패했습니다.',
-      });
+    return res.status(400).json({
+      success: false,
+      message: '유저 및 장바구니 정보를 불러오는데 실패했습니다.',
+    });
   }
 };
 
@@ -184,12 +179,10 @@ export const addItemToCart = async (req, res) => {
   user.cart.push(item);
   await user.save((err, user) => {
     if (err) {
-      return res
-        .status(400)
-        .json({
-          success: false,
-          message: '카트에 아이템을 저장하는데 실패했습니다.',
-        });
+      return res.status(400).json({
+        success: false,
+        message: '카트에 아이템을 저장하는데 실패했습니다.',
+      });
     }
     return res.status(201).json({ success: true, cart: user.cart });
   });
@@ -238,12 +231,10 @@ export const deleteItem = async (req, res) => {
     await User.findByIdAndUpdate(userId, { cart: newCart });
     return res.status(200).json({ success: true, cart: newCart });
   } catch (error) {
-    return res
-      .status(400)
-      .json({
-        success: false,
-        message: '장바구니에서 상품을 삭제하는데 실패했습니다.',
-      });
+    return res.status(400).json({
+      success: false,
+      message: '장바구니에서 상품을 삭제하는데 실패했습니다.',
+    });
   }
 };
 
@@ -265,12 +256,10 @@ export const refreshCart = async (req, res) => {
   await currentUser.save((err, user) => {
     if (err) {
       console.log(err);
-      return res
-        .status(400)
-        .json({
-          success: false,
-          errorMessage: '유저 정보에 카트 정보를 지우는데 실패했습니다.',
-        });
+      return res.status(400).json({
+        success: false,
+        errorMessage: '유저 정보에 카트 정보를 지우는데 실패했습니다.',
+      });
     }
   });
   return res.status(200).json({ success: true, cart: [] });
@@ -301,12 +290,10 @@ export const addOrder = async (req, res) => {
     await currentUser.save((err, user) => {
       if (err) {
         console.log(err);
-        return res
-          .status(400)
-          .json({
-            success: false,
-            errorMessage: '유저 정보에 새로운 주문 저장을 실패했습니다.',
-          });
+        return res.status(400).json({
+          success: false,
+          errorMessage: '유저 정보에 새로운 주문 저장을 실패했습니다.',
+        });
       }
     });
     return res.status(200).json({ success: true, orderId: newOrder._id });
@@ -332,12 +319,10 @@ export const getOrders = async (req, res) => {
     return res.status(200).json({ success: true, orders });
   } catch (error) {
     console.log(error);
-    return res
-      .status(400)
-      .json({
-        success: false,
-        message: '주문 정보를 불러오는데 실패했습니다.',
-      });
+    return res.status(400).json({
+      success: false,
+      message: '주문 정보를 불러오는데 실패했습니다.',
+    });
   }
 };
 
@@ -409,12 +394,10 @@ export const changeUsername = async (req, res) => {
         return res.status(200).json({ success: true });
       } catch (error) {
         console.log('error4');
-        return res
-          .status(400)
-          .json({
-            success: false,
-            message: '유저네임 업데이트에 실패했습니다.',
-          });
+        return res.status(400).json({
+          success: false,
+          message: '유저네임 업데이트에 실패했습니다.',
+        });
       }
     }
   }
