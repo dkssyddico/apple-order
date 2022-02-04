@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
-import User from '../models/User';
+import User from '../models/User.js';
 dotenv.config();
 
 export const checkByRefreshToken = (req, res, next) => {
@@ -8,7 +8,11 @@ export const checkByRefreshToken = (req, res, next) => {
     console.log('error here, r token');
     return res
       .status(401)
-      .json({ success: false, error, message: '인증에 유효한 리프레쉬 토큰 정보가 없습니다.' });
+      .json({
+        success: false,
+        error,
+        message: '인증에 유효한 리프레쉬 토큰 정보가 없습니다.',
+      });
   }
   // r token을 분해한다.
   let { r_token } = req.cookies;
@@ -18,7 +22,11 @@ export const checkByRefreshToken = (req, res, next) => {
       res.clearCookie('r_token');
       return res
         .status(401)
-        .json({ success: false, error: err, message: '인증에서 문제가 발생했습니다.' });
+        .json({
+          success: false,
+          error: err,
+          message: '인증에서 문제가 발생했습니다.',
+        });
     }
     try {
       let user = await User.findById({ _id: decoded._id });
@@ -35,7 +43,11 @@ export const checkByRefreshToken = (req, res, next) => {
       res.clearCookie('r_token');
       return res
         .status(401)
-        .json({ success: false, error, message: '인증에 유효한 유저 정보가 없습니다.' });
+        .json({
+          success: false,
+          error,
+          message: '인증에 유효한 유저 정보가 없습니다.',
+        });
     }
   });
 };

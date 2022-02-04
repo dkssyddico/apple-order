@@ -1,7 +1,14 @@
 import express from 'express';
-import { add, getAll, getInfo, remove, saveImage, update } from '../controllers/product';
-import { auth } from '../middleware/auth';
-import isAdmin from '../middleware/isAdmin';
+import {
+  add,
+  getAll,
+  getInfo,
+  remove,
+  saveImage,
+  update,
+} from '../controllers/product.js';
+import { auth } from '../middleware/auth.js';
+import isAdmin from '../middleware/isAdmin.js';
 
 const productRouter = express.Router();
 

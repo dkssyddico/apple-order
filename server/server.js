@@ -1,6 +1,6 @@
+import path from 'path';
 import express from 'express';
 import morgan from 'morgan';
-import path from 'path';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import './db.js';
@@ -20,8 +20,10 @@ app.use(
   })
 );
 
+const __dirname = path.resolve();
+
 // Have Node serve the files for our built React app
-app.use(express.static(path.resolve(__dirname, '../client/build')));
+app.use(express.static(path.join(__dirname, '../client/build')));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -38,7 +40,7 @@ app.get('/', (req, res) => {
 
 // All other GET requests not handled before will return our React app
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+  res.sendFile(path.join(__dirname + '../client/build/index.html'));
 });
 
 app.listen(port, () => {

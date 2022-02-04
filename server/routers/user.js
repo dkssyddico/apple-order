@@ -15,10 +15,10 @@ import {
   logout,
   refreshCart,
   removeUser,
-} from '../controllers/user';
-import { auth } from '../middleware/auth';
-import { checkByRefreshToken } from '../middleware/checkByRefreshToken';
-import isAdmin from '../middleware/isAdmin';
+} from '../controllers/user.js';
+import { auth } from '../middleware/auth.js';
+import { checkByRefreshToken } from '../middleware/checkByRefreshToken.js';
+import isAdmin from '../middleware/isAdmin.js';
 
 const userRouter = express.Router();
 

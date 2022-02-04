@@ -1,9 +1,11 @@
-import Order from '../models/Order';
-import User from '../models/User';
+import Order from '../models/Order.js';
+import User from '../models/User.js';
 
 export const getAll = async (req, res) => {
   try {
-    let orders = await Order.find().populate('user').sort({ createdAt: 'desc' });
+    let orders = await Order.find()
+      .populate('user')
+      .sort({ createdAt: 'desc' });
     orders = orders.map((order) => {
       return {
         _id: order._id,
@@ -20,7 +22,10 @@ export const getAll = async (req, res) => {
   } catch (error) {
     return res
       .status(400)
-      .json({ success: false, message: '모든 주문 정보를 불러오는데 실패했습니다.' });
+      .json({
+        success: false,
+        message: '모든 주문 정보를 불러오는데 실패했습니다.',
+      });
   }
 };
 
@@ -38,12 +43,17 @@ export const getOrder = async (req, res) => {
       return res.status(200).json({ success: true, order });
     } else {
       console.log('error');
-      return res.status(400).json({ success: false, message: '잘못된 접근입니다.' });
+      return res
+        .status(400)
+        .json({ success: false, message: '잘못된 접근입니다.' });
     }
   } catch (error) {
     console.log('error2');
     return res
       .status(400)
-      .json({ success: false, message: '주문 정보를 불러오는데 실패했습니다.' });
+      .json({
+        success: false,
+        message: '주문 정보를 불러오는데 실패했습니다.',
+      });
   }
 };
