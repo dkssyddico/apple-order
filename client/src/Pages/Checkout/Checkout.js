@@ -10,6 +10,7 @@ function Checkout() {
   const {
     state: { items },
   } = useLocation();
+  console.log(items);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
@@ -64,13 +65,13 @@ function Checkout() {
         </div>
         <div className={styles.contentContainer}>
           {items.map((item) => (
-            <div className={styles.contents}>
+            <div key={uuidv4()} className={styles.contents}>
               <section className={styles.content}>
                 <div>
                   <img
                     className={styles.image}
                     src={`http://localhost:4000/${item.images[0].filePath}`}
-                    alt='product'
+                    alt="product"
                   />
                 </div>
                 <p className={styles.itemName}>{item.name}</p>
@@ -86,11 +87,20 @@ function Checkout() {
         </div>
       </section>
       <section className={styles.summaryContainer}>
-        <p>Total price: {items.reduce((a, b) => b.canBeSold && a + b.price * b.quantity, 0)}</p>
-        <p>Total items: {items ? items.filter((item) => item.canBeSold).length : 0}</p>
+        <p>
+          Total price:{' '}
+          {items.reduce((a, b) => b.canBeSold && a + b.price * b.quantity, 0)}
+        </p>
+        <p>
+          Total items:{' '}
+          {items ? items.filter((item) => item.canBeSold).length : 0}
+        </p>
       </section>
       <section className={styles.btnContainer}>
-        <button className={styles.paymentBtn} onClick={() => handlePaymentClick()}>
+        <button
+          className={styles.paymentBtn}
+          onClick={() => handlePaymentClick()}
+        >
           Payment
         </button>
       </section>

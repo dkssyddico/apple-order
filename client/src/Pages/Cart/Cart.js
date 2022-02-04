@@ -12,6 +12,7 @@ function Cart() {
   const cart = useSelector((state) => state.cart);
   const { userId } = user;
   let { items } = cart;
+  console.log(items);
 
   useEffect(() => {
     dispatch(getCart(userId));

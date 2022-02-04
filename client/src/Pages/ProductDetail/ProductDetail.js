@@ -16,15 +16,20 @@ function ProductDetail() {
   const cart = useSelector((state) => state.cart);
   const { login, userId } = user;
   const { items } = cart;
-  const { isLoading, isError, data, error } = useQuery(['product', productId], async () => {
-    let { data } = await productService.getInfo(productId);
-    return data;
-  });
+  const { isLoading, isError, data, error } = useQuery(
+    ['product', productId],
+    async () => {
+      let { data } = await productService.getInfo(productId);
+      return data;
+    }
+  );
 
   // 객체 형태로 줘야함.
   const handleCartClick = () => {
     if (!login) {
-      alert('장바구니는 로그인하셔야 이용하실 수 있습니다. 로그인 페이지로 이동합니다.');
+      alert(
+        '장바구니는 로그인하셔야 이용하실 수 있습니다. 로그인 페이지로 이동합니다.'
+      );
       navigate('/login');
       return;
     }
@@ -33,14 +38,17 @@ function ProductDetail() {
       productId,
       quantity,
     };
-    let existence = items.filter((item) => item.productId === productId).length > 0 ? true : false;
+    let existence =
+      items.filter((item) => item.productId === productId).length > 0
+        ? true
+        : false;
     if (existence) {
       alert('이미 장바구니에 있는 상품입니다.');
     } else {
       let confirm = window.confirm(
-        `다음과 같은 상품을 장바구니에 넣으시겠습니까?\n${data.product.name} ${quantity}개 ${
-          quantity * data.product.price
-        }`
+        `다음과 같은 상품을 장바구니에 넣으시겠습니까?\n${
+          data.product.name
+        } ${quantity}개 ${quantity * data.product.price}`
       );
       if (confirm) {
         dispatch(addToCart(userData));
@@ -65,6 +73,25 @@ function ProductDetail() {
     setQuantity(parseInt(value));
   };
 
+  const handleShopNowClick = () => {
+    let itemData = {
+      productId: data.product._id,
+      canBeSold: data.product.canBeSold,
+      images: data.product.images,
+      name: data.product.name,
+      price: data.product.price,
+      quantity,
+    };
+    let confirm = window.confirm(
+      `다음과 같은 상품을 바로 주문 하시겠습니까?\n${
+        data.product.name
+      } ${quantity}개 ${quantity * data.product.price}`
+    );
+    if (confirm) {
+      navigate('/checkout', { state: { items: [itemData] } });
+    }
+  };
+
   if (isLoading) {
     return (
       <div className={styles.product}>
@@ -86,7 +113,7 @@ function ProductDetail() {
         <img
           className={styles.productImg}
           src={`http://localhost:4000/${data.product.images[0].filePath}`}
-          alt='product'
+          alt="product"
         />
       </div>
       <div className={styles.infoContainer}>
@@ -103,7 +130,7 @@ function ProductDetail() {
             </button>
             <input
               className={styles.input}
-              type='number'
+              type="number"
               onChange={handleQuantityChange}
               value={quantity}
             />
@@ -114,13 +141,17 @@ function ProductDetail() {
         </div>
         <div className={styles.totalPriceContainer}>
           <h3>Total Price</h3>
-          <h3 className={styles.totalPrice}>${quantity * data.product.price}</h3>
+          <h3 className={styles.totalPrice}>
+            ${quantity * data.product.price}
+          </h3>
         </div>
         <div className={styles.btnContainer}>
           <button className={styles.cartBtn} onClick={handleCartClick}>
             Add to cart
           </button>
-          <button className={styles.shopNowBtn}>Shop now</button>
+          <button className={styles.shopNowBtn} onClick={handleShopNowClick}>
+            Shop now
+          </button>
         </div>
       </div>
     </div>
