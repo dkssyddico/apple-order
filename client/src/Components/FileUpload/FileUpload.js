@@ -64,8 +64,8 @@ function FileUpload({ refreshImages, originalImages }) {
             <div onClick={() => handleDelete(image)} key={index}>
               <img
                 className={styles.image}
-                src={`http://localhost:4000/${image.filePath}`}
-                alt='product'
+                src={image.filePath}
+                alt="product"
               />
             </div>
           ))}

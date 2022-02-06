@@ -16,12 +16,17 @@ function OrderItemCard({ productId, images, name, quantity, price }) {
       productId,
       quantity: 1,
     };
-    let existence = items.filter((item) => item.productId === productId).length > 0 ? true : false;
+    let existence =
+      items.filter((item) => item.productId === productId).length > 0
+        ? true
+        : false;
     if (existence) {
       alert('이미 장바구니에 있는 상품입니다.');
     } else {
       let confirm = window.confirm(
-        `다음과 같은 상품을 장바구니에 넣으시겠습니까?\n${name} 1개 ${1 * price}`
+        `다음과 같은 상품을 장바구니에 넣으시겠습니까?\n${name} 1개 ${
+          1 * price
+        }`
       );
       if (confirm) {
         dispatch(addToCart(cartData));
@@ -36,8 +41,8 @@ function OrderItemCard({ productId, images, name, quantity, price }) {
           <Link to={`/product/${productId}`}>
             <img
               className={styles.image}
-              src={`http://localhost:4000/${images[0].filePath}`}
-              alt='product'
+              src={images[0].filePath}
+              alt="product"
             ></img>
           </Link>
         </div>

@@ -26,7 +26,7 @@ function Products() {
   }
 
   return (
-    <div className={styles.products}>
+    <section className={styles.products}>
       {data.products.map((item) => (
         <MainProductCard
           key={item._id}
@@ -36,7 +36,7 @@ function Products() {
           price={item.price}
         />
       ))}
-    </div>
+    </section>
   );
 }
 

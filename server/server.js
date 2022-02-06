@@ -30,7 +30,7 @@ app.use('/api/users', userRouter);
 app.use('/api/products', productRouter);
 app.use('/api/orders', orderRouter);
 
-console.log(process.env.NODE_ENV);
+// console.log(process.env.NODE_ENV);
 
 // Have Node serve the files for our built React app
 app.use(express.static(path.join(__dirname, '/client/build')));
@@ -40,7 +40,7 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname + '/client/build/index.html'));
 });
 
-console.log(path.join(__dirname, '/client/build/index.html'));
+// console.log(path.join(__dirname, '/client/build/index.html'));
 
 const port = process.env.PORT || 4000;
 

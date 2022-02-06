@@ -1,5 +1,9 @@
+import aws from 'aws-sdk';
+import multerS3 from 'multer-s3';
 import multer from 'multer';
 import Product from '../models/Product.js';
+import dotenv from 'dotenv';
+dotenv.config();
 
 export const add = async (req, res) => {
   let { name, price, category, description, images } = req.body;
@@ -26,38 +30,53 @@ export const add = async (req, res) => {
       .json({ success: true, message: '새로운 상품이 등록되었습니다!' });
   } catch (error) {
     console.log(error);
-    return res
-      .status(400)
-      .json({
-        success: false,
-        error,
-        message: '새로운 상품을 등록 실패했습니다.',
-      });
+    return res.status(400).json({
+      success: false,
+      error,
+      message: '새로운 상품을 등록 실패했습니다.',
+    });
   }
 };
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/');
-  },
-  filename: function (req, file, cb) {
-    cb(null, `${Date.now()}_${file.originalname}`);
+const s3 = new aws.S3({
+  credentials: {
+    accessKeyId: process.env.AWS_ID,
+    secretAccessKey: process.env.AWS_SECRET,
   },
 });
 
-const upload = multer({ storage: storage }).single('image');
+const multerStorage = multerS3({
+  s3: s3,
+  bucket: 'apple-order',
+  acl: 'public-read',
+});
+
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, 'uploads/');
+//   },
+//   filename: function (req, file, cb) {
+//     cb(null, `${Date.now()}_${file.originalname}`);
+//   },
+// });
+
+const upload = multer({
+  dest: 'uploads/',
+  storage: multerStorage,
+}).single('image');
 
 export const saveImage = (req, res) => {
   upload(req, res, (err) => {
     if (err) {
+      console.log(err);
       return res
         .status(400)
         .json({ success: false, message: '사진 업로드에 실패했습니다' });
     }
+    console.log(res.req.file);
     return res.status(200).json({
       success: true,
-      filePath: res.req.file.path,
-      filename: res.req.file.filename,
+      filePath: res.req.file.location,
     });
   });
 };
@@ -67,13 +86,11 @@ export const getAll = async (req, res) => {
     const products = await Product.find().sort({ createdAt: 'desc' });
     return res.status(200).json({ success: true, products });
   } catch (error) {
-    return res
-      .status(400)
-      .json({
-        success: false,
-        error,
-        message: '상품들을 불러오는데 실패했습니다.',
-      });
+    return res.status(400).json({
+      success: false,
+      error,
+      message: '상품들을 불러오는데 실패했습니다.',
+    });
   }
 };
 
@@ -99,12 +116,10 @@ export const getInfo = async (req, res) => {
     let product = await Product.findById(id);
     return res.status(200).json({ success: true, product });
   } catch (error) {
-    return res
-      .status(400)
-      .json({
-        success: false,
-        message: '상품 정보를 불러오는데 실패했습니다.',
-      });
+    return res.status(400).json({
+      success: false,
+      message: '상품 정보를 불러오는데 실패했습니다.',
+    });
   }
 };
 

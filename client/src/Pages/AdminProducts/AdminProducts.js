@@ -5,10 +5,13 @@ import productService from '../../service/product';
 import styles from './AdminProducts.module.css';
 
 function AdminProducts() {
-  const { isLoading, isError, data, error } = useQuery('adminProducts', async () => {
-    let { data } = await productService.getAllProducts();
-    return data;
-  });
+  const { isLoading, isError, data, error } = useQuery(
+    'adminProducts',
+    async () => {
+      let { data } = await productService.getAllProducts();
+      return data;
+    }
+  );
 
   if (isLoading) {
     return (
@@ -30,7 +33,7 @@ function AdminProducts() {
       <h1 className={styles.title}>Admin Products</h1>
       <div className={styles.btnContainer}>
         <button>
-          <Link to='/admin/products/upload'>Upload product</Link>
+          <Link to="/admin/products/upload">Upload product</Link>
         </button>
       </div>
       <section>
@@ -54,8 +57,8 @@ function AdminProducts() {
             <div className={styles.content}>
               <img
                 className={styles.image}
-                alt='item'
-                src={`http://localhost:4000/${item.images[0].filePath}`}
+                alt="item"
+                src={item.images[0].filePath}
               />
             </div>
             <div className={styles.content}>

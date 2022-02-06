@@ -11,7 +11,7 @@
   width: 270px;
   height: 300px;
   animation: floating 2s ease-in;
-  flex-basis: 30%;
+  /* flex-basis: 30%; */
   margin-bottom: 1rem;
 }
 

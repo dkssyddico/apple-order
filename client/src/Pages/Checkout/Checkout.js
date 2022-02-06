@@ -70,7 +70,7 @@ function Checkout() {
                 <div>
                   <img
                     className={styles.image}
-                    src={`http://localhost:4000/${item.images[0].filePath}`}
+                    src={item.images[0].filePath}
                     alt="product"
                   />
                 </div>

@@ -45,20 +45,29 @@ function CartItem({ name, images, price, quantity, canBeSold, productId }) {
   return (
     <div className={styles.contents}>
       <section className={styles.content}>
-        <input type='checkbox' />
+        <input type="checkbox" />
       </section>
       <section className={styles.content}>
         <div className={styles.infoBox}>
           <div>
             <img
               className={styles.image}
-              src={`http://localhost:4000/${images[0].filePath}`}
-              alt='product'
+              src={images[0].filePath}
+              alt="product"
             />
           </div>
           <p className={styles.itemName}>{name}</p>
-          <div className={styles.iconBox} onClick={() => handleDelete(productId)}>
-            <TiDelete style={{ cursor: 'pointer', color: 'lightgray', fontSize: '1.5em' }} />
+          <div
+            className={styles.iconBox}
+            onClick={() => handleDelete(productId)}
+          >
+            <TiDelete
+              style={{
+                cursor: 'pointer',
+                color: 'lightgray',
+                fontSize: '1.5em',
+              }}
+            />
           </div>
         </div>
       </section>
@@ -69,13 +78,21 @@ function CartItem({ name, images, price, quantity, canBeSold, productId }) {
       </section>
       <section className={styles.content}>
         <div className={styles.qtyContainer}>
-          <button onClick={handleQtyBtnClick} className={styles.qtyBtn} name='decrement'>
+          <button
+            onClick={handleQtyBtnClick}
+            className={styles.qtyBtn}
+            name="decrement"
+          >
             -
           </button>
           <div className={styles.qtyBox}>
             <span>{parseInt(quantity)}</span>
           </div>
-          <button onClick={handleQtyBtnClick} className={styles.qtyBtn} name='increment'>
+          <button
+            onClick={handleQtyBtnClick}
+            className={styles.qtyBtn}
+            name="increment"
+          >
             +
           </button>
         </div>

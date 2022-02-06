@@ -6,11 +6,9 @@ function Home() {
   return (
     <div className={styles.home}>
       <h1 className={styles.title}>Welcome to apple order!</h1>
-      <section className={styles.productsContainer}>
-        <h2 className={styles.productsTitle}>Products</h2>
-        <div className={styles.bar}></div>
-        <Products />
-      </section>
+      <h2 className={styles.productsTitle}>Products</h2>
+      <div className={styles.bar}></div>
+      <Products />
     </div>
   );
 }

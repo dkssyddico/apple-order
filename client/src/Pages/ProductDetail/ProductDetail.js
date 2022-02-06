@@ -112,7 +112,7 @@ function ProductDetail() {
       <div className={styles.imageContainer}>
         <img
           className={styles.productImg}
-          src={`http://localhost:4000/${data.product.images[0].filePath}`}
+          src={data.product.images[0].filePath}
           alt="product"
         />
       </div>
