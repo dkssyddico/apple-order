@@ -82,12 +82,10 @@
   border-right: 1px solid lightgray;
 }
 
-.infoBox {
-  width: 100%;
+.imageBox {
   display: flex;
-  justify-content: center;
   align-items: center;
-  position: relative;
+  margin-right: 1rem;
 }
 
 .image {
@@ -96,7 +94,7 @@
 }
 
 .itemName {
-  margin-left: 1rem;
+  width: 150px;
 }
 
 .summaryContainer {
@@ -110,7 +108,7 @@
   margin-bottom: 3rem;
 }
 
-.summaryContainer p {
+.summaryContainer span {
   padding: 1rem;
 }
 

@@ -67,7 +67,7 @@ function Checkout() {
           {items.map((item) => (
             <div key={uuidv4()} className={styles.contents}>
               <section className={styles.content}>
-                <div>
+                <div className={styles.imageBox}>
                   <img
                     className={styles.image}
                     src={item.images[0].filePath}
@@ -87,14 +87,14 @@ function Checkout() {
         </div>
       </section>
       <section className={styles.summaryContainer}>
-        <p>
+        <span>
           Total price:{' '}
           {items.reduce((a, b) => b.canBeSold && a + b.price * b.quantity, 0)}
-        </p>
-        <p>
+        </span>
+        <span>
           Total items:{' '}
           {items ? items.filter((item) => item.canBeSold).length : 0}
-        </p>
+        </span>
       </section>
       <section className={styles.btnContainer}>
         <button
