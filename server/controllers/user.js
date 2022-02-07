@@ -58,8 +58,10 @@ export const login = async (req, res) => {
 
   return res
     .cookie('r_token', refreshToken, {
-      // httpOnly: true,
-      // sameSite: 'none',
+      httpOnly: true,
+      sameSite: 'none',
+      secure: true,
+      maxAge: 1000 * 60 * 60 * 24, // One day
     })
     .status(200)
     .json({

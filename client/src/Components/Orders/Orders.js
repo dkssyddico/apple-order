@@ -1,9 +1,10 @@
 import React from 'react';
 import { useQuery } from 'react-query';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import orderService from '../../service/order';
 import OrderCard from '../OrderCard/OrderCard';
 import styles from './Orders.module.css';
-import { useSelector } from 'react-redux';
 
 function Orders() {
   const user = useSelector((state) => state.user);
@@ -11,6 +12,7 @@ function Orders() {
 
   const { isLoading, isError, data, error } = useQuery('orders', async () => {
     let { data } = await orderService.getOrderByUserId(userId);
+    console.log(data);
     return data;
   });
 

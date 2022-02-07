@@ -35,30 +35,30 @@ function Login() {
     <section className={styles.loginContainer}>
       <div className={styles.loginCard}>
         <h1 className={styles.title}>Glad to see you again</h1>
-        {error && <h2>{error}</h2>}
+        {error && <p className={styles.error}>{error}</p>}
         <form className={styles.form} onSubmit={onSubmit}>
-          <label className={styles.label} htmlFor='email'>
+          <label className={styles.label} htmlFor="email">
             Email
           </label>
           <input
             className={styles.input}
             onChange={onChange}
-            name='email'
-            type='email'
-            placeholder='apple@order.com'
+            name="email"
+            type="email"
+            placeholder="apple@order.com"
           />
-          <label className={styles.label} htmlFor='password'>
+          <label className={styles.label} htmlFor="password">
             Password
           </label>
           <input
             className={styles.input}
             onChange={onChange}
-            name='password'
-            type='password'
-            placeholder='Enter your password'
-            minLength='6'
+            name="password"
+            type="password"
+            placeholder="Enter your password"
+            minLength="6"
           />
-          <button className={styles.loginBtn} type='submit'>
+          <button className={styles.loginBtn} type="submit">
             Sign in
           </button>
         </form>
@@ -66,7 +66,7 @@ function Login() {
           <p>
             Don't have an account?{' '}
             <span>
-              <Link className={styles.joinLink} to='/join'>
+              <Link className={styles.joinLink} to="/join">
                 Join Now
               </Link>
             </span>

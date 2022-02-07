@@ -12,7 +12,6 @@ function Cart() {
   const cart = useSelector((state) => state.cart);
   const { userId } = user;
   let { items } = cart;
-  console.log(items);
 
   useEffect(() => {
     dispatch(getCart(userId));
@@ -28,7 +27,7 @@ function Cart() {
       <section className={styles.cartContainer}>
         <div className={styles.headContainer}>
           <div className={styles.head}>
-            <input type='checkbox' />
+            <input type="checkbox" />
           </div>
           <div className={styles.head}>
             <h2>Product</h2>
@@ -61,12 +60,18 @@ function Cart() {
         </div>
       </section>
       <section className={styles.summaryContainer}>
-        <h1>Total price: ${items.reduce((a, b) => b.canBeSold && a + b.price * b.quantity, 0)}</h1>
-        <h1>Total items: {items ? items.filter((item) => item.canBeSold).length : 0}</h1>
+        <h1>
+          Total price: $
+          {items.reduce((a, b) => b.canBeSold && a + b.price * b.quantity, 0)}
+        </h1>
+        <h1>
+          Total items:{' '}
+          {items ? items.filter((item) => item.canBeSold).length : 0}
+        </h1>
       </section>
       <section className={styles.checkoutContainer}>
         <button className={styles.shoppingBtn}>
-          <Link to='/'>Keep shopping</Link>
+          <Link to="/">Keep shopping</Link>
         </button>
         <button
           onClick={() => handleCheckoutClick()}

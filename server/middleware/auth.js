@@ -12,16 +12,22 @@ export const auth = (req, res, next) => {
     jwt.verify(
       accessToken,
       process.env.JWT_SECRET,
-      async function (err, decoded) {
-        if (err) {
-          console.log('error here');
-          return res
-            .status(401)
-            .json({
+      async function (error, decoded) {
+        if (error) {
+          if (error instanceof jwt.TokenExpiredError) {
+            console.log('token expired');
+            return res.status(401).json({
               success: false,
-              error: err,
-              message: '인증에서 문제가 발생했습니다.',
+              error,
+              message: '액세스 토큰이 만료되었습니다. 다시 로그인해주세요.',
             });
+          }
+          console.log('error here');
+          return res.status(401).json({
+            success: false,
+            error,
+            message: '인증에서 문제가 발생했습니다.',
+          });
         }
         try {
           let user = await User.findOne({
@@ -32,13 +38,11 @@ export const auth = (req, res, next) => {
           next();
         } catch (error) {
           console.log('error here2');
-          return res
-            .status(401)
-            .json({
-              success: false,
-              error,
-              message: '인증에 유효한 유저 정보가 없습니다.',
-            });
+          return res.status(401).json({
+            success: false,
+            error,
+            message: '인증에 유효한 유저 정보가 없습니다.',
+          });
         }
       }
     );

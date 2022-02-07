@@ -27,54 +27,84 @@ function Router() {
     <BrowserRouter>
       <NavBar />
       <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/login' element={login ? <Navigate to='/' /> : <Login />} />
-        <Route path='/join' element={login ? <Navigate to='/' /> : <Join />} />
-        <Route path='/product/:id' element={<ProductDetail />} />
-
-        <Route path='/cart' element={login ? <Cart /> : <Navigate to='/login' />} />
-        <Route path='/checkout' element={login ? <Checkout /> : <Navigate to='/login' />} />
-        <Route path='/profile' element={login ? <Profile /> : <Navigate to='/login' />} />
-        <Route path='/orders' element={login ? <OrderHistory /> : <Navigate to='/login' />} />
+        <Route path="/" element={<Home />} />
         <Route
-          path='/orders/:orderId'
-          element={login ? <OrderDetail /> : <Navigate to='/login' />}
+          path="/login"
+          element={login ? <Navigate to="/" /> : <Login />}
         />
-        <Route path='/orderSuccess' element={login ? <OrderSuccess /> : <Navigate to='/login' />} />
+        <Route path="/join" element={login ? <Navigate to="/" /> : <Join />} />
+        <Route path="/product/:id" element={<ProductDetail />} />
 
         <Route
-          path='/admin'
-          element={login && isAdmin ? <AdminMain /> : <Navigate to='/login' />}
+          path="/cart"
+          element={login ? <Cart /> : <Navigate to="/login" />}
         />
         <Route
-          path='/admin/users'
-          element={login && isAdmin ? <AdminUsers /> : <Navigate to='/login' />}
+          path="/checkout"
+          element={login ? <Checkout /> : <Navigate to="/login" />}
         />
         <Route
-          path='/admin/users/:userId'
-          element={login && isAdmin ? <AdminUserDetail /> : <Navigate to='/login' />}
+          path="/profile"
+          element={login ? <Profile /> : <Navigate to="/login" />}
         />
         <Route
-          path='/admin/orders'
-          element={login && isAdmin ? <AdminOrders /> : <Navigate to='/login' />}
+          path="/orders"
+          element={login ? <OrderHistory /> : <Navigate to="/login" />}
         />
         <Route
-          path='/admin/orders/:orderId'
-          element={login && isAdmin ? <AdminOrderDetail /> : <Navigate to='/login' />}
+          path="/orders/:orderId"
+          element={login ? <OrderDetail /> : <Navigate to="/login" />}
         />
         <Route
-          path='/admin/products'
-          element={login && isAdmin ? <AdminProducts /> : <Navigate to='/login' />}
+          path="/orderSuccess"
+          element={login ? <OrderSuccess /> : <Navigate to="/login" />}
+        />
+
+        <Route
+          path="/admin"
+          element={login && isAdmin ? <AdminMain /> : <Navigate to="/login" />}
         />
         <Route
-          path='/admin/products/:productId'
-          element={login && login ? <AdminProductDetail /> : <Navigate to='/login' />}
+          path="/admin/users"
+          element={login && isAdmin ? <AdminUsers /> : <Navigate to="/login" />}
         />
         <Route
-          path='/admin/products/upload'
-          element={login && login ? <UploadProduct /> : <Navigate to='/login' />}
+          path="/admin/users/:userId"
+          element={
+            login && isAdmin ? <AdminUserDetail /> : <Navigate to="/login" />
+          }
         />
-        <Route path='*' element={<Navigate to='/' replace={true} />} />
+        <Route
+          path="/admin/orders"
+          element={
+            login && isAdmin ? <AdminOrders /> : <Navigate to="/login" />
+          }
+        />
+        <Route
+          path="/admin/orders/:orderId"
+          element={
+            login && isAdmin ? <AdminOrderDetail /> : <Navigate to="/login" />
+          }
+        />
+        <Route
+          path="/admin/products"
+          element={
+            login && isAdmin ? <AdminProducts /> : <Navigate to="/login" />
+          }
+        />
+        <Route
+          path="/admin/products/:productId"
+          element={
+            login && login ? <AdminProductDetail /> : <Navigate to="/login" />
+          }
+        />
+        <Route
+          path="/admin/products/upload"
+          element={
+            login && login ? <UploadProduct /> : <Navigate to="/login" />
+          }
+        />
+        <Route path="*" element={<Navigate to="/" replace={true} />} />
       </Routes>
     </BrowserRouter>
   );
