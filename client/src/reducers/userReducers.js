@@ -14,69 +14,52 @@ const initialState = {
   error: '',
 };
 
-const loginUser = createAsyncThunk(
-  loginUserAction,
-  async (userInfo, { rejectWithValue }) => {
-    try {
-      const { data } = await userService.login(userInfo);
-      console.log(data);
-      const accessToken = data.accessToken;
-      if (data.success) {
-        httpClient.defaults.headers.common[
-          'Authorization'
-        ] = `Bearer ${accessToken}`;
-      }
-      localStorage.setItem('r_token', true);
-      return data;
-    } catch (error) {
-      console.log(error.response);
-      return rejectWithValue(
-        error.response.data.message
-          ? error.response.data.message
-          : error.response.data.error.name
-      );
+const loginUser = createAsyncThunk(loginUserAction, async (userInfo, { rejectWithValue }) => {
+  try {
+    const { data } = await userService.login(userInfo);
+    console.log(data);
+    const accessToken = data.accessToken;
+    if (data.success) {
+      httpClient.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
     }
+    localStorage.setItem('r_token', true);
+    return data;
+  } catch (error) {
+    console.log(error.response);
+    return rejectWithValue(
+      error.response.data.message ? error.response.data.message : error.response.data.error.name
+    );
   }
-);
+});
 
-const refreshUser = createAsyncThunk(
-  refreshUserAction,
-  async (_, { rejectWithValue }) => {
-    try {
-      const { data } = await userService.refresh();
-      const accessToken = data.accessToken;
-      if (data.success) {
-        httpClient.defaults.headers.common[
-          'Authorization'
-        ] = `Bearer ${accessToken}`;
-      }
-      localStorage.setItem('r_token', true);
-      console.log(data);
-      return data;
-    } catch (error) {
-      console.log(error.response);
-      return rejectWithValue(
-        error.response.data.message
-          ? error.response.data.message
-          : error.response.data.error.name
-      );
+const refreshUser = createAsyncThunk(refreshUserAction, async (_, { rejectWithValue }) => {
+  try {
+    const { data } = await userService.refresh();
+    const accessToken = data.accessToken;
+    if (data.success) {
+      httpClient.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
     }
+    localStorage.setItem('r_token', true);
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.log(error.response);
+    return rejectWithValue(
+      error.response.data.message ? error.response.data.message : error.response.data.error.name
+    );
   }
-);
+});
 
-const logoutUser = createAsyncThunk(
-  logoutUserAction,
-  async (userInfo, { rejectWithValue }) => {
-    try {
-      const { data } = await userService.logout();
-      localStorage.removeItem('r_token');
-      return data;
-    } catch (error) {
-      console.log(error.response);
-      return rejectWithValue(error.response.data);
-    }
+const logoutUser = createAsyncThunk(logoutUserAction, async (userInfo, { rejectWithValue }) => {
+  try {
+    const { data } = await userService.logout();
+    localStorage.removeItem('r_token');
+    return data;
+  } catch (error) {
+    console.log(error.response);
+    return rejectWithValue(error.response.data);
   }
-);
+});
 
 const userSlice = createSlice({
   name: 'user',

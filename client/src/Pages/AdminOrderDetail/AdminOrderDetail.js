@@ -1,16 +1,39 @@
 import React from 'react';
 import { useQuery } from 'react-query';
-import { useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useParams, useNavigate } from 'react-router-dom';
+import { clearUser } from '../../reducers/userReducers';
 import OrderItemCard from '../../Components/OrderItemCard/OrderItemCard';
 import orderService from '../../service/order';
 import styles from './AdminOrderDetail.module.css';
 
 function AdminOrderDetail() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const { orderId } = useParams();
-  const { isLoading, isError, data, error } = useQuery('orderDetail', async () => {
-    let { data } = await orderService.getOrderByOrderId(orderId);
-    return data;
-  });
+  const { isLoading, isError, data, error } = useQuery(
+    'orderDetail',
+    async () => {
+      let { data } = await orderService.getOrderByOrderId(orderId);
+      return data;
+    },
+    {
+      onError: (error) => {
+        const { status } = error.response;
+        if (status === 401) {
+          alert(
+            error.response.data.message
+              ? error.response.data.message
+              : error.response.data.error.name
+          );
+          navigate('/login'); // 리프레쉬 토큰이 만료된 경우 새로 로그인 유도.
+          localStorage.removeItem('r_token');
+          dispatch(clearUser());
+        }
+      },
+    }
+  );
 
   if (isLoading) {
     return (

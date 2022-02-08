@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { getCart } from '../../reducers/cartReducer';
 import styles from './Cart.module.css';
 import CartItem from '../../Components/CartItem/CartItem';
+import { clearUser } from '../../reducers/userReducers';
 
 function Cart() {
   const dispatch = useDispatch();
@@ -11,11 +12,20 @@ function Cart() {
   const user = useSelector((state) => state.user);
   const cart = useSelector((state) => state.cart);
   const { userId } = user;
-  let { items } = cart;
+  let { items, error } = cart;
 
   useEffect(() => {
     dispatch(getCart(userId));
   }, [dispatch, userId]);
+
+  useEffect(() => {
+    if (error) {
+      alert(error);
+      navigate('/login'); // 리프레쉬 토큰이 만료된 경우 새로 로그인 유도.
+      localStorage.removeItem('r_token');
+      dispatch(clearUser());
+    }
+  }, [error, dispatch, navigate]);
 
   const handleCheckoutClick = () => {
     navigate('/checkout', { state: { items } });
@@ -27,7 +37,7 @@ function Cart() {
       <section className={styles.cartContainer}>
         <div className={styles.headContainer}>
           <div className={styles.head}>
-            <input type="checkbox" />
+            <input type='checkbox' />
           </div>
           <div className={styles.head}>
             <h2>Product</h2>
@@ -60,18 +70,12 @@ function Cart() {
         </div>
       </section>
       <section className={styles.summaryContainer}>
-        <h1>
-          Total price: $
-          {items.reduce((a, b) => b.canBeSold && a + b.price * b.quantity, 0)}
-        </h1>
-        <h1>
-          Total items:{' '}
-          {items ? items.filter((item) => item.canBeSold).length : 0}
-        </h1>
+        <h1>Total price: ${items.reduce((a, b) => b.canBeSold && a + b.price * b.quantity, 0)}</h1>
+        <h1>Total items: {items ? items.filter((item) => item.canBeSold).length : 0}</h1>
       </section>
       <section className={styles.checkoutContainer}>
         <button className={styles.shoppingBtn}>
-          <Link to="/">Keep shopping</Link>
+          <Link to='/'>Keep shopping</Link>
         </button>
         <button
           onClick={() => handleCheckoutClick()}

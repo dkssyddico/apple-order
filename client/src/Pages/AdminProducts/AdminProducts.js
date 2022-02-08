@@ -1,15 +1,34 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { useQuery } from 'react-query';
 import productService from '../../service/product';
 import styles from './AdminProducts.module.css';
+import { clearUser } from '../../reducers/userReducers';
 
 function AdminProducts() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { isLoading, isError, data, error } = useQuery(
     'adminProducts',
     async () => {
       let { data } = await productService.getAllProducts();
       return data;
+    },
+    {
+      onError: (error) => {
+        const { status } = error.response;
+        if (status === 401) {
+          alert(
+            error.response.data.message
+              ? error.response.data.message
+              : error.response.data.error.name
+          );
+          navigate('/login'); // 리프레쉬 토큰이 만료된 경우 새로 로그인 유도.
+          localStorage.removeItem('r_token');
+          dispatch(clearUser());
+        }
+      },
     }
   );
 
@@ -33,7 +52,7 @@ function AdminProducts() {
       <h1 className={styles.title}>Admin Products</h1>
       <div className={styles.btnContainer}>
         <button>
-          <Link to="/admin/products/upload">Upload product</Link>
+          <Link to='/admin/products/upload'>Upload product</Link>
         </button>
       </div>
       <section>
@@ -55,11 +74,7 @@ function AdminProducts() {
         {data.products.map((item) => (
           <div className={styles.productCard} key={item._id}>
             <div className={styles.content}>
-              <img
-                className={styles.image}
-                alt="item"
-                src={item.images[0].filePath}
-              />
+              <img className={styles.image} alt='item' src={item.images[0].filePath} />
             </div>
             <div className={styles.content}>
               <span>{item.name}</span>

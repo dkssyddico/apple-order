@@ -14,7 +14,6 @@ export const checkByRefreshToken = (req, res, next) => {
   }
   // r token을 분해한다.
   let { r_token } = req.cookies;
-  console.log(r_token);
   jwt.verify(r_token, process.env.JWT_SECRET, async function (err, decoded) {
     if (err) {
       if (err instanceof jwt.TokenExpiredError) {

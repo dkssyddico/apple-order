@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
+import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import OrderCard from '../../Components/OrderCard/OrderCard';
 import userService from '../../service/user';
 import styles from './AdminUserDetail.module.css';
+import { clearUser } from '../../reducers/userReducers';
 
 function AdminUserDetail() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const { userId } = useParams();
   const [deleteError, setDeleteError] = useState(false);
   const [deleteErrorMessage, setDeleteErrorMessage] = useState('');
@@ -36,10 +40,28 @@ function AdminUserDetail() {
     }
   };
 
-  const { isLoading, isError, data, error } = useQuery('user', async () => {
-    let { data } = await userService.getProfile(userId);
-    return data;
-  });
+  const { isLoading, isError, data, error } = useQuery(
+    'user',
+    async () => {
+      let { data } = await userService.getProfile(userId);
+      return data;
+    },
+    {
+      onError: (error) => {
+        const { status } = error.response;
+        if (status === 401) {
+          alert(
+            error.response.data.message
+              ? error.response.data.message
+              : error.response.data.error.name
+          );
+          navigate('/login'); // 리프레쉬 토큰이 만료된 경우 새로 로그인 유도.
+          localStorage.removeItem('r_token');
+          dispatch(clearUser());
+        }
+      },
+    }
+  );
 
   if (isLoading) {
     return (

@@ -12,7 +12,10 @@ const getCart = createAsyncThunk(getCartAction, async (userId, { rejectWithValue
     const { data } = await cartService.getInfo(userId);
     return data;
   } catch (error) {
-    return rejectWithValue(error.response.data);
+    console.log(error.response);
+    return rejectWithValue(
+      error.response.data.message ? error.response.data.message : error.response.data.error.name
+    );
   }
 });
 
@@ -57,6 +60,7 @@ const refreshCart = createAsyncThunk(refreshCartAction, async (userId, { rejectW
 
 const initialState = {
   items: [],
+  error: '',
 };
 
 const cartSlice = createSlice({
@@ -66,6 +70,10 @@ const cartSlice = createSlice({
   extraReducers: {
     [getCart.fulfilled]: (state, { payload }) => ({
       items: payload.cart,
+    }),
+    [getCart.rejected]: (state, { payload }) => ({
+      ...state,
+      error: payload,
     }),
     [addToCart.fulfilled]: (state, { payload }) => ({
       items: payload.cart,

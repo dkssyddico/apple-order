@@ -6,12 +6,11 @@ import { configureStore } from '@reduxjs/toolkit';
 import ReduxThunk from 'redux-thunk';
 import promiseMiddleware from 'redux-promise';
 import logger from 'redux-logger';
-import rootReducer from './reducers';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { ThemeProvider } from 'styled-components';
-import { theme } from './theme';
+import { Toaster } from 'react-hot-toast';
+import rootReducer from './reducers';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({});
 
 export const store = configureStore({
   reducer: rootReducer,
@@ -21,9 +20,23 @@ export const store = configureStore({
 ReactDOM.render(
   <Provider store={store}>
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={theme}>
-        <App />
-      </ThemeProvider>
+      <App />
+      <Toaster
+        position='top-center'
+        reverseOrder={false}
+        gutter={8}
+        containerClassName=''
+        containerStyle={{}}
+        toastOptions={{
+          // Define default options
+          className: '',
+          duration: 3000,
+          style: {
+            background: '#363636',
+            color: '#fff',
+          },
+        }}
+      />
     </QueryClientProvider>
   </Provider>,
   document.getElementById('root')
