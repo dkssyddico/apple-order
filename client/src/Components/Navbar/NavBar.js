@@ -55,16 +55,19 @@ function NavBar() {
 
   useEffect(() => {
     if (error) {
-      alert(error);
-      navigate('/login'); // 리프레쉬 토큰이 만료된 경우 새로 로그인 유도.
-      localStorage.removeItem('r_token');
-      dispatch(clearUser());
+      console.log(error);
+      const { status } = error;
+      if (status === 401) {
+        navigate('/login'); // 리프레쉬 토큰이 만료된 경우 새로 로그인 유도.
+        localStorage.removeItem('r_token');
+        dispatch(clearUser());
+        toast.error('Refresh token is expired. Please login again');
+      }
     }
   }, [error, dispatch, navigate]);
 
   const onLogoutClick = () => {
     dispatch(logoutUser());
-    toast.success('로그아웃되었습니다.');
   };
 
   return (

@@ -5,13 +5,11 @@ import { useForm } from 'react-hook-form';
 import categories from '../../../utils/category';
 import productService from '../../../service/product';
 import FileUpload from '../../../Components/FileUpload/FileUpload';
+import toast from 'react-hot-toast';
 
 function UploadProduct() {
   const navigate = useNavigate();
-
   const [images, setImages] = useState([]);
-  const [error, setError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
 
   const {
     register,
@@ -41,11 +39,11 @@ function UploadProduct() {
           .add(newProduct)
           .then((res) => {
             let {
-              data: { success, message },
+              data: { success },
             } = res;
             if (success) {
-              alert(message);
               navigate('/admin/products');
+              toast.success('Product was successfully updated!');
             }
           })
           .catch((error) => {
@@ -54,8 +52,7 @@ function UploadProduct() {
                 data: { message },
               },
             } = error;
-            setError(true);
-            setErrorMessage(message ? message : error.message);
+            toast.error(message ? message : error.message);
           });
       }
     }
@@ -68,7 +65,6 @@ function UploadProduct() {
   return (
     <div className='container'>
       <h1 className={styles.title}>Upload product</h1>
-      {error && <p>{errorMessage}</p>}
       <FileUpload originalImages={images} refreshImages={refreshImages} />
       <div className={styles.infoContainer}>
         <form className={styles.form} onSubmit={handleSubmit(handleUploadSubmit)}>

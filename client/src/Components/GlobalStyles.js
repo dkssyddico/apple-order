@@ -22,6 +22,8 @@ const GlobalStyles = createGlobalStyle`
     width: 100%;
     height: 100vh;
     font-family: 'Montserrat', sans-serif;
+    background-color: #faf9f9;
+    color: #22181c;
   }
 
   .container {

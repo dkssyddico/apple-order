@@ -32,8 +32,18 @@ ReactDOM.render(
           className: '',
           duration: 3000,
           style: {
-            background: '#363636',
-            color: '#fff',
+            background: '#fff',
+            color: '#22181c',
+          },
+          success: {
+            style: {
+              fontWeight: 600,
+            },
+          },
+          error: {
+            style: {
+              fontWeight: 600,
+            },
           },
         }}
       />

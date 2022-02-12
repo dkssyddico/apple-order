@@ -1,11 +1,14 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
+import toast from 'react-hot-toast';
+import { useSelector, useDispatch } from 'react-redux';
+import { changeProfile } from '../../reducers/userReducers';
 import userService from '../../service/user';
 import styles from './Profile.module.css';
 
 function Profile() {
   const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const { userId, username } = user;
   const {
     register,
@@ -24,26 +27,26 @@ function Profile() {
 
   const changeUsername = (data) => {
     const { username } = data;
-    userService
-      .changeUsername({ userId, username })
-      .then((res) => {
-        let {
-          data: { success },
-        } = res;
-        if (success) {
-          alert('유저네임이 변경되었습니다.');
-        }
-      })
-      .catch((error) => console.log(error));
+    dispatch(changeProfile({ userId, username })).then((response) => {
+      const {
+        meta: { requestStatus },
+        payload,
+      } = response;
+      if (requestStatus === 'fulfilled') {
+        toast.success('Username was successfully changed!');
+      } else {
+        toast.error(payload.data.message ? payload.data.message : payload.data.error.name);
+      }
+    });
   };
 
   const changePassword = (data) => {
     const { currentPassword, newPassword, newPasswordConfirmation } = data;
     if (currentPassword === newPassword) {
-      alert('현재 비밀번호과 같은 비밀번호입니다.');
+      toast.error('Please enter the different password');
     } else {
       if (newPassword !== newPasswordConfirmation) {
-        alert('새 비밀번호과 같은 비밀번호를 입력해주세요');
+        toast.error('Please enter the same password');
       } else {
         userService
           .changePassword({ userId, currentPassword, newPassword })
@@ -52,13 +55,16 @@ function Profile() {
               data: { success },
             } = res;
             if (success) {
-              alert('비밀번호가 변경되었습니다.');
+              toast.success('Password was successfully changed!');
               setValue('currentPassword', '');
               setValue('newPassword', '');
               setValue('newPasswordConfirmation', '');
             }
           })
-          .catch((error) => console.log(error));
+          .catch((error) => {
+            const { data } = error.response;
+            toast.error(data.message ? data.message : data.error.name);
+          });
       }
     }
   };

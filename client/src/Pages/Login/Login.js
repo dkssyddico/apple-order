@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { loginUser } from '../../reducers/userReducers';
-import toast from 'react-hot-toast';
 import styles from './Login.module.css';
+import toast from 'react-hot-toast';
 
 function Login() {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
-  const { error } = user;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -18,11 +16,16 @@ function Login() {
       email,
       password,
     };
-    const fetch = dispatch(loginUser(userInfo));
-    toast.promise(fetch, {
-      loading: 'Loading',
-      success: '로그인 성공!',
-      error: 'error',
+    dispatch(loginUser(userInfo)).then((response) => {
+      const {
+        meta: { requestStatus },
+        payload,
+      } = response;
+      if (requestStatus === 'fulfilled') {
+        toast.success('Login successfully!');
+      } else {
+        toast.error(payload.data.message ? payload.data.message : payload.data.error.name);
+      }
     });
   };
 
@@ -42,7 +45,6 @@ function Login() {
     <section className={styles.loginContainer}>
       <div className={styles.loginCard}>
         <h1 className={styles.title}>Glad to see you again</h1>
-        {error && <p className={styles.error}>{error}</p>}
         <form className={styles.form} onSubmit={onSubmit}>
           <label className={styles.label} htmlFor='email'>
             Email

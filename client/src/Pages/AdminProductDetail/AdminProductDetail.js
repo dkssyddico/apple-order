@@ -5,20 +5,14 @@ import FileUpload from '../../Components/FileUpload/FileUpload';
 import categories from '../../utils/category';
 import productService from '../../service/product';
 import styles from './AdminProductDetail.module.css';
+import toast from 'react-hot-toast';
 
 function AdminProductDetail() {
   let { productId } = useParams();
   const navigate = useNavigate();
-
   const [images, setImages] = useState([]);
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [productsError, setProductsError] = useState(false);
-  const [productsErrorMessage, setProductsErrorMessage] = useState('');
-  const [deleteError, setDeleteError] = useState(false);
-  const [editError, setEditError] = useState(false);
-  const [editErrorMessage, setEditErrorMessage] = useState('');
-  const [deleteErrorMessage, setDeleteErrorMessage] = useState('');
 
   const {
     register,
@@ -44,8 +38,7 @@ function AdminProductDetail() {
           data: { message },
         },
       } = error;
-      setProductsError(true);
-      setProductsErrorMessage(message ? message : error.message);
+      toast.error(message ? message : error.message);
     } finally {
       setLoading(false);
     }
@@ -76,7 +69,7 @@ function AdminProductDetail() {
     if (images.length === 0) {
       alert('상품 이미지는 한 개 이상 필요합니다.');
     } else {
-      let confirm = window.confirm('업데이트하시겠습니까?');
+      const confirm = window.confirm('업데이트하시겠습니까?');
       if (confirm) {
         const newProduct = {
           name,
@@ -92,8 +85,8 @@ function AdminProductDetail() {
               data: { success },
             } = res;
             if (success) {
-              alert('상품 업데이트에 성공했습니다!');
               navigate('/admin/products');
+              toast.success('Product was successfully updated!');
             }
           })
           .catch((error) => {
@@ -102,15 +95,14 @@ function AdminProductDetail() {
                 data: { message },
               },
             } = error;
-            setEditError(true);
-            setEditErrorMessage(message ? message : error.message);
+            toast.error(message ? message : error.message);
           });
       }
     }
   };
 
   const handleDelete = (itemId) => {
-    let confirm = window.confirm('상품을 삭제하시겠습니까?');
+    const confirm = window.confirm('상품을 삭제하시겠습니까?');
     if (confirm) {
       productService
         .remove(itemId)
@@ -119,8 +111,8 @@ function AdminProductDetail() {
             data: { success },
           } = res;
           if (success) {
-            alert('상품 삭제에 성공했습니다!');
             navigate('/admin/products');
+            toast.success('Product was successfully deleted!');
           }
         })
         .catch((error) => {
@@ -129,8 +121,7 @@ function AdminProductDetail() {
               data: { message },
             },
           } = error;
-          setDeleteError(true);
-          setDeleteErrorMessage(message ? message : error.message);
+          toast.error(message ? message : error.message);
         });
     }
   };
@@ -139,14 +130,9 @@ function AdminProductDetail() {
     <div className='container'>
       {loading ? (
         <h1>Loading</h1>
-      ) : productsError ? (
-        <h1>{productsErrorMessage}</h1>
       ) : (
         <div className={styles.adminProductDetail}>
           <h1 className={styles.title}>Product Detail</h1>
-
-          {editError && <h1>{editErrorMessage}</h1>}
-          {deleteError && <h1>{deleteErrorMessage}</h1>}
           <FileUpload originalImages={images} refreshImages={refreshImages} />
           <div className={styles.infoContainer}>
             <form className={styles.form} onSubmit={handleSubmit(handleEditSubmit)}>

@@ -5,13 +5,14 @@ import userService from '../service/user';
 const loginUserAction = createAction('user/loginUser');
 const refreshUserAction = createAction('user/refreshUser');
 const logoutUserAction = createAction('user/logoutUser');
+const changeProfileAction = createAction('user/changeProfile');
 
 const initialState = {
   username: undefined,
   userId: undefined,
   login: false,
   isAdmin: false,
-  error: '',
+  error: null,
 };
 
 const loginUser = createAsyncThunk(loginUserAction, async (userInfo, { rejectWithValue }) => {
@@ -25,10 +26,7 @@ const loginUser = createAsyncThunk(loginUserAction, async (userInfo, { rejectWit
     localStorage.setItem('r_token', true);
     return data;
   } catch (error) {
-    console.log(error.response);
-    return rejectWithValue(
-      error.response.data.message ? error.response.data.message : error.response.data.error.name
-    );
+    return rejectWithValue(error.response);
   }
 });
 
@@ -44,11 +42,22 @@ const refreshUser = createAsyncThunk(refreshUserAction, async (_, { rejectWithVa
     return data;
   } catch (error) {
     console.log(error.response);
-    return rejectWithValue(
-      error.response.data.message ? error.response.data.message : error.response.data.error.name
-    );
+    return rejectWithValue(error.response);
   }
 });
+
+const changeProfile = createAsyncThunk(
+  changeProfileAction,
+  async (userInfo, { rejectWithValue }) => {
+    try {
+      const { data } = await userService.changeUsername(userInfo);
+      return data;
+    } catch (error) {
+      console.log(error.response);
+      return rejectWithValue(error.response);
+    }
+  }
+);
 
 const logoutUser = createAsyncThunk(logoutUserAction, async (userInfo, { rejectWithValue }) => {
   try {
@@ -57,7 +66,7 @@ const logoutUser = createAsyncThunk(logoutUserAction, async (userInfo, { rejectW
     return data;
   } catch (error) {
     console.log(error.response);
-    return rejectWithValue(error.response.data);
+    return rejectWithValue(error.response);
   }
 });
 
@@ -79,7 +88,7 @@ const userSlice = createSlice({
       console.log(payload);
       return {
         ...state,
-        error: payload.message,
+        error: payload,
       };
     },
     [refreshUser.fulfilled]: (state, { payload }) => ({
@@ -97,10 +106,19 @@ const userSlice = createSlice({
     },
     [logoutUser.fulfilled]: (state) => initialState,
     [logoutUser.rejected]: (state) => initialState,
+    [changeProfile.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        username: payload.username,
+      };
+    },
+    [changeProfile.rejected]: (state, { payload }) => {
+      return { ...state, error: payload };
+    },
   },
 });
 
 export const { clearUser } = userSlice.actions;
-export { loginUser, logoutUser, refreshUser };
+export { loginUser, logoutUser, refreshUser, changeProfile };
 
 export default userSlice.reducer;

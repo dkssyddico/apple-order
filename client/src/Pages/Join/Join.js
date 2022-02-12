@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Message from '../../Components/Message';
 import { useForm } from 'react-hook-form';
 import userService from '../../service/user';
 import styles from './Join.module.css';
+import toast from 'react-hot-toast';
 
 function Join() {
   const navigate = useNavigate();
   const [success, setSuccess] = useState(false);
-  const [error, setError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
   const {
     register,
     handleSubmit,
@@ -23,6 +21,7 @@ function Join() {
   useEffect(() => {
     if (success) {
       navigate('/login');
+      toast.success('Thanks for joining!');
     }
   }, [navigate, success]);
 
@@ -45,8 +44,7 @@ function Join() {
               data: { message },
             },
           } = error;
-          setError(true);
-          setErrorMessage(message ? message : error.message);
+          toast.error(message ? message : error.message);
         });
     }
   };
@@ -55,7 +53,6 @@ function Join() {
     <section className={styles.joinContainer}>
       <div className={styles.joinCard}>
         <h1 className={styles.title}>Welcome !</h1>
-        {error && <Message>{errorMessage}</Message>}
         <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
           {watchFields.username && watchFields.username.length < 3 && (
             <p className={styles.warning}>유저네임은 3글자 이상이어야합니다.</p>

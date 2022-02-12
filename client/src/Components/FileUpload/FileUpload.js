@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react';
 import Dropzone from 'react-dropzone';
 import productService from '../../service/product';
 import styles from './FileUpload.module.css';
+import toast from 'react-hot-toast';
 
 function FileUpload({ refreshImages, originalImages }) {
   const [images, setImages] = useState([]);
-  const [error, setError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     if (originalImages) {
@@ -26,8 +25,8 @@ function FileUpload({ refreshImages, originalImages }) {
           data: { message },
         },
       } = error;
-      setError(true);
-      setErrorMessage(message ? message : error.message);
+
+      toast.error(message ? message : error.message);
     }
   };
 
@@ -47,7 +46,6 @@ function FileUpload({ refreshImages, originalImages }) {
 
   return (
     <div className={styles.fileUploadBox}>
-      {error && <h1>{errorMessage}</h1>}
       <Dropzone onDrop={handleDrop}>
         {({ getRootProps, getInputProps }) => (
           <section>
@@ -62,11 +60,7 @@ function FileUpload({ refreshImages, originalImages }) {
         {images &&
           images.map((image, index) => (
             <div onClick={() => handleDelete(image)} key={index}>
-              <img
-                className={styles.image}
-                src={image.filePath}
-                alt="product"
-              />
+              <img className={styles.image} src={image.filePath} alt='product' />
             </div>
           ))}
       </div>

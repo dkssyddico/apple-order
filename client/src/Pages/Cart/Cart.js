@@ -5,6 +5,7 @@ import { getCart } from '../../reducers/cartReducer';
 import styles from './Cart.module.css';
 import CartItem from '../../Components/CartItem/CartItem';
 import { clearUser } from '../../reducers/userReducers';
+import toast from 'react-hot-toast';
 
 function Cart() {
   const dispatch = useDispatch();
@@ -28,6 +29,10 @@ function Cart() {
   }, [error, dispatch, navigate]);
 
   const handleCheckoutClick = () => {
+    if (items.length < 1) {
+      toast.error('There is no items!');
+      return;
+    }
     navigate('/checkout', { state: { items } });
   };
 
