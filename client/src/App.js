@@ -17,10 +17,8 @@ function App() {
 
   return (
     <>
-      <div className='container'>
-        <GlobalStyles />
-        <Router />
-      </div>
+      <GlobalStyles />
+      <Router />
     </>
   );
 }

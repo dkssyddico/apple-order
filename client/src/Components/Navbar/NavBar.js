@@ -1,43 +1,9 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import styles from './NavBar.module.css';
 import { clearUser, logoutUser, refreshUser } from '../../reducers/userReducers';
-import styled from 'styled-components';
-import toast from 'react-hot-toast';
-
-const DropdownMenu = styled.div`
-  display: none;
-  position: absolute;
-  top: 6vh;
-  left: 0;
-  ul {
-    background-color: whitesmoke;
-    padding: 16px;
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    li {
-      margin: 0;
-      padding: 0.5rem 0;
-      border-bottom: 1px solid black;
-      &:last-child {
-        border: none;
-      }
-    }
-  }
-`;
-
-const Dropdown = styled.li`
-  position: relative;
-  padding: 16px;
-  &:hover {
-    ${DropdownMenu} {
-      display: block;
-    }
-  }
-`;
 
 function NavBar() {
   const dispatch = useDispatch();
@@ -72,65 +38,38 @@ function NavBar() {
 
   return (
     <nav className={styles.navbar}>
-      <div className={styles.navbar__left}>
-        <Link to='/'>Home</Link>
-      </div>
-      <div className={styles.navbar__right}>
+      <ul className={styles.navbar__menus}>
+        <li className={styles.navbar_menu}>
+          <Link to='/'>Home</Link>
+        </li>
+        <li className={styles.navbar_menu}>
+          <Link to='/products'>Products</Link>
+        </li>
         {login && isAdmin && (
-          <>
-            <Dropdown>
-              <Link to='/admin'>Admin</Link>
-              <DropdownMenu>
-                <ul>
-                  <li>
-                    <Link to='/admin/users'>Users</Link>
-                  </li>
-                  <li>
-                    <Link to='/admin/orders'>Orders</Link>
-                  </li>
-                  <li>
-                    <Link to='/admin/products'>Products</Link>
-                  </li>
-                </ul>
-              </DropdownMenu>
-            </Dropdown>
-          </>
+          <li className={styles.navbar_menu}>
+            <Link to='/admin'>Admin</Link>
+          </li>
         )}
         {login ? (
           <>
-            <li>
+            <li className={styles.navbar_menu}>
               <Link to='/cart'>Cart</Link>
             </li>
-            <Dropdown>
+            <li className={styles.navbar_menu}>
               <Link to='/profile'>{username}</Link>
-              <DropdownMenu>
-                <ul>
-                  <li>
-                    <Link to='/profile'>Profile</Link>
-                  </li>
-                  <li>
-                    <Link to='/orders'>Order</Link>
-                  </li>
-                </ul>
-              </DropdownMenu>
-            </Dropdown>
-            <li>
-              <button onClick={onLogoutClick}>Log out</button>
+            </li>
+            <li className={styles.navbar_menu}>
+              <button onClick={onLogoutClick}>Logout</button>
             </li>
           </>
         ) : (
           <>
-            <li>
+            <li className={styles.navbar_menu}>
               <Link to='/login'>Login</Link>
-            </li>
-            <li>
-              <Link to='/join'>
-                <span className={styles.join}>Join</span>
-              </Link>
             </li>
           </>
         )}
-      </div>
+      </ul>
     </nav>
   );
 }

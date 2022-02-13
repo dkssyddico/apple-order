@@ -28,6 +28,10 @@ const productSchema = new mongoose.Schema(
       default: true,
       required: true,
     },
+    orderCount: {
+      type: Number,
+      default: 0,
+    },
     remarks: {
       type: String,
     },

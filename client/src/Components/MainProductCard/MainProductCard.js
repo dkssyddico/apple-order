@@ -7,7 +7,7 @@ function MainProductCard({ id, image, name, price }) {
     <div className={styles.card}>
       <Link to={`/product/${id}`}>
         <div className={styles.imgContainer}>
-          <img className={styles.image} src={image} alt="product" />
+          <img className={styles.image} src={image} alt='product' />
         </div>
         <h3 className={styles.name}>{name}</h3>
         <p className={styles.price}>{`$${price}`}</p>

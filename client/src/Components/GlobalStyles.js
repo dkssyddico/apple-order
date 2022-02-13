@@ -26,11 +26,6 @@ const GlobalStyles = createGlobalStyle`
     color: #22181c;
   }
 
-  .container {
-    margin-top:15vh;
-    padding: 0 10vw;
-    padding-bottom:10vh;
-  }
 
   input,
   input::placeholder {
