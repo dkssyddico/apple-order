@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import styles from './CartItem.module.css';
 import { TiDelete } from 'react-icons/ti';
+import styles from './CartItem.module.css';
 import { changeQty, deleteItemInCart } from '../../reducers/cartReducer';
 
 function CartItem({ name, images, price, quantity, canBeSold, productId }) {
@@ -45,22 +45,15 @@ function CartItem({ name, images, price, quantity, canBeSold, productId }) {
   return (
     <div className={styles.contents}>
       <section className={styles.content}>
-        <input type="checkbox" />
+        <input type='checkbox' />
       </section>
       <section className={styles.content}>
         <div className={styles.infoBox}>
           <div>
-            <img
-              className={styles.image}
-              src={images[0].filePath}
-              alt="product"
-            />
+            <img className={styles.image} src={images[0].filePath} alt='product' />
           </div>
           <p className={styles.itemName}>{name}</p>
-          <div
-            className={styles.iconBox}
-            onClick={() => handleDelete(productId)}
-          >
+          <div className={styles.iconBox} onClick={() => handleDelete(productId)}>
             <TiDelete
               style={{
                 cursor: 'pointer',
@@ -72,29 +65,21 @@ function CartItem({ name, images, price, quantity, canBeSold, productId }) {
         </div>
       </section>
       <section className={styles.content}>
-        <div className={styles.box}>
-          <span>${canBeSold ? price * quantity : '0'}</span>
-        </div>
-      </section>
-      <section className={styles.content}>
         <div className={styles.qtyContainer}>
-          <button
-            onClick={handleQtyBtnClick}
-            className={styles.qtyBtn}
-            name="decrement"
-          >
+          <button onClick={handleQtyBtnClick} className={styles.qtyBtn} name='decrement'>
             -
           </button>
           <div className={styles.qtyBox}>
             <span>{parseInt(quantity)}</span>
           </div>
-          <button
-            onClick={handleQtyBtnClick}
-            className={styles.qtyBtn}
-            name="increment"
-          >
+          <button onClick={handleQtyBtnClick} className={styles.qtyBtn} name='increment'>
             +
           </button>
+        </div>
+      </section>
+      <section className={styles.content}>
+        <div className={styles.box}>
+          <span>${canBeSold ? price * quantity : '0'}</span>
         </div>
       </section>
     </div>
