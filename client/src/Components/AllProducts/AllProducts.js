@@ -2,9 +2,9 @@ import React from 'react';
 import { useQuery } from 'react-query';
 import productService from '../../service/product';
 import MainProductCard from '../MainProductCard/MainProductCard';
-import styles from './Products.module.css';
+import styles from './AllProducts.module.css';
 
-function Products() {
+function AllProducts() {
   const { isLoading, isError, data, error } = useQuery('products', async () => {
     let { data } = await productService.getAllProducts();
     return data;
@@ -40,4 +40,4 @@ function Products() {
   );
 }
 
-export default Products;
+export default AllProducts;

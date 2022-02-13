@@ -6,11 +6,13 @@ function MainProductCard({ id, image, name, price }) {
   return (
     <div className={styles.card}>
       <Link to={`/product/${id}`}>
-        <div className={styles.imgContainer}>
-          <img className={styles.image} src={image} alt='product' />
+        <div className={styles.card__container}>
+          <div className={styles.card__imgBox}>
+            <img className={styles.card__img} src={image} alt='product' />
+          </div>
+          <h3 className={styles.card__name}>{name}</h3>
+          <p className={styles.card__price}>{`$${price}`}</p>
         </div>
-        <h3 className={styles.name}>{name}</h3>
-        <p className={styles.price}>{`$${price}`}</p>
       </Link>
     </div>
   );
