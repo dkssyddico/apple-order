@@ -1,14 +1,28 @@
-.loginContainer {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.login {
+  padding-top: 8vh;
 }
 
-.loginCard {
+.login__slider {
+  position: fixed;
+  top: 0;
+  z-index: 2;
+  width: 45%;
+  height: 100vh;
+}
+
+.login__container {
+  margin-left: 45%;
+  padding: 3rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.login__title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-top: 1rem;
+  margin-bottom: 3rem;
 }
 
 .title {
@@ -18,22 +32,19 @@
   text-align: left;
 }
 
-.error {
-}
-
-.form {
+.login__form {
   width: 300px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.label {
+.login__label {
   align-self: flex-start;
   margin-bottom: 1rem;
 }
 
-.input {
+.login__input {
   width: 100%;
   border-radius: 2rem;
   margin-bottom: 1.5rem;
@@ -41,18 +52,22 @@
   border: 1px solid lightgray;
 }
 
-.loginBtn {
+.login__btn {
   width: 100%;
   margin: 1rem 0 2rem;
   padding: 1rem 0;
-  background-color: green;
+  background-color: #1f7a8c;
   font-weight: 600;
   text-align: center;
   color: white;
   border-radius: 4px;
 }
 
+.login__joinBox p {
+  word-spacing: 1px;
+}
+
 .joinLink {
   font-weight: 600;
-  color: green;
+  color: #1f7a8c;
 }
