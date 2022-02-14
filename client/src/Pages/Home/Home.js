@@ -65,15 +65,18 @@ function Home() {
           </p>
           <h2 className={styles.products__title}>Featured Products</h2>
           <div className={styles.products__container}>
-            {data.products.map((product) => (
-              <HomeProductCard
-                key={product._id}
-                id={product._id}
-                image={product.images[0].filePath}
-                name={product.name}
-                price={product.price}
-              />
-            ))}
+            {data.products
+              .sort((a, b) => b.orderCount - a.orderCount)
+              .slice(0, 3)
+              .map((product) => (
+                <HomeProductCard
+                  key={product._id}
+                  id={product._id}
+                  image={product.images[0].filePath}
+                  name={product.name}
+                  price={product.price}
+                />
+              ))}
           </div>
         </div>
       </section>

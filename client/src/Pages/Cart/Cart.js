@@ -6,7 +6,6 @@ import styles from './Cart.module.css';
 import CartItem from '../../Components/CartItem/CartItem';
 import { clearUser } from '../../reducers/userReducers';
 import toast from 'react-hot-toast';
-import { BiArrowBack } from 'react-icons/bi';
 
 function Cart() {
   const dispatch = useDispatch();

@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import toast from 'react-hot-toast';
+import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
@@ -10,17 +12,25 @@ function Checkout() {
   const {
     state: { items },
   } = useLocation();
-  console.log(items);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const { userId } = user;
-  const [error, setError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
 
-  const handlePaymentClick = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { isValid },
+    watch,
+  } = useForm({
+    mode: 'onChange',
+  });
+  const watchFields = watch();
+
+  const submitShippingForm = (data) => {
+    let shippingInfo = data;
     orderService
-      .addOrder(userId, items)
+      .addOrder(userId, { items, shippingInfo })
       .then((res) => {
         let {
           data: { success, orderId },
@@ -36,8 +46,7 @@ function Checkout() {
             data: { message },
           },
         } = error;
-        setError(true);
-        setErrorMessage(message ? message : error.message);
+        toast.error(message ? message : error.message);
       });
   };
 
@@ -50,60 +59,89 @@ function Checkout() {
   return (
     <div className={styles.checkout}>
       <h1 className={styles.title}>checkout</h1>
-      {error && <p>{errorMessage}</p>}
-      <section className={styles.checkoutContainer}>
-        <div className={styles.headContainer}>
-          <div className={styles.head}>
-            <h2>Product</h2>
-          </div>
-          <div className={styles.head}>
-            <h2>Price</h2>
-          </div>
-          <div className={styles.head}>
-            <h2>Quantity</h2>
-          </div>
-        </div>
-        <div className={styles.contentContainer}>
-          {items.map((item) => (
-            <div key={uuidv4()} className={styles.contents}>
-              <section className={styles.content}>
-                <div className={styles.imageBox}>
-                  <img
-                    className={styles.image}
-                    src={item.images[0].filePath}
-                    alt="product"
-                  />
-                </div>
-                <p className={styles.itemName}>{item.name}</p>
-              </section>
-              <section className={styles.content}>
-                <span>${item.price * item.quantity}</span>
-              </section>
-              <section className={styles.content}>
-                <span>{item.quantity}</span>
-              </section>
+      <div className={styles.container}>
+        <section className={styles.orderContainer}>
+          <section className={styles.itemsContainer}>
+            <div className={styles.headBox}>
+              <div className={styles.head}>
+                <h2>Product</h2>
+              </div>
+              <div className={styles.head}>
+                <h2>Price</h2>
+              </div>
+              <div className={styles.head}>
+                <h2>Quantity</h2>
+              </div>
             </div>
-          ))}
-        </div>
-      </section>
-      <section className={styles.summaryContainer}>
-        <span>
-          Total price:{' '}
-          {items.reduce((a, b) => b.canBeSold && a + b.price * b.quantity, 0)}
-        </span>
-        <span>
-          Total items:{' '}
-          {items ? items.filter((item) => item.canBeSold).length : 0}
-        </span>
-      </section>
-      <section className={styles.btnContainer}>
-        <button
-          className={styles.paymentBtn}
-          onClick={() => handlePaymentClick()}
-        >
-          Payment
-        </button>
-      </section>
+            <div className={styles.container__contentBox}>
+              {items.map((item) => (
+                <div key={uuidv4()} className={styles.contentCard}>
+                  <section className={styles.content}>
+                    <div className={styles.imageBox}>
+                      <img className={styles.image} src={item.images[0].filePath} alt='product' />
+                    </div>
+                    <p className={styles.itemName}>{item.name}</p>
+                  </section>
+                  <section className={styles.content}>
+                    <span>${item.price * item.quantity}</span>
+                  </section>
+                  <section className={styles.content}>
+                    <span>{item.quantity}</span>
+                  </section>
+                </div>
+              ))}
+            </div>
+          </section>
+        </section>
+        <section className={styles.paymentContainer}>
+          <h2 className={styles.shipping__title}>Shipping Address</h2>
+          <form className={styles.shipping__form} onSubmit={handleSubmit(submitShippingForm)}>
+            <div className={styles.inputBox}>
+              <input
+                className={styles.input}
+                {...register('fullName', { required: true })}
+                name='fullName'
+                type='text'
+                required='true'
+              ></input>
+              <label className={styles.shipping__label} htmlFor='fullName'>
+                Full Name
+              </label>
+            </div>
+            <div className={styles.inputBox}>
+              <input
+                className={styles.input}
+                {...register('address', { required: true })}
+                name='address'
+                type='text'
+                required='true'
+              ></input>
+              <label className={styles.shipping__label} htmlFor='address'>
+                Address
+              </label>
+            </div>
+            <div className={styles.inputBox}>
+              <input
+                className={styles.input}
+                {...register('contact', { required: true })}
+                name='contact'
+                type='text'
+                required='true'
+              ></input>
+              <label className={styles.shipping__label} htmlFor='contact'>
+                Contact
+              </label>
+            </div>
+            <div className={styles.totalPriceContainer}>
+              <span>Total price</span>
+              <span>${items.reduce((a, b) => b.canBeSold && a + b.price * b.quantity, 0)}</span>
+            </div>
+            <button className={styles.paymentBtn} onSubmit={handleSubmit(submitShippingForm)}>
+              Payment
+            </button>
+          </form>
+        </section>
+      </div>
     </div>
   );
 }

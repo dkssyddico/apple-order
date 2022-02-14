@@ -5,44 +5,49 @@
 }
 
 .content {
+  width: 100%;
   padding: 1rem;
   display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .content:first-child {
   flex-basis: 8%;
+  justify-content: center;
+  align-items: center;
 }
 
 .content:nth-child(2) {
   flex-basis: 47%;
+  width: 100%;
 }
 
 .content:nth-child(3) {
   flex-basis: 25%;
+  justify-content: center;
+  align-items: center;
 }
 
 .content:last-child {
   flex-basis: 20%;
+  justify-content: center;
+  align-items: center;
 }
-
-.content:nth-child(2) {
-  justify-content: flex-start;
-  padding: 1rem 2rem;
-}
-
-/* .content:nth-child(2),
-.content:nth-child(3) {
-  border-right: 1px solid lightgray;
-} */
 
 .infoBox {
   width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  height: 100%;
   position: relative;
+}
+
+.infoBox a {
+  display: flex;
+  align-items: center;
+}
+
+.imgBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .image {
@@ -67,6 +72,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  /* background-color: #eeebeb; */
+  /* border-radius: 1.5rem; */
 }
 
 .qtyBtn {
@@ -75,8 +82,8 @@
   height: 100%;
   cursor: pointer;
   text-align: center;
-  background-color: #eeebeb;
   border-radius: 50%;
+  background-color: #eeebeb;
 }
 
 .qtyBox {

@@ -1,19 +1,29 @@
 .checkout {
-  padding: 0 5vw;
+  padding: 8vh 10vw 10vh;
 }
 
 .title {
-  font-size: 1.5rem;
-  margin-bottom: 3rem;
-  font-weight: 500;
-  text-align: center;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-top: 1rem;
+  margin-bottom: 3.5rem;
 }
 
-.checkoutContainer {
+.container {
+  display: flex;
+  gap: 5%;
+}
+
+.orderContainer {
+  flex-basis: 65%;
+}
+
+.itemsContainer {
+  width: 100%;
   margin-bottom: 3rem;
 }
 
-.headContainer {
+.headBox {
   display: flex;
   border-top: 3px solid black;
 }
@@ -29,14 +39,14 @@
   font-weight: 600;
 }
 
-.contentContainer {
+.container__contentBox {
   width: 100%;
   display: flex;
   flex-direction: column;
   border-bottom: 1px solid lightgray;
 }
 
-.contents {
+.contentCard {
   width: 100%;
   display: flex;
   border-top: 1px solid lightgray;
@@ -97,30 +107,68 @@
   width: 150px;
 }
 
-.summaryContainer {
-  padding: 1rem;
-  height: 100px;
-  border-top: 1px solid lightgray;
-  border-bottom: 1px solid lightgray;
+.paymentContainer {
+  padding: 1.5rem 2rem;
+  flex-basis: 40%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  border: 1px solid lightgray;
+}
+
+.shipping__title {
+  font-size: 20px;
+  font-weight: 500;
   margin-bottom: 3rem;
 }
 
-.summaryContainer span {
-  padding: 1rem;
+.shipping__form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.btnContainer {
+.inputBox {
+  width: 100%;
+  margin-bottom: 1rem;
+  position: relative;
+  height: 50px;
+}
+
+.input {
+  background-color: transparent;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid black;
+  outline: none;
+}
+
+.shipping__label {
+  position: absolute;
+  left: 0;
+  transition: all 0.3s ease;
+}
+
+.input:focus + .shipping__label,
+.input:valid + .shipping__label {
+  transform: translateY(-1.5rem);
+  font-size: 14px;
+  /* font-weight: 500; */
+}
+
+.totalPriceContainer {
+  width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
+  margin-bottom: 3rem;
+  font-weight: 500;
 }
 
 .paymentBtn {
   padding: 1rem 2rem;
-  background-color: green;
+  background-color: #ef626c;
   font-weight: 600;
   color: whitesmoke;
   border-radius: 4px;

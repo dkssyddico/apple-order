@@ -87,6 +87,32 @@ function Join() {
             type='email'
             placeholder='Email'
           />
+          <input
+            className={styles.join__input}
+            {...register('address', {
+              minLength: {
+                value: 3,
+                message: '3글자 이상 입력하세요.',
+              },
+              required: true,
+            })}
+            name='address'
+            type='text'
+            placeholder='Address'
+          />
+          <input
+            className={styles.join__input}
+            {...register('contact', {
+              minLength: {
+                value: 3,
+                message: '3글자 이상 입력하세요.',
+              },
+              required: true,
+            })}
+            name='contact'
+            type='text'
+            placeholder='Contact'
+          />
           {watchFields.password && watchFields.password.length < 5 && (
             <p className={styles.warning}>비밀번호는 5글자 이상이어야합니다.</p>
           )}

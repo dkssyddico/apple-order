@@ -6,7 +6,7 @@ import Order from '../models/Order.js';
 dotenv.config();
 
 export const join = async (req, res) => {
-  const { username, email, password, passwordConfirmation } = req.body;
+  const { username, email, password, passwordConfirmation, address, contact } = req.body;
   // 비밀번호와 비밀번호 확인이 같은지 확인
   if (passwordConfirmation !== password) {
     return res.status(400).json({ success: false, message: '비밀번호가 같지 않습니다.' });
@@ -20,7 +20,7 @@ export const join = async (req, res) => {
     });
   }
   try {
-    await User.create({ username, email, password });
+    await User.create({ username, email, password, address, contact });
     return res.status(201).json({ success: true, message: '회원가입에 성공했습니다.' });
   } catch (error) {
     return res.status(400).json({ success: false, message: '회원가입에 문제가 발생했습니다.' });
@@ -238,7 +238,7 @@ export const refreshCart = async (req, res) => {
 };
 
 export const addOrder = async (req, res) => {
-  const items = req.body;
+  const { items, shippingInfo } = req.body;
   const {
     user,
     params: { userId },
@@ -252,8 +252,10 @@ export const addOrder = async (req, res) => {
     return res.status(400).json({ success: false, message: '유저 정보가 맞지 않습니다.' });
   }
   // 새로운 order 만들어서 유저의 order에 넣어주기
+  // item 마다 주문 횟수 1씩 추가
   try {
-    let newOrder = await Order.create({ user: userId, items });
+    console.log(items);
+    let newOrder = await Order.create({ user: userId, items, shippingInfo });
     currentUser.orders.push(newOrder._id);
     await currentUser.save((err, user) => {
       if (err) {
@@ -263,6 +265,20 @@ export const addOrder = async (req, res) => {
           errorMessage: '유저 정보에 새로운 주문 저장을 실패했습니다.',
         });
       }
+    });
+    items.forEach((i) => {
+      Product.findById(i.productId).exec(async (err, product) => {
+        if (err) {
+          console.log('err1', err);
+        }
+
+        product.orderCount += 1;
+        await product.save((err, p) => {
+          if (err) {
+            console.log('err2', err);
+          }
+        });
+      });
     });
     return res.status(200).json({ success: true, orderId: newOrder._id });
   } catch (error) {

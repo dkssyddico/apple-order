@@ -116,8 +116,7 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 2rem;
-  background-color: #f7f7f8;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+  border: 1px solid lightgray;
 }
 
 .summary__title {
@@ -140,7 +139,7 @@
   margin: 1rem 0.5rem;
   border-radius: 4px;
   letter-spacing: 1px;
-  background-color: #1f7a8c;
+  background-color: #55a630;
   color: white;
   letter-spacing: 1px;
 }

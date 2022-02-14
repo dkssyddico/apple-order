@@ -12,6 +12,25 @@ const orderSchema = new mongoose.Schema(
       default: [],
       required: true,
     },
+    shippingInfo: {
+      fullName: {
+        type: String,
+        required: true,
+      },
+      address: {
+        type: String,
+        required: true,
+      },
+      contact: {
+        type: String,
+        required: true,
+      },
+    },
+    deliveryStatus: {
+      type: Boolean,
+      required: true,
+      default: 0, // 0이면 미배송 1이면 배송완료
+    },
   },
   { timestamps: true }
 );

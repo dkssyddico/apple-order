@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { TiDelete } from 'react-icons/ti';
 import styles from './CartItem.module.css';
 import { changeQty, deleteItemInCart } from '../../reducers/cartReducer';
@@ -49,10 +50,12 @@ function CartItem({ name, images, price, quantity, canBeSold, productId }) {
       </section>
       <section className={styles.content}>
         <div className={styles.infoBox}>
-          <div>
-            <img className={styles.image} src={images[0].filePath} alt='product' />
-          </div>
-          <p className={styles.itemName}>{name}</p>
+          <Link to={`/product/${productId}`}>
+            <div className={styles.imgBox}>
+              <img className={styles.image} src={images[0].filePath} alt='product' />
+            </div>
+            <p className={styles.itemName}>{name}</p>
+          </Link>
           <div className={styles.iconBox} onClick={() => handleDelete(productId)}>
             <TiDelete
               style={{
