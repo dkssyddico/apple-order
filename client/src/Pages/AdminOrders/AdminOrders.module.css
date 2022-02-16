@@ -1,43 +1,95 @@
 .adminOrders {
   display: flex;
   flex-direction: column;
-  padding: 0 8vw;
+  padding: 8vh 10vw 0;
 }
 
 .title {
-  font-size: 1.5rem;
-  padding-bottom: 1rem;
-  margin-bottom: 2rem;
-  font-weight: 500;
-  text-align: center;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-top: 1rem;
+  margin-bottom: 3.5rem;
 }
 
-.headBox,
-.contentBox {
+.adminOrders__container {
+  display: flex;
+  flex-direction: column;
+}
+
+.headSection,
+.contentContainer {
   display: flex;
 }
 
-.headBox {
+.headSection {
   border-top: 3px solid black;
-}
-
-.head,
-.content {
-  height: 3rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-basis: 50%;
-}
-
-.content {
-  border-top: 1px solid lightgray;
-}
-
-.content:nth-child(2) {
-  border-left: 1px solid lightgray;
+  border-bottom: 1px solid lightgrey;
 }
 
 .contentContainer {
   border-bottom: 1px solid lightgray;
+}
+
+.headBox,
+.contentBox {
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.headBox:first-child,
+.contentBox:first-child {
+  flex-basis: 15%;
+}
+
+.headBox:nth-child(2),
+.contentBox:nth-child(2) {
+  flex-basis: 33%;
+}
+
+.headBox:nth-child(3),
+.contentBox:nth-child(3) {
+  flex-basis: 25%;
+}
+
+.headBox:nth-child(4),
+.contentBox:nth-child(4) {
+  flex-basis: 15%;
+}
+
+.headBox:last-child,
+.contentBox:last-child {
+  flex-basis: 22%;
+}
+
+.head {
+  font-weight: 500;
+  letter-spacing: 1.1px;
+}
+
+.badge__new,
+.badge__delivered,
+.badge__InDelivery {
+  padding: 0.5rem 1rem;
+  background-color: aliceblue;
+  letter-spacing: 1.1px;
+  font-weight: 500;
+  border-radius: 8px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  font-size: 14px;
+}
+
+.badge__new {
+  background-color: #ffd60a;
+}
+
+.badge__delivered {
+  background-color: #e07a5f;
+  color: white;
+}
+
+.badge__InDelivery {
+  background-color: #56ab91;
+  color: white;
 }

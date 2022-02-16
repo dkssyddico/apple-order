@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import { clearUser } from '../../reducers/userReducers';
 import orderService from '../../service/order';
+import { getToday } from '../../utils/date';
 import styles from './AdminOrders.module.css';
 
 function AdminOrders() {
@@ -50,23 +51,63 @@ function AdminOrders() {
   return (
     <div className={styles.adminOrders}>
       <h1 className={styles.title}>Admin Orders</h1>
-      <div className={styles.headBox}>
-        <p className={styles.head}>Order Id.</p>
-        <p className={styles.head}>Date</p>
-      </div>
-      <div className={styles.contentContainer}>
+      <section className={styles.adminOrders__container}>
+        <div className={styles.headSection}>
+          <div className={styles.headBox}>
+            <h3 className={styles.head}>{getToday()}</h3>
+          </div>
+          <div className={styles.headBox}>
+            <h3 className={styles.head}>Order Id.</h3>
+          </div>
+          <div className={styles.headBox}>
+            <h3 className={styles.head}>Date</h3>
+          </div>
+          <div className={styles.headBox}>
+            <h3 className={styles.head}>Username</h3>
+          </div>
+          <div className={styles.headBox}>
+            <h3 className={styles.head}>Status</h3>
+          </div>
+        </div>
         {data.orders &&
           data.orders.map((order) => (
-            <div className={styles.contentBox} key={order._id}>
-              <p className={styles.content}>
-                <Link to={`/admin/orders/${order._id}`}>{order._id} </Link>
-              </p>
-              <p className={styles.content}>{`${order.createdAt.split('T')[0]} ${
-                order.createdAt.split('T')[1].split('.')[0]
-              }`}</p>
-            </div>
+            <section className={styles.contentContainer} key={order._id}>
+              <div className={styles.contentBox}>
+                <span
+                  className={`${
+                    order.createdAt.slice(0, 10) === getToday() ? styles.badge__new : styles.content
+                  }`}
+                >
+                  {order.createdAt.slice(0, 10) === getToday() ? 'New' : null}
+                </span>
+              </div>
+              <div className={styles.contentBox}>
+                <span className={styles.content}>
+                  <Link to={`/admin/orders/${order._id}`}>{order._id} </Link>
+                </span>
+              </div>
+              <div className={styles.contentBox}>
+                <span className={styles.content}>{`${order.createdAt.split('T')[0]} ${
+                  order.createdAt.split('T')[1].split('.')[0]
+                }`}</span>
+              </div>
+              <div className={styles.contentBox}>
+                <span className={styles.content}>{order.user.username}</span>
+              </div>
+              <div className={styles.contentBox}>
+                <span
+                  className={`${
+                    order.user.deliveryStatus
+                      ? `${styles.badge__delivered}`
+                      : `${styles.badge__InDelivery}`
+                  }`}
+                >
+                  {order.user.deliveryStatus ? 'Delivered' : 'In Delivery'}
+                </span>
+              </div>
+            </section>
           ))}
-      </div>
+      </section>
     </div>
   );
 }
