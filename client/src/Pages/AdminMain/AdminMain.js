@@ -7,7 +7,7 @@ import styles from './AdminMain.module.css';
 function AdminMain() {
   return (
     <div className={styles.adminMain}>
-      <h1 className={styles.title}>Admin</h1>
+      <h1 className={styles.title}>Admin Dashboard</h1>
       <section className={styles.adminCardContainer}>
         <AdminUserCard />
         <AdminOrdersCard />

@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaAppleAlt } from 'react-icons/fa';
 import { useQuery } from 'react-query';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
@@ -49,14 +50,20 @@ function AdminProductsCard() {
 
   return (
     <div className={styles.adminMainCard}>
-      <h2 className={styles.adminMainCard__title}>Products</h2>
-      <h3>
-        {data.products.length > 1
-          ? `${data.products.length} products`
-          : `${data.products.length} product`}
-      </h3>
+      <section className={styles.adminMainCard__titleContainer}>
+        <div className={styles.adminMainCard__iconBox}>
+          <FaAppleAlt className={styles.adminMainCard__icon} />
+        </div>
+        <h2 className={styles.adminMainCard__title}>Products</h2>
+      </section>
+      <section className={styles.adminMainCard__contentContainer}>
+        <div className={styles.adminMainCard__contentBox}>
+          <h3 className={styles.adminMainCard__contentHead}>Total</h3>
+          <span className={styles.adminMainCard__content}>{data.products.length}</span>
+        </div>
+      </section>
       <button className={styles.adminMainCard__button}>
-        <Link to='/admin/products'>See more</Link>
+        <Link to='/admin/products'>See details</Link>
       </button>
     </div>
   );

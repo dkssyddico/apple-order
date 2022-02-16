@@ -2,9 +2,11 @@ import React from 'react';
 import { useQuery } from 'react-query';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { FaUser } from 'react-icons/fa';
 import { clearUser } from '../../reducers/userReducers';
 import userService from '../../service/user';
 import styles from './AdminUserCard.module.css';
+import { getToday } from '../../utils/date';
 
 function AdminUserCard() {
   const navigate = useNavigate();
@@ -17,8 +19,7 @@ function AdminUserCard() {
     },
     {
       onError: (error) => {
-        const { status } = error.response;
-        if (status === 401) {
+        if (error.response.status === 401) {
           alert(
             error.response.data.message
               ? error.response.data.message
@@ -46,12 +47,28 @@ function AdminUserCard() {
     );
   }
 
+  const newUser = data.users.filter((user) => user.createdAt.slice(0, 10) === getToday()).length;
+
   return (
     <div className={styles.adminMainCard}>
-      <h2 className={styles.adminMainCard__title}>User</h2>
-      <h3>{data.users.length > 1 ? `${data.users.length} users` : `${data.users.length} user`}</h3>
+      <section className={styles.adminMainCard__titleContainer}>
+        <div className={styles.adminMainCard__iconBox}>
+          <FaUser className={styles.adminMainCard__icon} />
+        </div>
+        <h2 className={styles.adminMainCard__title}>Customers</h2>
+      </section>
+      <section className={styles.adminMainCard__contentContainer}>
+        <div className={styles.adminMainCard__contentBox}>
+          <h3 className={styles.adminMainCard__contentHead}>Total</h3>
+          <span className={styles.adminMainCard__content}>{data.users.length}</span>
+        </div>
+        <div className={styles.adminMainCard__contentBox}>
+          <h3 className={styles.adminMainCard__contentHead}>New</h3>
+          <span className={styles.adminMainCard__content}>{newUser}</span>
+        </div>
+      </section>
       <button className={styles.adminMainCard__button}>
-        <Link to='/admin/users'>See more</Link>
+        <Link to='/admin/users'>See details</Link>
       </button>
     </div>
   );
