@@ -17,6 +17,9 @@ class Order {
   getAllOrders = () => {
     return this.order.get('/orders');
   };
+  changeDeliverStatus = (orderId) => {
+    return this.order.post(`/orders/${orderId}/deliverStatus`);
+  };
 }
 
 const orderService = new Order(httpClient);

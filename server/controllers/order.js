@@ -32,7 +32,20 @@ export const getOrder = async (req, res) => {
   const { user } = req;
 
   try {
-    let order = await Order.findById(orderId);
+    let order = await Order.findById(orderId).populate('user');
+
+    order = {
+      shippingInfo: order.shippingInfo,
+      _id: order._id,
+      items: order.items,
+      deliveryStatus: order.deliveryStatus,
+      createdAt: order.createdAt,
+      user: {
+        username: order.user.username,
+        email: order.user.email,
+      },
+    };
+
     // 주문 정보를 볼 때 admin은 모든 주문 정보를 볼 수 있다
     if (user && user.role === 0) {
       return res.status(200).json({ success: true, order });
@@ -44,7 +57,25 @@ export const getOrder = async (req, res) => {
       return res.status(400).json({ success: false, message: '잘못된 접근입니다.' });
     }
   } catch (error) {
-    console.log('error2');
+    console.log('error2', error);
+    return res.status(400).json({
+      success: false,
+      message: '주문 정보를 불러오는데 실패했습니다.',
+    });
+  }
+};
+
+export const changeDeliverStatus = async (req, res) => {
+  const { orderId } = req.params;
+  try {
+    let order = await Order.findById(orderId);
+    order.deliveryStatus = !order.deliveryStatus;
+    order.save((err, order) => {
+      console.log(order);
+      if (err) res.status(400).json({ success: false, message: '배송 상태 변경에 실패했습니다.' });
+      return res.status(201).json({ success: true });
+    });
+  } catch (error) {
     return res.status(400).json({
       success: false,
       message: '주문 정보를 불러오는데 실패했습니다.',

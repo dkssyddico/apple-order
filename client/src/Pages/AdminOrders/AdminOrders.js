@@ -47,7 +47,7 @@ function AdminOrders() {
       </div>
     );
   }
-
+  console.log(data);
   return (
     <div className={styles.adminOrders}>
       <h1 className={styles.title}>Admin Orders</h1>
@@ -97,12 +97,12 @@ function AdminOrders() {
               <div className={styles.contentBox}>
                 <span
                   className={`${
-                    order.user.deliveryStatus
+                    order.deliveryStatus
                       ? `${styles.badge__delivered}`
                       : `${styles.badge__InDelivery}`
                   }`}
                 >
-                  {order.user.deliveryStatus ? 'Delivered' : 'In Delivery'}
+                  {order.deliveryStatus ? 'Delivered' : 'In Delivery'}
                 </span>
               </div>
             </section>

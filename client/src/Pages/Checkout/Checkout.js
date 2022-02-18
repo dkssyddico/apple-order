@@ -102,7 +102,7 @@ function Checkout() {
                 {...register('fullName', { required: true })}
                 name='fullName'
                 type='text'
-                required='true'
+                required
               ></input>
               <label className={styles.shipping__label} htmlFor='fullName'>
                 Full Name
@@ -114,7 +114,7 @@ function Checkout() {
                 {...register('address', { required: true })}
                 name='address'
                 type='text'
-                required='true'
+                required
               ></input>
               <label className={styles.shipping__label} htmlFor='address'>
                 Address
@@ -126,7 +126,7 @@ function Checkout() {
                 {...register('contact', { required: true })}
                 name='contact'
                 type='text'
-                required='true'
+                required
               ></input>
               <label className={styles.shipping__label} htmlFor='contact'>
                 Contact

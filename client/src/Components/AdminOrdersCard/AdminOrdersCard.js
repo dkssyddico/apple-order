@@ -49,7 +49,6 @@ function AdminOrdersCard() {
     );
   }
 
-  console.log(data);
   const newOrder = data.orders.filter(
     (order) => order.createdAt.slice(0, 10) === getToday()
   ).length;
