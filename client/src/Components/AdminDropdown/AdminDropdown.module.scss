@@ -1,0 +1,22 @@
+.dropdown {
+  position: absolute;
+  padding: 1rem 1.5rem;
+  margin-top: 1.5rem;
+  border: 1px solid lightgray;
+  border-radius: 1rem;
+  background-color: #faf9f9;
+  top: 1rem;
+  .menuList {
+    .menu {
+      margin-bottom: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      &:last-child {
+        margin-bottom: 0;
+      }
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

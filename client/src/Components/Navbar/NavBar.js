@@ -2,14 +2,16 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import styles from './NavBar.module.css';
-import { clearUser, logoutUser, refreshUser } from '../../reducers/userReducers';
+import styles from './NavBar.module.scss';
+import { clearUser, refreshUser } from '../../reducers/userReducers';
+import LoginUser from '../LoginUser/LoginUser';
+import AdminMenu from '../AdminMenu/AdminMenu';
 
 function NavBar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
-  const { login, isAdmin, username, error } = user;
+  const { login, isAdmin, error } = user;
   const isRToken = localStorage.getItem('r_token');
 
   useEffect(() => {
@@ -32,10 +34,6 @@ function NavBar() {
     }
   }, [error, dispatch, navigate]);
 
-  const onLogoutClick = () => {
-    dispatch(logoutUser());
-  };
-
   return (
     <nav className={styles.navbar}>
       <ul className={styles.navbar__menus}>
@@ -47,7 +45,7 @@ function NavBar() {
         </li>
         {login && isAdmin && (
           <li className={styles.navbar_menu}>
-            <Link to='/admin'>Admin</Link>
+            <AdminMenu />
           </li>
         )}
         {login ? (
@@ -56,10 +54,7 @@ function NavBar() {
               <Link to='/cart'>Cart</Link>
             </li>
             <li className={styles.navbar_menu}>
-              <Link to='/profile'>{username}</Link>
-            </li>
-            <li className={styles.navbar_menu}>
-              <button onClick={onLogoutClick}>Logout</button>
+              <LoginUser />
             </li>
           </>
         ) : (
