@@ -4,7 +4,7 @@ import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import userService from '../../service/user';
-import styles from './AdminUsers.module.css';
+import styles from './AdminUsers.module.scss';
 import { clearUser } from '../../reducers/userReducers';
 
 function AdminUsers() {
@@ -49,23 +49,35 @@ function AdminUsers() {
     );
   }
 
+  console.log(data);
+
   return (
     <div className={styles.adminUsers}>
       <h1 className={styles.title}>Admin Users</h1>
       <section className={styles.tableContainer}>
         <div className={styles.headBox}>
           <h2 className={styles.head}>Username</h2>
+          <h2 className={styles.head}>Admin</h2>
           <h2 className={styles.head}>Email</h2>
           <h2 className={styles.head}>Orders</h2>
         </div>
         {data.users &&
           data.users.map((user) => (
             <div className={styles.contentBox} key={user._id}>
-              <p className={styles.content}>
-                <Link to={`/admin/users/${user._id}`}>{user.username}</Link>
-              </p>
-              <p className={styles.content}>{user.email}</p>
-              <p className={styles.content}>{user.ordersCount}</p>
+              <div className={styles.content}>
+                <span>
+                  <Link to={`/admin/users/${user._id}`}>{user.username}</Link>
+                </span>
+              </div>
+              <div className={styles.content}>
+                <span>{user.role === 0 ? ' O' : 'X'}</span>
+              </div>
+              <div className={styles.content}>
+                <span>{user.email}</span>
+              </div>
+              <div className={styles.content}>
+                <span>{user.ordersCount}</span>
+              </div>
             </div>
           ))}
       </section>
