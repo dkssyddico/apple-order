@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaArrowRight } from 'react-icons/fa';
-import styles from './OrderCard.module.css';
+import styles from './OrderCard.module.scss';
 
 function OrderCard({ id, items, createdAt }) {
   return (

@@ -6,8 +6,8 @@ class Order {
   }
   addOrder = (userId, items) => this.order.post(`/users/${userId}/orders`, items);
 
-  getOrderByUserId = async (userId) => {
-    return this.order.get(`/users/${userId}/orders`);
+  getOrderByUserId = async (userId, index) => {
+    return this.order.get(`/users/${userId}/orders/${index}`);
   };
 
   getOrderByOrderId = (orderId) => {

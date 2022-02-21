@@ -34,8 +34,6 @@ function Home() {
     }
   );
 
-  console.log(data);
-
   if (isLoading) {
     return (
       <div className={styles.home}>

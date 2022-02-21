@@ -1,0 +1,25 @@
+.orders {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .paginationContainer {
+    display: flex;
+    .paginationBtn {
+      padding: 1rem;
+      background-color: aquamarine;
+      .paginationIcon {
+        font-size: 18px;
+      }
+    }
+    .paginationNumBox {
+      display: flex;
+      justify-items: center;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      background-color: #fff;
+      .paginationNum {
+        font-size: 18px;
+      }
+    }
+  }
+}

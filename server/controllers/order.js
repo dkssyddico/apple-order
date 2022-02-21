@@ -4,7 +4,6 @@ import User from '../models/User.js';
 export const getAll = async (req, res) => {
   try {
     let orders = await Order.find().populate('user').sort({ createdAt: 'desc' });
-    console.log(orders);
     orders = orders.map((order) => {
       return {
         _id: order._id,

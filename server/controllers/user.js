@@ -288,15 +288,21 @@ export const addOrder = async (req, res) => {
 };
 
 export const getOrders = async (req, res) => {
-  const { userId } = req.params;
+  let { userId, index } = req.params;
+  index = Number(index) - 1;
   const { user } = req;
+  const offset = 4;
   if (String(userId) !== String(user._id)) {
     return res.status(400).json({ success: false, message: '유저 정보가 일치하지 않습니다.' });
   }
   try {
     let currentUser = await User.findById(userId).populate('orders');
-    let orders = currentUser.orders.sort((a, b) => b.createdAt - a.createdAt);
-    return res.status(200).json({ success: true, orders });
+    let slicedOrders = currentUser.orders
+      .sort((a, b) => b.createdAt - a.createdAt)
+      .slice(offset * index, offset * index + offset);
+    return res
+      .status(200)
+      .json({ success: true, total: currentUser.orders.length, orders: slicedOrders });
   } catch (error) {
     console.log(error);
     return res.status(400).json({

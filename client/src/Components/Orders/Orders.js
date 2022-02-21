@@ -1,23 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { VscTriangleLeft, VscTriangleRight } from 'react-icons/vsc';
+import toast from 'react-hot-toast';
 import orderService from '../../service/order';
 import OrderCard from '../OrderCard/OrderCard';
-import styles from './Orders.module.css';
+import styles from './Orders.module.scss';
 import { clearUser } from '../../reducers/userReducers';
-import toast from 'react-hot-toast';
 
 function Orders() {
   const user = useSelector((state) => state.user);
   const { userId } = user;
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const offset = 4;
+  const [index, setIndex] = useState(1);
+  const [totalOrders, setTotalOrders] = useState(null);
 
   const { isLoading, isError, data, error } = useQuery(
-    'orders',
+    ['orders', index],
     async () => {
-      let { data } = await orderService.getOrderByUserId(userId);
+      let { data } = await orderService.getOrderByUserId(userId, index);
+      setTotalOrders(Math.ceil(data.total / offset));
       return data;
     },
     {
@@ -57,6 +62,16 @@ function Orders() {
     );
   }
 
+  const handleIndexDecrease = () => {
+    if (index === 1) return;
+    setIndex((prev) => prev - 1);
+  };
+
+  const handleIndexIncrease = () => {
+    if (index === totalOrders) return;
+    setIndex((prev) => prev + 1);
+  };
+
   return (
     <div className={styles.orders}>
       {data.orders.map((order) => (
@@ -67,6 +82,17 @@ function Orders() {
           createdAt={order.createdAt.slice(0, 10)}
         />
       ))}
+      <div className={styles.paginationContainer}>
+        <button onClick={handleIndexDecrease} className={styles.paginationBtn}>
+          <VscTriangleLeft className={styles.paginationIcon} />
+        </button>
+        <div className={styles.paginationNumBox}>
+          <span className={styles.paginationNum}>{index}</span>
+        </div>
+        <button onClick={handleIndexIncrease} className={styles.paginationBtn}>
+          <VscTriangleRight className={styles.paginationIcon} />
+        </button>
+      </div>
     </div>
   );
 }

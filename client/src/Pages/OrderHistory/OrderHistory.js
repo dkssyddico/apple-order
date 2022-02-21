@@ -1,6 +1,6 @@
 import React from 'react';
 import Orders from '../../Components/Orders/Orders';
-import styles from './OrderHistory.module.css';
+import styles from './OrderHistory.module.scss';
 
 function OrderHistory() {
   return (
