@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router';
 import { useQuery } from 'react-query';
 import { BiArrowBack } from 'react-icons/bi';
-import styles from './productDetail.module.css';
+import styles from './productDetail.module.scss';
 import { addToCart } from '../../reducers/cartReducer';
 import productService from '../../service/product';
 
@@ -113,9 +113,11 @@ function ProductDetail() {
           <img className={styles.productImg} src={data.product.images[0].filePath} alt='product' />
         </div>
         <div className={styles.infoContainer}>
-          <h1 className={styles.name}>{data.product.name}</h1>
-          <h3 className={styles.price}>${data.product.price * quantity}</h3>
-          <p className={styles.description}>Detail: {data.product.description}</p>
+          <div className={styles.metaContainer}>
+            <h1 className={styles.name}>{data.product.name}</h1>
+            <h3 className={styles.price}>${data.product.price * quantity}</h3>
+            <p className={styles.description}>Description: {data.product.description}</p>
+          </div>
           <div className={styles.QtyContainer}>
             <div className={styles.QtyBtnContainer}>
               <button className={styles.QtyBtn} onClick={handleDecrement}>
@@ -132,6 +134,7 @@ function ProductDetail() {
               </button>
             </div>
           </div>
+          <div className={styles.bar} />
           <div className={styles.btnContainer}>
             <button className={styles.cartBtn} onClick={handleCartClick}>
               Add to cart

@@ -1,0 +1,119 @@
+.product {
+  padding: 15vh 10vw 0;
+  .back__container {
+    margin-bottom: 4rem;
+    button {
+      display: flex;
+      align-items: center;
+      font-weight: 500;
+      span {
+        margin-left: 0.5rem;
+        letter-spacing: 1px;
+      }
+    }
+  }
+  .product__container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2%;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 1rem;
+    padding: 1rem 2rem;
+    .imageContainer {
+      padding: 1rem;
+      flex-basis: 49%;
+      display: flex;
+      align-items: center;
+      .productImg {
+        width: 100%;
+        height: 350px;
+      }
+    }
+    .infoContainer {
+      flex-basis: 49%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 1rem;
+      .metaContainer {
+        .name {
+          margin-bottom: 1.5rem;
+          font-size: 32px;
+          font-weight: 500;
+        }
+        .price {
+          font-size: 28px;
+          font-weight: 600;
+          margin-bottom: 2rem;
+          letter-spacing: 1px;
+        }
+
+        .description {
+          font-style: italic;
+          margin-bottom: 2rem;
+        }
+      }
+      .QtyContainer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .QtyBtnContainer {
+          width: 140px;
+          height: 40px;
+          border-radius: 4px;
+          .QtyBtn {
+            all: unset;
+            text-align: center;
+            cursor: pointer;
+            border: none;
+            width: 30%;
+            height: 100%;
+            cursor: pointer;
+            background-color: #eeebeb;
+            border-radius: 50%;
+          }
+          .input {
+            all: unset;
+            border: none;
+            text-align: center;
+            width: 40%;
+          }
+        }
+      }
+      .bar {
+        width: 100%;
+        height: 1px;
+        background-color: lightgray;
+        margin: 2rem 0;
+      }
+      .btnContainer {
+        display: flex;
+        gap: 4px;
+        .cartBtn,
+        .shopNowBtn {
+          all: unset;
+          text-align: center;
+          cursor: pointer;
+          border: none;
+          flex: 1 1 45%;
+          padding: 1rem;
+          border-radius: 4px;
+          font-weight: 600;
+          letter-spacing: 1px;
+        }
+        .cartBtn {
+          background-color: #c1121f;
+          color: white;
+        }
+        .shopNowBtn {
+          border: 3px solid black;
+          transition: all 0.3s ease-in-out;
+          &:hover {
+            background-color: black;
+            color: white;
+          }
+        }
+      }
+    }
+  }
+}
