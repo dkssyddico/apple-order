@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeProfile } from '../../reducers/userReducers';
 import userService from '../../service/user';
-import styles from './Profile.module.css';
+import styles from './Profile.module.scss';
 
 function Profile() {
   const user = useSelector((state) => state.user);

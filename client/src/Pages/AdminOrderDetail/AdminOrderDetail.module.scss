@@ -1,12 +1,11 @@
+@import '../../common/_extends';
+
 .orderDetail {
-  padding: 8vh 10vw 3vh;
+  @extend %main;
 }
 
 .title {
-  font-size: 2rem;
-  font-weight: 600;
-  margin-top: 1rem;
-  margin-bottom: 3rem;
+  @extend %title;
 }
 
 .metaContainer {

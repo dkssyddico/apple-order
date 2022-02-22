@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from './UploadProduct.module.css';
 import { useForm } from 'react-hook-form';
+import styles from './UploadProduct.module.scss';
 import categories from '../../../utils/category';
 import productService from '../../../service/product';
 import FileUpload from '../../../Components/FileUpload/FileUpload';
@@ -63,7 +63,7 @@ function UploadProduct() {
   };
 
   return (
-    <div className='container'>
+    <div className={styles.adminProductDetail}>
       <h1 className={styles.title}>Upload product</h1>
       <FileUpload originalImages={images} refreshImages={refreshImages} />
       <div className={styles.infoContainer}>

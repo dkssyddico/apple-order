@@ -5,7 +5,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { clearUser } from '../../reducers/userReducers';
 import orderService from '../../service/order';
 import { getToday } from '../../utils/date';
-import styles from './AdminOrders.module.css';
+import styles from './AdminOrders.module.scss';
 
 function AdminOrders() {
   const navigate = useNavigate();

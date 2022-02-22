@@ -1,44 +1,38 @@
+@import '../../common/_extends';
+
 .adminProducts {
   display: flex;
   flex-direction: column;
-}
-
-.title {
-  font-size: 1.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 3px solid black;
-  margin-bottom: 2rem;
-  font-weight: 500;
-  text-align: center;
-}
-
-.btnContainer {
-  margin-bottom: 2rem;
-  align-self: flex-end;
-}
-
-.btnContainer button {
-  padding: 1rem 2rem;
-  background-color: gainsboro;
-  border-radius: 2rem;
-  font-weight: 600;
+  @extend %main;
+  .title {
+    @extend %title;
+  }
+  .btnContainer {
+    margin-bottom: 2rem;
+    align-self: flex-end;
+    button {
+      padding: 1rem 2rem;
+      background-color: gainsboro;
+      border-radius: 2rem;
+      font-weight: 600;
+    }
+  }
 }
 
 .headContainer {
   display: flex;
-  border-top: 2px solid gainsboro;
+  border-top: 3px solid black;
+
   padding: 1rem;
-}
-
-.head {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-basis: 20%;
-}
-
-.head h2 {
-  font-weight: 600;
+  .head {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-basis: 20%;
+    h2 {
+      font-weight: 600;
+    }
+  }
 }
 
 .productCard {

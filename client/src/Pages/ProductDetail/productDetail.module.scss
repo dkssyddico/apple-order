@@ -1,23 +1,16 @@
+@import '../../common/_colors.scss';
+@import '../../common/_extends';
+
 .product {
-  padding: 15vh 10vw 0;
-  .back__container {
-    margin-bottom: 4rem;
-    button {
-      display: flex;
-      align-items: center;
-      font-weight: 500;
-      span {
-        margin-left: 0.5rem;
-        letter-spacing: 1px;
-      }
-    }
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @extend %main;
   .product__container {
+    width: 80%;
+    height: 70%;
     display: flex;
-    flex-wrap: wrap;
     gap: 2%;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    border-radius: 1rem;
     padding: 1rem 2rem;
     .imageContainer {
       padding: 1rem;
@@ -34,7 +27,7 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 1rem;
+      padding: 4rem;
       .metaContainer {
         .name {
           margin-bottom: 1.5rem;
@@ -47,7 +40,6 @@
           margin-bottom: 2rem;
           letter-spacing: 1px;
         }
-
         .description {
           font-style: italic;
           margin-bottom: 2rem;
@@ -68,8 +60,7 @@
             border: none;
             width: 30%;
             height: 100%;
-            cursor: pointer;
-            background-color: #eeebeb;
+            background-color: $lightGray;
             border-radius: 50%;
           }
           .input {

@@ -20,6 +20,7 @@ import OrderSuccess from '../Pages/OrderSuccess/OrderSuccess';
 import ProductDetail from '../Pages/ProductDetail/ProductDetail';
 import Products from '../Pages/Products/Products';
 import Profile from '../Pages/Profile/Profile';
+import Footer from './Footer/Footer';
 import NavBar from './Navbar/NavBar';
 
 function Router() {
@@ -77,6 +78,7 @@ function Router() {
         />
         <Route path='*' element={<Navigate to='/' replace={true} />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 }

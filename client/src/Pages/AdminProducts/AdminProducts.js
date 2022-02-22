@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useQuery } from 'react-query';
 import productService from '../../service/product';
-import styles from './AdminProducts.module.css';
+import styles from './AdminProducts.module.scss';
 import { clearUser } from '../../reducers/userReducers';
 
 function AdminProducts() {

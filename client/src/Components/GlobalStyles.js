@@ -19,13 +19,11 @@ const GlobalStyles = createGlobalStyle`
   }
 
   body {
-    width: 100%;
-    height: 100vh;
+    width: 100%;  
     font-family: 'Montserrat', sans-serif;
-    background-color: #faf9f9;
+    background-color: white;
     color: #22181c;
   }
-
 
   input,
   input::placeholder {

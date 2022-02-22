@@ -1,11 +1,9 @@
+@import '../../common/_extends';
+
 .orderHistory {
-  padding: 8vh 10vw 5vh;
+  @extend %main;
 }
 
 .title {
-  font-size: 2rem;
-  font-weight: 600;
-  margin-top: 1rem;
-  margin-bottom: 3.5rem;
-  text-align: center;
+  @extend %title;
 }

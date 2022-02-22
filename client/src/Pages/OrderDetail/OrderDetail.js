@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { useDispatch } from 'react-redux';
 import orderService from '../../service/order';
-import styles from './OrderDetail.module.css';
+import styles from './OrderDetail.module.scss';
 import OrderItemCard from '../../Components/OrderItemCard/OrderItemCard';
 import { clearUser } from '../../reducers/userReducers';
 

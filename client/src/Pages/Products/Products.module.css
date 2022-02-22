@@ -1,10 +1,12 @@
 .products {
-  padding: 8vh 10vw 0;
+  padding: 10vh 10vw;
+  min-height: 100vh;
 }
 
 .products__title {
   font-size: 2rem;
   font-weight: 600;
-  margin-top: 1rem;
+  margin-top: 3rem;
   margin-bottom: 3.5rem;
+  text-align: center;
 }

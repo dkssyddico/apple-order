@@ -102,12 +102,6 @@ function ProductDetail() {
 
   return (
     <div className={styles.product}>
-      <div className={styles.back__container}>
-        <button>
-          <BiArrowBack />
-          <span>Back to Products</span>
-        </button>
-      </div>
       <section className={styles.product__container}>
         <div className={styles.imageContainer}>
           <img className={styles.productImg} src={data.product.images[0].filePath} alt='product' />

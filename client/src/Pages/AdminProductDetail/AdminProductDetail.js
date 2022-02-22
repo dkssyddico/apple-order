@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import FileUpload from '../../Components/FileUpload/FileUpload';
 import categories from '../../utils/category';
 import productService from '../../service/product';
-import styles from './AdminProductDetail.module.css';
+import styles from './AdminProductDetail.module.scss';
 import toast from 'react-hot-toast';
 
 function AdminProductDetail() {
