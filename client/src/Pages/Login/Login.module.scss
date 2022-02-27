@@ -1,0 +1,69 @@
+@import '../../common/_colors';
+
+.login {
+  width: 100%;
+  padding-top: 10vh;
+  min-height: 100vh;
+  .container {
+    display: flex;
+    .login__slider {
+      flex-basis: 50%;
+      width: 50%;
+      height: 100%;
+    }
+    .login__container {
+      flex-basis: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .login__title {
+        padding-top: 10vh;
+        font-size: 2rem;
+        font-weight: 600;
+        margin-top: 1rem;
+        margin-bottom: 3rem;
+      }
+
+      .login__form {
+        width: 300px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .login__label {
+          align-self: flex-start;
+          margin-bottom: 1rem;
+        }
+
+        .login__input {
+          width: 100%;
+          border-radius: 2rem;
+          margin-bottom: 1.5rem;
+          padding: 1rem;
+          border: 2px solid lightgray;
+          &:focus {
+            outline: none;
+            border-color: $mainGreen;
+          }
+        }
+        .login__btn {
+          width: 100%;
+          margin: 1rem 0 2rem;
+          padding: 1rem 0;
+          background-color: $mainGreen;
+          font-weight: 600;
+          text-align: center;
+          color: black;
+          border-radius: 4px;
+        }
+      }
+    }
+
+    .login__joinBox p {
+      word-spacing: 1px;
+      .joinLink {
+        font-weight: 600;
+        color: $mainGreen;
+      }
+    }
+  }
+}

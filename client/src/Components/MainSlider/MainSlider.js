@@ -8,17 +8,17 @@ function MainSlider() {
   return (
     <Swiper modules={[Autoplay]} autoplay={true}>
       <SwiperSlide>
-        <div>
+        <div className={styles.imgBox}>
           <img className={styles.slider__img} src='img/1.jpeg' alt='background' />
         </div>
       </SwiperSlide>
       <SwiperSlide>
-        <div>
+        <div className={styles.imgBox}>
           <img className={styles.slider__img} src='img/2.jpeg' alt='background' />
         </div>
       </SwiperSlide>
       <SwiperSlide>
-        <div>
+        <div className={styles.imgBox}>
           <img className={styles.slider__img} src='img/3.jpg' alt='background' />
         </div>
       </SwiperSlide>

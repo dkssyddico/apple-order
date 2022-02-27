@@ -1,8 +1,8 @@
+@import '../../common/extends';
+@import '../../common/colors';
+
 .orderSuccess {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  @extend %main;
 }
 
 .infoContainer {
@@ -13,9 +13,7 @@
 }
 
 .infoContainer h1 {
-  font-size: 2rem;
-  font-weight: 500;
-  margin-bottom: 2rem;
+  @extend %title;
 }
 
 .orderId {
@@ -30,7 +28,7 @@
 
 .btnContainer button {
   font-weight: 600;
-  border: 1px solid green;
+  border: 2px solid $mainGreen;
   width: 350px;
   padding: 1rem 0;
   text-align: center;
@@ -40,10 +38,10 @@
 }
 
 .mainBtn {
-  background-color: green;
+  background-color: $mainGreen;
   color: white;
 }
 
 .detailBtn {
-  color: green;
+  color: black;
 }

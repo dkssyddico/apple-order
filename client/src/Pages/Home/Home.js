@@ -6,7 +6,7 @@ import HomeProductCard from '../../Components/HomeProductCard/HomeProductCard';
 import MainSlider from '../../Components/MainSlider/MainSlider';
 import { clearUser } from '../../reducers/userReducers';
 import productService from '../../service/product';
-import styles from './Home.module.css';
+import styles from './Home.module.scss';
 
 function Home() {
   const navigate = useNavigate();
@@ -34,8 +34,6 @@ function Home() {
     }
   );
 
-  console.log(data);
-
   if (isLoading) {
     return (
       <div className={styles.home}>
@@ -53,33 +51,26 @@ function Home() {
 
   return (
     <div className={styles.home}>
-      <section className={styles.home__slider}>
-        <MainSlider />
-      </section>
-      <section className={styles.home__introduction}>
-        <div className={styles.introduction__container}>
-          <h1 className={styles.introduction__title}>Welcome to apple order</h1>
-          <p className={styles.introduction__description}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit voluptates quisquam
-            aliquid atque dolore excepturi!
-          </p>
-          <h2 className={styles.products__title}>Featured Products</h2>
-          <div className={styles.products__container}>
-            {data.products
-              .sort((a, b) => b.orderCount - a.orderCount)
-              .slice(0, 3)
-              .map((product) => (
-                <HomeProductCard
-                  key={product._id}
-                  id={product._id}
-                  image={product.images[0].filePath}
-                  name={product.name}
-                  price={product.price}
-                />
-              ))}
-          </div>
-        </div>
-      </section>
+      <h1 className={styles.introduction__title}>Welcome to apple order</h1>
+      <p className={styles.introduction__description}>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit voluptates quisquam aliquid
+        atque dolore excepturi!
+      </p>
+      <h2 className={styles.products__title}>Featured Products</h2>
+      <div className={styles.products__container}>
+        {data.products
+          .sort((a, b) => b.orderCount - a.orderCount)
+          .slice(0, 3)
+          .map((product) => (
+            <HomeProductCard
+              key={product._id}
+              id={product._id}
+              image={product.images[0].filePath}
+              name={product.name}
+              price={product.price}
+            />
+          ))}
+      </div>
     </div>
   );
 }

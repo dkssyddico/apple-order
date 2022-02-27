@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import styles from './OrderSuccess.module.css';
+import styles from './OrderSuccess.module.scss';
 
 function OrderSuccess() {
   const {

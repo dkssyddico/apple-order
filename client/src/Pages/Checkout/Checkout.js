@@ -6,7 +6,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { refreshCart } from '../../reducers/cartReducer';
 import orderService from '../../service/order';
-import styles from './Checkout.module.css';
+import styles from './Checkout.module.scss';
 
 function Checkout() {
   const {
