@@ -49,13 +49,13 @@ const GlobalStyles = createGlobalStyle`
   -webkit-appearance: none;  
   -moz-appearance: none;
   appearance: none;
+  border: 2px solid lightgray;
   } 
 
   
   select::-ms-expand {
     display: none;
   }
-
 `;
 
 export default GlobalStyles;

@@ -1,7 +1,7 @@
 .fileUploadBox {
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   margin-bottom: 2rem;
 }
 

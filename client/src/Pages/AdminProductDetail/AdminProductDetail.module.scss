@@ -1,7 +1,10 @@
 @import '../../common/_extends';
+@import '../../common/_colors';
 
 .adminProductDetail {
   @extend %main;
+  padding-left: 15vw;
+  padding-right: 15vw;
 }
 
 .title {
@@ -43,16 +46,24 @@
   font-family: inherit;
   font-size: 1rem;
   resize: none;
-  border: 1px solid lightgray;
+  border: 2px solid lightgray;
   border-radius: 4px;
+  &:focus {
+    outline: none;
+    border-color: $mainGreen;
+  }
 }
 
 .select {
   padding: 1rem;
-  border: 1px solid lightgray;
+  border: 2px solid lightgray;
   font-family: inherit;
   font-size: 1rem;
   border-radius: 4px;
+  &:focus {
+    outline: none;
+    border-color: $mainGreen;
+  }
 }
 
 .btnContainer {
@@ -63,8 +74,7 @@
 .submitBtn {
   font-weight: 600;
   padding: 1rem 2rem;
-  background-color: green;
-  color: white;
+  background-color: $mainGreen;
   border-radius: 4px;
   margin: 0.5rem;
 }
@@ -76,9 +86,8 @@
   color: red;
   border-radius: 4px;
   transition: all 0.3s ease-in-out;
-}
-
-.deleteBtn:hover {
-  background-color: red;
-  color: white;
+  &:hover {
+    background-color: red;
+    color: white;
+  }
 }

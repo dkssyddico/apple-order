@@ -1,4 +1,5 @@
 @import '../../common/_extends';
+@import '../../common/_colors';
 
 .adminProducts {
   display: flex;
@@ -7,67 +8,67 @@
   .title {
     @extend %title;
   }
-  .btnContainer {
+  .itemsContainer {
+    height: 70vh;
+    overflow: scroll;
     margin-bottom: 2rem;
-    align-self: flex-end;
-    button {
-      padding: 1rem 2rem;
-      background-color: gainsboro;
+    .headContainer {
+      display: flex;
+      border-top: 3px solid black;
+      padding: 1rem;
+      .head {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-basis: 20%;
+        h2 {
+          font-weight: 600;
+        }
+      }
+    }
+    .productCard {
+      display: flex;
+      padding: 1rem;
+      border-top: 1px solid gainsboro;
+    }
+    .productCard:last-child {
+      border-bottom: 1px solid gainsboro;
+    }
+    .content {
+      flex-basis: 20%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .image {
+      width: 70px;
+      height: 70px;
+    }
+    .detailBtn {
+      padding: 0.8rem 1.5rem;
+      color: $darkGray;
+      background-color: $mainGreen;
       border-radius: 2rem;
       font-weight: 600;
+      border: 1px solid $mainGreen;
+      transition: all 0.3s ease-in-out;
+      &:hover {
+        color: whitesmoke;
+      }
     }
   }
-}
-
-.headContainer {
-  display: flex;
-  border-top: 3px solid black;
-
-  padding: 1rem;
-  .head {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-basis: 20%;
-    h2 {
+  .btnContainer {
+    margin-top: 1rem;
+    align-self: center;
+    button {
+      padding: 1rem 2rem;
+      background-color: $mainGreen;
+      border-radius: 2rem;
       font-weight: 600;
+      transition: color 0.3s ease-in-out;
+      &:hover {
+        color: white;
+      }
     }
   }
-}
-
-.productCard {
-  display: flex;
-  padding: 1rem;
-  border-top: 1px solid gainsboro;
-}
-
-.productCard:last-child {
-  border-bottom: 1px solid gainsboro;
-}
-
-.content {
-  flex-basis: 20%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.image {
-  width: 70px;
-  height: 70px;
-}
-
-.detailBtn {
-  padding: 0.8rem 1.5rem;
-  color: lightseagreen;
-  background-color: whitesmoke;
-  border-radius: 2rem;
-  font-weight: 600;
-  border: 1px solid lightseagreen;
-  transition: all 0.3s ease-in-out;
-}
-
-.detailBtn:hover {
-  background-color: lightseagreen;
-  color: whitesmoke;
 }
