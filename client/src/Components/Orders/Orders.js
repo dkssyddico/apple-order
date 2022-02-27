@@ -73,15 +73,18 @@ function Orders() {
   };
 
   return (
-    <div className={styles.orders}>
-      {data.orders.map((order) => (
-        <OrderCard
-          key={order._id}
-          id={order._id}
-          items={order.items}
-          createdAt={order.createdAt.slice(0, 10)}
-        />
-      ))}
+    <div className={styles.container}>
+      <div className={styles.orders}>
+        {data.orders.map((order) => (
+          <OrderCard
+            key={order._id}
+            id={order._id}
+            items={order.items}
+            createdAt={order.createdAt.slice(0, 10)}
+            deliveryStatus={order.deliveryStatus}
+          />
+        ))}
+      </div>
       <div className={styles.paginationContainer}>
         <button onClick={handleIndexDecrease} className={styles.paginationBtn}>
           <VscTriangleLeft className={styles.paginationIcon} />

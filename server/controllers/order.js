@@ -29,9 +29,10 @@ export const getAll = async (req, res) => {
 export const getOrder = async (req, res) => {
   const { orderId } = req.params;
   const { user } = req;
-
+  console.log(user);
   try {
     let order = await Order.findById(orderId).populate('user');
+    console.log(order);
 
     order = {
       shippingInfo: order.shippingInfo,
@@ -42,6 +43,7 @@ export const getOrder = async (req, res) => {
       user: {
         username: order.user.username,
         email: order.user.email,
+        _id: order.user._id,
       },
     };
 
@@ -49,7 +51,7 @@ export const getOrder = async (req, res) => {
     if (user && user.role === 0) {
       return res.status(200).json({ success: true, order });
       // 개인은 본인의 주문 내역에 있는 주문 정보만 볼 수 있다.
-    } else if (user && String(user._id) === String(order.user)) {
+    } else if (user && String(user._id) === String(order.user._id)) {
       return res.status(200).json({ success: true, order });
     } else {
       console.log('error');

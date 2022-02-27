@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { FaArrowRight } from 'react-icons/fa';
 import styles from './OrderCard.module.scss';
 
-function OrderCard({ id, items, createdAt }) {
+function OrderCard({ id, items, createdAt, deliveryStatus }) {
   return (
     <div className={styles.card}>
       <h4 className={styles.date}>{createdAt}</h4>
@@ -30,6 +30,9 @@ function OrderCard({ id, items, createdAt }) {
               <p className={styles.price}>
                 Total Price{' '}
                 {`$${items.reduce((prev, curr) => prev + curr.quantity * curr.price, 0)}`}
+              </p>
+              <p className={styles.deliveryStatus}>
+                {deliveryStatus ? 'Delivered' : 'In Delivery'}
               </p>
             </div>
           </div>

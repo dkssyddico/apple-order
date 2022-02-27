@@ -2,8 +2,7 @@
   display: flex;
   flex-direction: column;
   margin-bottom: 2rem;
-  width: 50%;
-
+  width: 70%;
   .date {
     color: #2d3436;
     font-weight: 500;
@@ -11,7 +10,7 @@
     margin-bottom: 1rem;
   }
   .metaContainer {
-    // border: 1px solid lightgray;
+    border: 1px solid lightgray;
     padding: 1.2rem 1.5rem;
     background-color: #fff;
     transition: all 0.3s ease-in;
@@ -39,12 +38,15 @@
       .infoBox {
         padding: 0 1rem;
         .orderNum {
-          font-size: 15px;
           margin-bottom: 0.8rem;
         }
         .price {
-          font-weight: 500;
+          // font-weight: 500;
           font-size: 1rem;
+          margin-bottom: 0.8rem;
+        }
+        .deliveryStatus {
+          // font-weight: 500;
         }
       }
     }

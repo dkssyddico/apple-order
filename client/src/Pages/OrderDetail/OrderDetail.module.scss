@@ -7,24 +7,3 @@
 .title {
   @extend %title;
 }
-
-.wholeContainer {
-  padding: 1rem 0;
-}
-
-.metaContainer {
-  height: 100px;
-  padding: 1rem 1.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  border: 1px solid lightgray;
-  /* border-bottom: none; */
-  background-color: whitesmoke;
-}
-
-.itemsContainer {
-  border: 1px solid lightgray;
-  border-top: none;
-  border-bottom: none;
-}

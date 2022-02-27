@@ -1,12 +1,22 @@
-.orders {
+@import '../../common/_colors.scss';
+
+.container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  .orders {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 50vh;
+  }
   .paginationContainer {
+    margin-top: 2rem;
     display: flex;
     .paginationBtn {
       padding: 1rem;
-      background-color: aquamarine;
+      background-color: $mainGreen;
       .paginationIcon {
         font-size: 18px;
       }
