@@ -70,7 +70,7 @@ function Profile() {
   };
 
   return (
-    <div className={styles.profileContainer}>
+    <div className={styles.profile}>
       <h1 className={styles.title}>Profile</h1>
       <section className={styles.section}>
         <div className={styles.usernameContainer}>
@@ -91,12 +91,12 @@ function Profile() {
               name='username'
             />
             <button className={styles.button} type='submit'>
-              수정
+              Update
             </button>
           </form>
         </div>
         <div className={styles.passwordContainer}>
-          <h1 className={styles.passwordTitle}>Change Password</h1>
+          <h2 className={styles.passwordTitle}>Change Password</h2>
           <form className={styles.form} onSubmit={handleSubmit2(changePassword)}>
             {errors2.currentPassword && (
               <p className={styles.warning}>{errors2.currentPassword.message}</p>

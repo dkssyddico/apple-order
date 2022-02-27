@@ -1,10 +1,7 @@
 @import '../../common/_extends';
+@import '../../common/_colors.scss';
 
-.profileContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+.profile {
   @extend %main;
 }
 
@@ -14,6 +11,7 @@
 
 .section {
   display: flex;
+  justify-content: center;
   gap: 10rem;
 }
 
@@ -34,6 +32,7 @@
 .label {
   margin-bottom: 2rem;
   font-weight: 600;
+  color: $darkGray;
 }
 
 .input {
@@ -41,17 +40,21 @@
   border-radius: 2rem;
   margin-bottom: 1.5rem;
   padding: 1rem;
-  border: 1px solid lightgray;
+  border: 2px solid lightgray;
+  &:focus {
+    outline: none;
+    border: 2px solid $mainGreen;
+  }
 }
 
 .button {
   width: 100%;
   margin: 1rem 0 2rem;
   padding: 1rem 0;
-  background-color: green;
-  font-weight: 600;
+  background-color: $mainGreen;
+  font-weight: 500;
   text-align: center;
-  color: white;
+  color: black;
   border-radius: 4px;
 }
 
@@ -64,6 +67,7 @@
 .passwordTitle {
   margin-bottom: 2rem;
   font-weight: 600;
+  color: $darkGray;
 }
 
 .warning {
