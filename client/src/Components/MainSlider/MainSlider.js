@@ -19,7 +19,7 @@ function MainSlider() {
       </SwiperSlide>
       <SwiperSlide>
         <div className={styles.imgBox}>
-          <img className={styles.slider__img} src='img/3.jpg' alt='background' />
+          <img className={styles.slider__img} src='img/3.png' alt='background' />
         </div>
       </SwiperSlide>
     </Swiper>

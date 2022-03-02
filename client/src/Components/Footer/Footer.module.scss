@@ -1,7 +1,11 @@
 @import '../../common/_colors.scss';
 
 .footer {
-  height: 100px;
+  height: 15vh;
   margin-top: auto;
   background-color: $mainGreen;
+  padding: 1rem 10vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
