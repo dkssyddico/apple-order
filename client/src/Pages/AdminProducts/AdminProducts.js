@@ -1,36 +1,14 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import productService from '../../service/product';
 import styles from './AdminProducts.module.scss';
-import { clearUser } from '../../reducers/userReducers';
 
 function AdminProducts() {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { isLoading, isError, data, error } = useQuery(
-    'adminProducts',
-    async () => {
-      let { data } = await productService.getAllProducts();
-      return data;
-    },
-    {
-      onError: (error) => {
-        const { status } = error.response;
-        if (status === 401) {
-          alert(
-            error.response.data.message
-              ? error.response.data.message
-              : error.response.data.error.name
-          );
-          navigate('/login'); // 리프레쉬 토큰이 만료된 경우 새로 로그인 유도.
-          localStorage.removeItem('r_token');
-          dispatch(clearUser());
-        }
-      },
-    }
-  );
+  const { isLoading, isError, data, error } = useQuery('adminProducts', async () => {
+    let { data } = await productService.getAllProducts();
+    return data;
+  });
 
   if (isLoading) {
     return (

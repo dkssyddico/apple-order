@@ -1,40 +1,17 @@
 import React from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
-import { useDispatch } from 'react-redux';
 import orderService from '../../service/order';
 import styles from './OrderDetail.module.scss';
-import OrderItemCard from '../../Components/OrderItemCard/OrderItemCard';
-import { clearUser } from '../../reducers/userReducers';
 import OrderDetailCard from '../../Components/OrderDetailCard/OrderDetailCard';
 
 function OrderDetail() {
   const { orderId } = useParams();
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
 
-  const { isLoading, isError, data, error } = useQuery(
-    'orderDetail',
-    async () => {
-      let { data } = await orderService.getOrderByOrderId(orderId);
-      return data;
-    },
-    {
-      onError: (error) => {
-        const { status } = error.response;
-        if (status === 401) {
-          alert(
-            error.response.data.message
-              ? error.response.data.message
-              : error.response.data.error.name
-          );
-          navigate('/login'); // 리프레쉬 토큰이 만료된 경우 새로 로그인 유도.
-          localStorage.removeItem('r_token');
-          dispatch(clearUser());
-        }
-      },
-    }
-  );
+  const { isLoading, isError, data, error } = useQuery('orderDetail', async () => {
+    let { data } = await orderService.getOrderByOrderId(orderId);
+    return data;
+  });
 
   if (isLoading) {
     return (

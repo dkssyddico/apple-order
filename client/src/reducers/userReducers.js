@@ -3,7 +3,7 @@ import httpClient from '../service/httpClient';
 import userService from '../service/user';
 
 const loginUserAction = createAction('user/loginUser');
-const refreshUserAction = createAction('user/refreshUser');
+const checkUserLoginAction = createAction('user/checkLogin');
 const logoutUserAction = createAction('user/logoutUser');
 const changeProfileAction = createAction('user/changeProfile');
 
@@ -30,9 +30,9 @@ const loginUser = createAsyncThunk(loginUserAction, async (userInfo, { rejectWit
   }
 });
 
-const refreshUser = createAsyncThunk(refreshUserAction, async (_, { rejectWithValue }) => {
+const checkUserLogin = createAsyncThunk(checkUserLoginAction, async (_, { rejectWithValue }) => {
   try {
-    const { data } = await userService.refresh();
+    const { data } = await userService.checkLogin();
     const accessToken = data.accessToken;
     if (data.success) {
       httpClient.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
@@ -91,14 +91,14 @@ const userSlice = createSlice({
         error: payload,
       };
     },
-    [refreshUser.fulfilled]: (state, { payload }) => ({
+    [checkUserLogin.fulfilled]: (state, { payload }) => ({
       username: payload.username,
       userId: payload._id,
       isAdmin: payload.isAdmin,
       login: true,
       error: '',
     }),
-    [refreshUser.rejected]: (state, { payload }) => {
+    [checkUserLogin.rejected]: (state, { payload }) => {
       return {
         ...state,
         error: payload,
@@ -119,6 +119,6 @@ const userSlice = createSlice({
 });
 
 export const { clearUser } = userSlice.actions;
-export { loginUser, logoutUser, refreshUser, changeProfile };
+export { loginUser, logoutUser, checkUserLogin, changeProfile };
 
 export default userSlice.reducer;

@@ -1,38 +1,14 @@
 import React from 'react';
 import { useQuery } from 'react-query';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import HomeProductCard from '../../Components/HomeProductCard/HomeProductCard';
-import MainSlider from '../../Components/MainSlider/MainSlider';
-import { clearUser } from '../../reducers/userReducers';
 import productService from '../../service/product';
 import styles from './Home.module.scss';
 
 function Home() {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { isLoading, isError, data, error } = useQuery(
-    'products',
-    async () => {
-      let { data } = await productService.getAllProducts();
-      return data;
-    },
-    {
-      onError: (error) => {
-        const { status } = error.response;
-        if (status === 401) {
-          alert(
-            error.response.data.message
-              ? error.response.data.message
-              : error.response.data.error.name
-          );
-          navigate('/login'); // 리프레쉬 토큰이 만료된 경우 새로 로그인 유도.
-          localStorage.removeItem('r_token');
-          dispatch(clearUser());
-        }
-      },
-    }
-  );
+  const { isLoading, isError, data, error } = useQuery('products', async () => {
+    let { data } = await productService.getAllProducts();
+    return data;
+  });
 
   if (isLoading) {
     return (

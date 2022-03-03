@@ -15,9 +15,9 @@ import {
   logout,
   refreshCart,
   removeUser,
+  checkUserLogin,
 } from '../controllers/user.js';
 import { auth } from '../middleware/auth.js';
-import { checkByRefreshToken } from '../middleware/checkByRefreshToken.js';
 import isAdmin from '../middleware/isAdmin.js';
 
 const userRouter = express.Router();
@@ -26,7 +26,7 @@ userRouter.get('/', auth, isAdmin, getAll);
 userRouter.post('/join', join);
 userRouter.post('/login', login);
 userRouter.get('/logout', auth, logout);
-userRouter.get('/refresh', checkByRefreshToken);
+userRouter.get('/checkLogin', checkUserLogin);
 
 userRouter.get('/:userId', auth, getUserInfo);
 

@@ -1,51 +1,23 @@
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { VscTriangleLeft, VscTriangleRight } from 'react-icons/vsc';
-import toast from 'react-hot-toast';
 import orderService from '../../service/order';
 import OrderCard from '../OrderCard/OrderCard';
 import styles from './Orders.module.scss';
-import { clearUser } from '../../reducers/userReducers';
 
 function Orders() {
   const user = useSelector((state) => state.user);
   const { userId } = user;
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
   const offset = 4;
   const [index, setIndex] = useState(1);
   const [totalOrders, setTotalOrders] = useState(null);
 
-  const { isLoading, isError, data, error } = useQuery(
-    ['orders', index],
-    async () => {
-      let { data } = await orderService.getOrderByUserId(userId, index);
-      setTotalOrders(Math.ceil(data.total / offset));
-      return data;
-    },
-    {
-      onError: (error) => {
-        const { status } = error.response;
-        if (status === 401) {
-          // alert(
-          //   error.response.data.message
-          //     ? error.response.data.message
-          //     : error.response.data.error.name
-          // );
-          toast.error(
-            error.response.data.message
-              ? error.response.data.message
-              : error.response.data.error.name
-          );
-          navigate('/login'); // 리프레쉬 토큰이 만료된 경우 새로 로그인 유도.
-          localStorage.removeItem('r_token');
-          dispatch(clearUser());
-        }
-      },
-    }
-  );
+  const { isLoading, isError, data, error } = useQuery(['orders', index], async () => {
+    let { data } = await orderService.getOrderByUserId(userId, index);
+    setTotalOrders(Math.ceil(data.total / offset));
+    return data;
+  });
 
   if (isLoading) {
     return (

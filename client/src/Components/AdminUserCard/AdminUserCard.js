@@ -1,37 +1,16 @@
 import React from 'react';
 import { useQuery } from 'react-query';
-import { useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { FaUser } from 'react-icons/fa';
-import { clearUser } from '../../reducers/userReducers';
 import userService from '../../service/user';
 import styles from './AdminUserCard.module.css';
 import { getToday } from '../../utils/date';
 
 function AdminUserCard() {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { isLoading, isError, data, error } = useQuery(
-    'users',
-    async () => {
-      let { data } = await userService.getAll();
-      return data;
-    },
-    {
-      onError: (error) => {
-        if (error.response.status === 401) {
-          alert(
-            error.response.data.message
-              ? error.response.data.message
-              : error.response.data.error.name
-          );
-          navigate('/login'); // 리프레쉬 토큰이 만료된 경우 새로 로그인 유도.
-          localStorage.removeItem('r_token');
-          dispatch(clearUser());
-        }
-      },
-    }
-  );
+  const { isLoading, isError, data, error } = useQuery('users', async () => {
+    let { data } = await userService.getAll();
+    return data;
+  });
   if (isLoading) {
     return (
       <div className={styles.adminMainCard}>

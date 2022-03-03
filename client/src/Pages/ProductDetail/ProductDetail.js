@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router';
 import { useQuery } from 'react-query';
-import { BiArrowBack } from 'react-icons/bi';
 import styles from './productDetail.module.scss';
 import { addToCart } from '../../reducers/cartReducer';
 import productService from '../../service/product';

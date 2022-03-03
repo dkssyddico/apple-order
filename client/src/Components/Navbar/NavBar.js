@@ -3,21 +3,22 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import styles from './NavBar.module.scss';
-import { clearUser, refreshUser } from '../../reducers/userReducers';
+import { clearUser, checkUserLogin } from '../../reducers/userReducers';
 import LoginUser from '../LoginUser/LoginUser';
 import AdminMenu from '../AdminMenu/AdminMenu';
+import { getCart } from '../../reducers/cartReducer';
 
 function NavBar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
-  const { login, isAdmin, error } = user;
+  const { login, userId, isAdmin, error } = user;
   const isRToken = localStorage.getItem('r_token');
 
   useEffect(() => {
     // 새로고침해서 로그인은 풀렸는데 리프레쉬 토큰이 남아있는 경우
     if (!login && isRToken) {
-      dispatch(refreshUser());
+      dispatch(checkUserLogin());
     }
   }, [dispatch, login, isRToken, navigate]);
 
@@ -33,6 +34,12 @@ function NavBar() {
       }
     }
   }, [error, dispatch, navigate]);
+
+  useEffect(() => {
+    if (login) {
+      dispatch(getCart(userId));
+    }
+  }, [dispatch, login, userId]);
 
   return (
     <nav className={styles.navbar}>
