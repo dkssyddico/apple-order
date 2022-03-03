@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
+import Message from '../../Components/Message/Message';
 import OrderCard from '../../Components/OrderCard/OrderCard';
 import userService from '../../service/user';
 import styles from './AdminUserDetail.module.css';
@@ -45,14 +46,18 @@ function AdminUserDetail() {
   if (isLoading) {
     return (
       <div className={styles.adminUserDetail}>
-        <p>Now loading...</p>
+        <Message>
+          <p>Now loading...</p>
+        </Message>
       </div>
     );
   }
   if (isError) {
     return (
       <div className={styles.adminUserDetail}>
-        <span>Error: {error.message}</span>
+        <Message>
+          <span>Error: {error.message}</span>
+        </Message>
       </div>
     );
   }

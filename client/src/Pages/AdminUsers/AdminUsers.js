@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import userService from '../../service/user';
 import styles from './AdminUsers.module.scss';
+import Message from '../../Components/Message/Message';
 
 function AdminUsers() {
   const { isLoading, isError, data, error } = useQuery('user', async () => {
@@ -13,14 +14,18 @@ function AdminUsers() {
   if (isLoading) {
     return (
       <div className={styles.adminUsers}>
-        <p>Now loading...</p>
+        <Message>
+          <p>Now loading...</p>
+        </Message>
       </div>
     );
   }
   if (isError) {
     return (
       <div className={styles.adminUsers}>
-        <span>Error: {error.message}</span>
+        <Message>
+          <span>Error: {error.message}</span>
+        </Message>
       </div>
     );
   }

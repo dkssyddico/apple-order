@@ -1,6 +1,7 @@
 import React from 'react';
 import { useQuery } from 'react-query';
 import { Link } from 'react-router-dom';
+import Message from '../../Components/Message/Message';
 import orderService from '../../service/order';
 import { getToday } from '../../utils/date';
 import styles from './AdminOrders.module.scss';
@@ -14,14 +15,18 @@ function AdminOrders() {
   if (isLoading) {
     return (
       <div className={styles.adminOrders}>
-        <p>Now Loading...</p>
+        <Message>
+          <p>Now Loading...</p>
+        </Message>
       </div>
     );
   }
   if (isError) {
     return (
       <div className={styles.adminOrders}>
-        <p>Error: {error.message}</p>
+        <Message>
+          <p>Error: {error.message}</p>
+        </Message>
       </div>
     );
   }

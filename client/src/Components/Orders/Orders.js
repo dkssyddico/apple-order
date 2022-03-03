@@ -5,6 +5,7 @@ import { VscTriangleLeft, VscTriangleRight } from 'react-icons/vsc';
 import orderService from '../../service/order';
 import OrderCard from '../OrderCard/OrderCard';
 import styles from './Orders.module.scss';
+import Message from '../Message/Message';
 
 function Orders() {
   const user = useSelector((state) => state.user);
@@ -22,14 +23,18 @@ function Orders() {
   if (isLoading) {
     return (
       <div className={styles.orders}>
-        <p>Now Loading...</p>
+        <Message>
+          <p>Now Loading...</p>
+        </Message>
       </div>
     );
   }
   if (isError) {
     return (
       <div className={styles.orders}>
-        <p>Error: {error.message}</p>
+        <Message>
+          <p>Error: {error.message}</p>
+        </Message>
       </div>
     );
   }

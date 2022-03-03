@@ -1,6 +1,7 @@
 import React from 'react';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
+import Message from '../../Components/Message/Message';
 import OrderDetailCard from '../../Components/OrderDetailCard/OrderDetailCard';
 import orderService from '../../service/order';
 import styles from './AdminOrderDetail.module.scss';
@@ -15,14 +16,18 @@ function AdminOrderDetail() {
   if (isLoading) {
     return (
       <div className={styles.orderDetail}>
-        <p>Now Loading...</p>
+        <Message>
+          <p>Now Loading...</p>
+        </Message>
       </div>
     );
   }
   if (isError) {
     return (
       <div className={styles.orderDetail}>
-        <p>Error: {error.message}</p>
+        <Message>
+          <p>Error: {error.message}</p>
+        </Message>
       </div>
     );
   }

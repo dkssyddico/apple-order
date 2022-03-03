@@ -5,6 +5,7 @@ import { FaUser } from 'react-icons/fa';
 import userService from '../../service/user';
 import styles from './AdminUserCard.module.css';
 import { getToday } from '../../utils/date';
+import Message from '../Message/Message';
 
 function AdminUserCard() {
   const { isLoading, isError, data, error } = useQuery('users', async () => {
@@ -14,14 +15,18 @@ function AdminUserCard() {
   if (isLoading) {
     return (
       <div className={styles.adminMainCard}>
-        <p>Now Loading...</p>
+        <Message>
+          <p>Now Loading...</p>
+        </Message>
       </div>
     );
   }
   if (isError) {
     return (
       <div className={styles.adminMainCard}>
-        <p>{error.message}</p>
+        <Message>
+          <p>{error.message}</p>
+        </Message>
       </div>
     );
   }

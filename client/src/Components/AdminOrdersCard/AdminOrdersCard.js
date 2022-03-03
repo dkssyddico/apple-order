@@ -5,6 +5,7 @@ import { BsBoxSeam } from 'react-icons/bs';
 import orderService from '../../service/order';
 import styles from './AdminOrdersCard.module.css';
 import { getToday } from '../../utils/date';
+import Message from '../Message/Message';
 
 function AdminOrdersCard() {
   const { isLoading, isError, data, error } = useQuery('orders', async () => {
@@ -15,14 +16,18 @@ function AdminOrdersCard() {
   if (isLoading) {
     return (
       <div className={styles.adminMainCard}>
-        <p>Now Loading...</p>
+        <Message>
+          <p>Now Loading...</p>
+        </Message>
       </div>
     );
   }
   if (isError) {
     return (
       <div className={styles.adminMainCard}>
-        <p>{error.message}</p>
+        <Message>
+          <p>{error.message}</p>
+        </Message>
       </div>
     );
   }

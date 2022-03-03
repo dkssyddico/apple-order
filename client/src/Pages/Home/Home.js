@@ -1,6 +1,7 @@
 import React from 'react';
 import { useQuery } from 'react-query';
 import HomeProductCard from '../../Components/HomeProductCard/HomeProductCard';
+import Message from '../../Components/Message/Message';
 import productService from '../../service/product';
 import styles from './Home.module.scss';
 
@@ -13,14 +14,18 @@ function Home() {
   if (isLoading) {
     return (
       <div className={styles.home}>
-        <p>Now Loading...</p>
+        <Message>
+          <p>Now Loading...</p>
+        </Message>
       </div>
     );
   }
   if (isError) {
     return (
       <div className={styles.home}>
-        <p>{error.message}</p>
+        <Message>
+          <p>{error.message}</p>
+        </Message>
       </div>
     );
   }

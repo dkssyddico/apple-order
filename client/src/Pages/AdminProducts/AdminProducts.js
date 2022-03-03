@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import productService from '../../service/product';
 import styles from './AdminProducts.module.scss';
+import Message from '../../Components/Message/Message';
 
 function AdminProducts() {
   const { isLoading, isError, data, error } = useQuery('adminProducts', async () => {
@@ -13,14 +14,18 @@ function AdminProducts() {
   if (isLoading) {
     return (
       <div className={styles.adminProducts}>
-        <p>Now Loading...</p>
+        <Message>
+          <p>Now Loading...</p>
+        </Message>
       </div>
     );
   }
   if (isError) {
     return (
       <div className={styles.adminProducts}>
-        <p>Error: {error.message}</p>
+        <Message>
+          <p>Error: {error.message}</p>
+        </Message>
       </div>
     );
   }

@@ -4,6 +4,7 @@ import { useQuery } from 'react-query';
 import orderService from '../../service/order';
 import styles from './OrderDetail.module.scss';
 import OrderDetailCard from '../../Components/OrderDetailCard/OrderDetailCard';
+import Message from '../../Components/Message/Message';
 
 function OrderDetail() {
   const { orderId } = useParams();
@@ -16,14 +17,18 @@ function OrderDetail() {
   if (isLoading) {
     return (
       <div className={styles.orderDetail}>
-        <p>Now Loading...</p>
+        <Message>
+          <p>Now Loading...</p>
+        </Message>
       </div>
     );
   }
   if (isError) {
     return (
       <div className={styles.orderDetail}>
-        <p>Error: {error.message}</p>
+        <Message>
+          <p>Error: {error.message}</p>
+        </Message>
       </div>
     );
   }

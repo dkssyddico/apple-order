@@ -3,6 +3,7 @@ import { FaAppleAlt } from 'react-icons/fa';
 import { useQuery } from 'react-query';
 import { Link } from 'react-router-dom';
 import productService from '../../service/product';
+import Message from '../Message/Message';
 import styles from './AdminProductsCard.module.css';
 
 function AdminProductsCard() {
@@ -14,14 +15,18 @@ function AdminProductsCard() {
   if (isLoading) {
     return (
       <div className={styles.adminMainCard}>
-        <p>Now Loading...</p>
+        <Message>
+          <p>Now Loading...</p>
+        </Message>
       </div>
     );
   }
   if (isError) {
     return (
       <div className={styles.adminMainCard}>
-        <p>{error.message}</p>
+        <Message>
+          <p>{error.message}</p>
+        </Message>
       </div>
     );
   }

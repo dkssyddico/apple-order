@@ -2,6 +2,7 @@ import React from 'react';
 import { useQuery } from 'react-query';
 import productService from '../../service/product';
 import MainProductCard from '../MainProductCard/MainProductCard';
+import Message from '../Message/Message';
 import styles from './AllProducts.module.css';
 
 function AllProducts() {
@@ -13,14 +14,18 @@ function AllProducts() {
   if (isLoading) {
     return (
       <div className={styles.products}>
-        <p>Now Loading...</p>
+        <Message>
+          <p>Now Loading...</p>
+        </Message>
       </div>
     );
   }
   if (isError) {
     return (
       <div className={styles.products}>
-        <p>Error: {error.message}</p>
+        <Message>
+          <p>Error: {error.message}</p>
+        </Message>
       </div>
     );
   }

@@ -6,6 +6,7 @@ import { useQuery } from 'react-query';
 import styles from './productDetail.module.scss';
 import { addToCart } from '../../reducers/cartReducer';
 import productService from '../../service/product';
+import Message from '../../Components/Message/Message';
 
 function ProductDetail() {
   const dispatch = useDispatch();
@@ -87,14 +88,18 @@ function ProductDetail() {
   if (isLoading) {
     return (
       <div className={styles.product}>
-        <p>Now Loading...</p>
+        <Message>
+          <p>Now Loading...</p>
+        </Message>
       </div>
     );
   }
   if (isError) {
     return (
       <div className={styles.product}>
-        <p>Error: {error.message}</p>
+        <Message>
+          <p>Error: {error.message}</p>
+        </Message>
       </div>
     );
   }
