@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { TiDelete } from 'react-icons/ti';
-import styles from './CartItem.module.css';
+import styles from './CartItem.module.scss';
 import { changeQty, deleteItemInCart } from '../../reducers/cartReducer';
 
 function CartItem({ name, images, price, quantity, canBeSold, productId }) {
@@ -60,7 +60,7 @@ function CartItem({ name, images, price, quantity, canBeSold, productId }) {
             <TiDelete
               style={{
                 cursor: 'pointer',
-                color: 'lightgray',
+                color: '#eeebeb',
                 fontSize: '1.5em',
               }}
             />

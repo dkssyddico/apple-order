@@ -1,4 +1,5 @@
 @import '../../common/_extends';
+@import '../../common/_colors';
 
 .checkout {
   @extend %main;
@@ -8,49 +9,58 @@
   .container {
     display: flex;
     gap: 5%;
-    .orderContainer {
+    .orderBox {
       flex-basis: 65%;
-    }
-
-    .itemsContainer {
-      width: 100%;
-      margin-bottom: 3rem;
-    }
-
-    .headBox {
-      display: flex;
-      border-top: 3px solid black;
-    }
-
-    .head {
-      height: 3rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .head h2 {
-      font-weight: 600;
-    }
-
-    .container__contentBox {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      border-bottom: 1px solid lightgray;
-    }
-
-    .contentCard {
-      width: 100%;
-      display: flex;
-      border-top: 1px solid lightgray;
-    }
-
-    .content {
-      padding: 1rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      .items {
+        width: 100%;
+        margin-bottom: 3rem;
+        .headBox {
+          display: flex;
+          border-top: 3px solid black;
+          .head {
+            height: 3rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            h2 {
+              font-weight: 600;
+            }
+          }
+        }
+        .contentBox {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          border-bottom: 1px solid $lightGray;
+          .contentCard {
+            width: 100%;
+            display: flex;
+            border-top: 1px solid $lightGray;
+            .content {
+              padding: 1rem;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              &:nth-child(2) {
+                border-left: 1px solid $lightGray;
+                border-right: 1px solid $lightGray;
+              }
+              .imageBox {
+                display: flex;
+                align-items: center;
+                margin-right: 1rem;
+                .image {
+                  height: 100px;
+                  width: 100px;
+                }
+              }
+              .itemName {
+                width: 150px;
+              }
+            }
+          }
+        }
+      }
     }
 
     .head:first-child,
@@ -68,104 +78,68 @@
       flex-basis: 20%;
     }
 
-    .contents {
-      width: 100%;
-      display: flex;
-      border-top: 1px solid lightgray;
-    }
-
-    .content {
-      padding: 1rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .content:nth-child(2) {
-      border-left: 1px solid lightgray;
-      border-right: 1px solid lightgray;
-    }
-
-    .imageBox {
-      display: flex;
-      align-items: center;
-      margin-right: 1rem;
-    }
-
-    .image {
-      height: 100px;
-      width: 100px;
-    }
-
-    .itemName {
-      width: 150px;
-    }
-
     .paymentContainer {
       padding: 1.5rem 2rem;
       flex-basis: 40%;
       display: flex;
       flex-direction: column;
       align-items: center;
-      border: 1px solid lightgray;
-    }
-
-    .shipping__title {
-      font-size: 20px;
-      font-weight: 500;
-      margin-bottom: 3rem;
-    }
-
-    .shipping__form {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .inputBox {
-      width: 100%;
-      margin-bottom: 1rem;
-      position: relative;
-      height: 50px;
-    }
-
-    .input {
-      background-color: transparent;
-      width: 100%;
-      border: none;
-      border-bottom: 1px solid black;
-      outline: none;
-    }
-
-    .shipping__label {
-      position: absolute;
-      left: 0;
-      transition: all 0.3s ease;
-    }
-
-    .input:focus + .shipping__label,
-    .input:valid + .shipping__label {
-      transform: translateY(-1.5rem);
-      font-size: 14px;
-      /* font-weight: 500; */
-    }
-
-    .totalPriceContainer {
-      width: 100%;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      margin-bottom: 3rem;
-      font-weight: 500;
-    }
-
-    .paymentBtn {
-      padding: 1rem 2rem;
-      background-color: #ef626c;
-      font-weight: 600;
-      color: whitesmoke;
-      border-radius: 4px;
+      box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+      border-radius: 1rem;
+      .paymentTitle {
+        font-size: 20px;
+        font-weight: 500;
+        margin-bottom: 3rem;
+      }
+      .shippingForm {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .inputBox {
+          width: 100%;
+          margin-bottom: 1rem;
+          position: relative;
+          height: 50px;
+          .input {
+            background-color: transparent;
+            width: 100%;
+            border: none;
+            border-bottom: 1px solid black;
+            outline: none;
+          }
+          .shippingLabel {
+            position: absolute;
+            left: 0;
+            transition: all 0.3s ease;
+          }
+          .input:focus + .shippingLabel,
+          .input:valid + .shippingLabel {
+            transform: translateY(-1.5rem);
+            font-size: 14px;
+            /* font-weight: 500; */
+          }
+        }
+      }
+      .totalPriceBox {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin-bottom: 3rem;
+        font-weight: 500;
+        font-size: 18px;
+        .price {
+          color: $red;
+        }
+      }
+      .paymentBtn {
+        padding: 1rem 2rem;
+        background-color: $red;
+        font-weight: 600;
+        color: whitesmoke;
+        border-radius: 4px;
+      }
     }
   }
 }

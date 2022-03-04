@@ -33,6 +33,9 @@ function AdminProducts() {
   return (
     <div className={styles.adminProducts}>
       <h1 className={styles.title}>Admin Products</h1>
+      <button className={styles.uploadBtn}>
+        <Link to='/admin/products/upload'>Upload product</Link>
+      </button>
       <section className={styles.itemsContainer}>
         <div className={styles.headContainer}>
           <div className={styles.head}>
@@ -71,11 +74,6 @@ function AdminProducts() {
           </div>
         ))}
       </section>
-      <div className={styles.btnContainer}>
-        <button>
-          <Link to='/admin/products/upload'>Upload product</Link>
-        </button>
-      </div>
     </div>
   );
 }

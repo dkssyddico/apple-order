@@ -2,16 +2,25 @@
 @import '../../common/_colors';
 
 .adminProducts {
+  @extend %main;
   display: flex;
   flex-direction: column;
-  @extend %main;
+  align-items: center;
+  width: 100%;
   .title {
     @extend %title;
   }
+  .uploadBtn {
+    padding: 0.8rem 1rem;
+    margin-bottom: 3.5rem;
+    border: 2px solid $red;
+    border-radius: 2rem;
+    font-weight: 600;
+    background-color: $red;
+    color: $white;
+  }
   .itemsContainer {
-    height: 70vh;
-    overflow: scroll;
-    margin-bottom: 2rem;
+    width: 100%;
     .headContainer {
       display: flex;
       border-top: 3px solid black;
@@ -45,30 +54,13 @@
       height: 70px;
     }
     .detailBtn {
-      padding: 0.8rem 1.5rem;
-      color: $darkGray;
-      background-color: $mainGreen;
+      padding: 0.8rem 1rem;
+      color: $white;
+      background-color: $lightGreen;
       border-radius: 2rem;
       font-weight: 600;
-      border: 1px solid $mainGreen;
+      border: 1px solid $lightGreen;
       transition: all 0.3s ease-in-out;
-      &:hover {
-        color: whitesmoke;
-      }
-    }
-  }
-  .btnContainer {
-    margin-top: 1rem;
-    align-self: center;
-    button {
-      padding: 1rem 2rem;
-      background-color: $mainGreen;
-      border-radius: 2rem;
-      font-weight: 600;
-      transition: color 0.3s ease-in-out;
-      &:hover {
-        color: white;
-      }
     }
   }
 }

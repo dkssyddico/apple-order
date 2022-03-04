@@ -5,7 +5,7 @@ import styles from './AdminDropdown.module.scss';
 function AdminDropdown() {
   return (
     <div className={styles.dropdown}>
-      <ul className={styles.menuList}>
+      <ul className={styles.menus}>
         <li className={styles.menu}>
           <Link to='/admin'>Main</Link>
         </li>

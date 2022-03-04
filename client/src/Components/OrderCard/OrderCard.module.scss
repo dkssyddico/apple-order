@@ -1,3 +1,5 @@
+@import '../../common/_colors';
+
 .card {
   display: flex;
   flex-direction: column;
@@ -10,19 +12,19 @@
     margin-bottom: 1rem;
   }
   .metaContainer {
-    border: 1px solid lightgray;
+    border: 1px solid $lightGray;
+    border-radius: 1rem;
     padding: 1.2rem 1.5rem;
-    background-color: #fff;
     transition: all 0.3s ease-in;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
     &:hover {
-      box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     }
     .titleContainer {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding-bottom: 1rem;
-      border-bottom: 1px solid lightgray;
+      border-bottom: 1px solid $lightGray;
       .title {
         font-weight: 500;
         font-size: 18px;
@@ -46,7 +48,7 @@
           margin-bottom: 0.8rem;
         }
         .deliveryStatus {
-          // font-weight: 500;
+          font-weight: 500;
         }
       }
     }

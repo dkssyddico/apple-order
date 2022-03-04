@@ -3,7 +3,7 @@ import { useQuery } from 'react-query';
 import { Link } from 'react-router-dom';
 import { BsBoxSeam } from 'react-icons/bs';
 import orderService from '../../service/order';
-import styles from './AdminOrdersCard.module.css';
+import styles from './AdminOrdersCard.module.scss';
 import { getToday } from '../../utils/date';
 import Message from '../Message/Message';
 
@@ -37,23 +37,23 @@ function AdminOrdersCard() {
   ).length;
   return (
     <div className={styles.adminMainCard}>
-      <section className={styles.adminMainCard__titleContainer}>
-        <div className={styles.adminMainCard__iconBox}>
-          <BsBoxSeam className={styles.adminMainCard__icon} />
+      <section className={styles.titleContainer}>
+        <div className={styles.iconBox}>
+          <BsBoxSeam className={styles.icon} />
         </div>
-        <h2 className={styles.adminMainCard__title}>Orders</h2>
+        <h2 className={styles.title}>Orders</h2>
       </section>
-      <section className={styles.adminMainCard__contentContainer}>
-        <div className={styles.adminMainCard__contentBox}>
-          <h3 className={styles.adminMainCard__contentHead}>Total</h3>
-          <span className={styles.adminMainCard__content}>{data.orders.length}</span>
+      <section className={styles.contentContainer}>
+        <div className={styles.contentBox}>
+          <h3 className={styles.contentHead}>Total</h3>
+          <span className={styles.content}>{data.orders.length}</span>
         </div>
-        <div className={styles.adminMainCard__contentBox}>
-          <h3 className={styles.adminMainCard__contentHead}>Today</h3>
-          <span className={styles.adminMainCard__content}>{newOrder}</span>
+        <div className={styles.contentBox}>
+          <h3 className={styles.contentHead}>Today</h3>
+          <span className={styles.content}>{newOrder}</span>
         </div>
       </section>
-      <button className={styles.adminMainCard__button}>
+      <button className={styles.button}>
         <Link to='/admin/orders'>See details</Link>
       </button>
     </div>

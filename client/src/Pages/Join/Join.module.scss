@@ -1,67 +1,50 @@
 @import '../../common/_colors';
+@import '../../common/_extends';
 
 .join {
-  width: 100%;
-  padding-top: 10vh;
-  min-height: 100vh;
+  @extend %main;
+  .title {
+    @extend %title;
+  }
   .container {
+    flex-basis: 50%;
     display: flex;
-    .join__slider {
-      flex-basis: 50%;
-      width: 50%;
-      height: 100vh;
-    }
-    .join__container {
-      flex-basis: 50%;
+    flex-direction: column;
+    align-items: center;
+    .form {
+      width: 300px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      .join__title {
-        padding-top: 10vh;
-        font-size: 2rem;
-        font-weight: 600;
-        margin-bottom: 3rem;
+      .label {
+        align-self: flex-start;
+        margin-bottom: 1rem;
       }
-      .join__form {
-        width: 300px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        .join__label {
-          align-self: flex-start;
-          margin-bottom: 1rem;
+      .warning {
+        margin-bottom: 1rem;
+      }
+      .input {
+        width: 100%;
+        border-radius: 2rem;
+        margin-bottom: 1.5rem;
+        padding: 1rem;
+        border: 2px solid $lightGray;
+        &:focus {
+          outline: none;
+          border-color: $lightGreen;
         }
+      }
 
-        .warning {
-          margin-bottom: 1rem;
-        }
-
-        .join__input {
-          width: 100%;
-          border-radius: 2rem;
-          margin-bottom: 1.5rem;
-          padding: 1rem;
-          border: 2px solid lightgray;
-          &:focus {
-            outline: none;
-            border-color: $mainGreen;
-          }
-        }
-
-        .join__btn {
-          width: 100%;
-          margin: 1rem 0 2rem;
-          padding: 1rem 0;
-          background-color: $mainGreen;
-          font-weight: 600;
-          text-align: center;
-          color: black;
-          border-radius: 4px;
-          transition: color 0.3s ease;
-          &:hover {
-            color: white;
-          }
-        }
+      .btn {
+        width: 100%;
+        margin: 1rem 0 2rem;
+        padding: 1rem 0;
+        background-color: $lightGreen;
+        font-weight: 600;
+        text-align: center;
+        color: $white;
+        border-radius: 4px;
+        transition: color 0.3s ease;
       }
     }
   }

@@ -8,85 +8,74 @@
   align-items: center;
   padding-left: 15vw;
   padding-right: 15vw;
-}
-
-.title {
-  @extend %title;
-}
-
-.infoContainer {
-  width: 100%;
-  display: flex;
-  justify-content: center;
+  .title {
+    @extend %title;
+  }
+  .infoContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
 }
 
 .form {
-  width: 100%;
+  margin-top: 2rem;
+  width: 80%;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
+  .inputContainer {
+    width: 100%;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    .warning {
+      color: $red;
+      margin-bottom: 1rem;
+    }
+    .label {
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+    .input {
+      padding: 1rem;
+      font-family: inherit;
+      font-size: 1rem;
+      resize: none;
+      border: 2px solid $lightGray;
+      border-radius: 4px;
+      &:focus {
+        outline: none;
+        border-color: $lightGreen;
+      }
+    }
 
-.inputContainer {
-  width: 100%;
-  margin-bottom: 1rem;
-  display: flex;
-  flex-direction: column;
-}
-
-.warning {
-  color: red;
-  margin-bottom: 1rem;
-}
-
-.label {
-  margin-bottom: 1rem;
-  font-weight: 600;
-}
-
-.input {
-  padding: 1rem;
-  font-family: inherit;
-  font-size: 1rem;
-  resize: none;
-  border: 2px solid lightgray;
-  border-radius: 4px;
-  &:focus {
-    outline: none;
-    border-color: $mainGreen;
+    .select {
+      padding: 1rem;
+      border: 2px solid $lightGray;
+      font-family: inherit;
+      font-size: 1rem;
+      border-radius: 4px;
+      &:focus {
+        outline: none;
+        border-color: $lightGreen;
+      }
+    }
   }
-}
-
-.select {
-  padding: 1rem;
-  border: 2px solid lightgray;
-  font-family: inherit;
-  font-size: 1rem;
-  border-radius: 4px;
-  &:focus {
-    outline: none;
-    border-color: $mainGreen;
+  .btnContainer {
+    display: flex;
+    margin: 1.5rem 0;
+    .submitBtn {
+      font-weight: 600;
+      padding: 1rem 2rem;
+      border-radius: 2rem;
+      background-color: $lightGreen;
+      color: $white;
+      margin: 0.5rem;
+      transition: color 0.3s ease;
+    }
+    .submitBtn[disabled] {
+      background-color: $lightGray;
+    }
   }
-}
-
-.btnContainer {
-  display: flex;
-  margin: 1.5rem 0;
-}
-
-.submitBtn {
-  font-weight: 600;
-  padding: 1rem 2rem;
-  background-color: $mainGreen;
-  color: black;
-  border-radius: 4px;
-  margin: 0.5rem;
-  transition: color 0.3s ease;
-  &:hover {
-    color: white;
-  }
-}
-
-.submitBtn[disabled] {
-  background-color: darkgray;
 }

@@ -20,9 +20,10 @@ const GlobalStyles = createGlobalStyle`
 
   body {
     width: 100%;  
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Work Sans', sans-serif;
     background-color: white;
     color: #22181c;
+    background-color: #FFFDFA;
   }
 
   input,

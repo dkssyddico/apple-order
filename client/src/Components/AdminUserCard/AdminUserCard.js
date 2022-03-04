@@ -3,7 +3,7 @@ import { useQuery } from 'react-query';
 import { Link } from 'react-router-dom';
 import { FaUser } from 'react-icons/fa';
 import userService from '../../service/user';
-import styles from './AdminUserCard.module.css';
+import styles from './AdminUserCard.module.scss';
 import { getToday } from '../../utils/date';
 import Message from '../Message/Message';
 
@@ -35,23 +35,23 @@ function AdminUserCard() {
 
   return (
     <div className={styles.adminMainCard}>
-      <section className={styles.adminMainCard__titleContainer}>
-        <div className={styles.adminMainCard__iconBox}>
-          <FaUser className={styles.adminMainCard__icon} />
+      <section className={styles.titleContainer}>
+        <div className={styles.iconBox}>
+          <FaUser className={styles.icon} />
         </div>
-        <h2 className={styles.adminMainCard__title}>Customers</h2>
+        <h2 className={styles.title}>Customers</h2>
       </section>
-      <section className={styles.adminMainCard__contentContainer}>
-        <div className={styles.adminMainCard__contentBox}>
-          <h3 className={styles.adminMainCard__contentHead}>Total</h3>
-          <span className={styles.adminMainCard__content}>{data.users.length}</span>
+      <section className={styles.contentContainer}>
+        <div className={styles.contentBox}>
+          <h3 className={styles.contentHead}>Total</h3>
+          <span className={styles.content}>{data.users.length}</span>
         </div>
-        <div className={styles.adminMainCard__contentBox}>
-          <h3 className={styles.adminMainCard__contentHead}>New</h3>
-          <span className={styles.adminMainCard__content}>{newUser}</span>
+        <div className={styles.contentBox}>
+          <h3 className={styles.contentHead}>New</h3>
+          <span className={styles.content}>{newUser}</span>
         </div>
       </section>
-      <button className={styles.adminMainCard__button}>
+      <button className={styles.button}>
         <Link to='/admin/users'>See details</Link>
       </button>
     </div>

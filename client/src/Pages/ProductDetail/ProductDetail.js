@@ -106,19 +106,19 @@ function ProductDetail() {
 
   return (
     <div className={styles.product}>
-      <section className={styles.product__container}>
-        <div className={styles.imageContainer}>
+      <section className={styles.container}>
+        <div className={styles.imgBox}>
           <img className={styles.productImg} src={data.product.images[0].filePath} alt='product' />
         </div>
-        <div className={styles.infoContainer}>
-          <div className={styles.metaContainer}>
+        <div className={styles.infoCard}>
+          <div className={styles.metaBox}>
             <h1 className={styles.name}>{data.product.name}</h1>
             <h3 className={styles.price}>${data.product.price * quantity}</h3>
             <p className={styles.description}>Description: {data.product.description}</p>
           </div>
-          <div className={styles.QtyContainer}>
-            <div className={styles.QtyBtnContainer}>
-              <button className={styles.QtyBtn} onClick={handleDecrement}>
+          <div className={styles.qtyBox}>
+            <div className={styles.btnBox}>
+              <button className={styles.qtyBtn} onClick={handleDecrement}>
                 -
               </button>
               <input
@@ -127,13 +127,12 @@ function ProductDetail() {
                 onChange={handleQuantityChange}
                 value={quantity}
               />
-              <button className={styles.QtyBtn} onClick={handleIncrement}>
+              <button className={styles.qtyBtn} onClick={handleIncrement}>
                 +
               </button>
             </div>
           </div>
-          <div className={styles.bar} />
-          <div className={styles.btnContainer}>
+          <div className={styles.btnCard}>
             <button className={styles.cartBtn} onClick={handleCartClick}>
               Add to cart
             </button>

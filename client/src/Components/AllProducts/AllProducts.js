@@ -1,7 +1,7 @@
 import React from 'react';
 import { useQuery } from 'react-query';
 import productService from '../../service/product';
-import MainProductCard from '../MainProductCard/MainProductCard';
+import ProductCard from '../ProductCard/ProductCard';
 import Message from '../Message/Message';
 import styles from './AllProducts.module.css';
 
@@ -33,7 +33,7 @@ function AllProducts() {
   return (
     <section className={styles.products}>
       {data.products.map((item) => (
-        <MainProductCard
+        <ProductCard
           key={item._id}
           id={item._id}
           image={item.images[0].filePath}

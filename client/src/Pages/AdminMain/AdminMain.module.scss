@@ -1,0 +1,12 @@
+@import '../../common/_extends';
+
+.adminMain {
+  @extend %main;
+  .title {
+    @extend %title;
+  }
+  .container {
+    display: flex;
+    gap: 3%;
+  }
+}

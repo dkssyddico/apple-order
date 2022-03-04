@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Message from '../../Components/Message/Message';
 import OrderCard from '../../Components/OrderCard/OrderCard';
 import userService from '../../service/user';
-import styles from './AdminUserDetail.module.css';
+import styles from './AdminUserDetail.module.scss';
 
 function AdminUserDetail() {
   const navigate = useNavigate();
@@ -65,15 +65,18 @@ function AdminUserDetail() {
   return (
     <div className={styles.adminUserDetail}>
       <h1 className={styles.title}>User Info</h1>
-      <section>
+      <section className={styles.container}>
         <div className={styles.infoContainer}>
           <p>Username: {data.info && data.info.username}</p>
           <p>Email: {data.info && data.info.email}</p>
+          <button className={styles.deleteBtn} onClick={() => handleDelete(userId)}>
+            Remove this user
+          </button>
         </div>
         {deleteError && <p>{deleteErrorMessage}</p>}
         <div className={styles.orderContainer}>
-          <h2 className={styles.orderContainer__title}>Order list</h2>
-          <div>
+          <h2 className={styles.orderTitle}>Order list({data.info && data.info.orders.length})</h2>
+          <div className={styles.orders}>
             {data.info &&
               data.info.orders.map((order) => (
                 <OrderCard
@@ -84,11 +87,6 @@ function AdminUserDetail() {
                 />
               ))}
           </div>
-        </div>
-        <div className={styles.btnContainer}>
-          <button className={styles.deleteBtn} onClick={() => handleDelete(userId)}>
-            Remove this user
-          </button>
         </div>
       </section>
     </div>

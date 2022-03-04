@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { getCart } from '../../reducers/cartReducer';
-import styles from './Cart.module.css';
+import styles from './Cart.module.scss';
 import CartItem from '../../Components/CartItem/CartItem';
 import { clearUser } from '../../reducers/userReducers';
-import toast from 'react-hot-toast';
 
 function Cart() {
   const dispatch = useDispatch();
@@ -39,9 +39,9 @@ function Cart() {
   return (
     <div className={styles.cart}>
       <h1 className={styles.title}>Cart</h1>
-      <div className={styles.cart__container}>
+      <div className={styles.container}>
         <section className={styles.items}>
-          <div className={styles.items__headBox}>
+          <div className={styles.headBox}>
             <div className={styles.head}>
               <input type='checkbox' />
             </div>
@@ -55,7 +55,7 @@ function Cart() {
               <h2>Price</h2>
             </div>
           </div>
-          <div className={styles.items__contentBox}>
+          <div className={styles.contentBox}>
             {items.length > 0 ? (
               items.map((item) => (
                 <CartItem
@@ -78,22 +78,24 @@ function Cart() {
             )}
           </div>
           {items.length > 0 ? (
-            <div className={styles.back__container}>
+            <div className={styles.continueBox}>
               <button>
                 <Link to='/products'>Continue shopping</Link>
               </button>
             </div>
           ) : null}
         </section>
-        <section className={styles.summaryContainer}>
-          <h2 className={styles.summary__title}>Order summary</h2>
-          <div className={styles.summary__itemsBox}>
+        <section className={styles.summaryBox}>
+          <h2 className={styles.summaryTitle}>Order summary</h2>
+          <div className={styles.itemsBox}>
             <span>Total items</span>
             <span>{items ? items.filter((item) => item.canBeSold).length : 0}</span>
           </div>
-          <div className={styles.summary__priceBox}>
+          <div className={styles.priceBox}>
             <span>Total price</span>
-            <span>${items.reduce((a, b) => b.canBeSold && a + b.price * b.quantity, 0)}</span>
+            <span className={styles.price}>
+              ${items.reduce((a, b) => b.canBeSold && a + b.price * b.quantity, 0)}
+            </span>
           </div>
           <button
             onClick={() => handleCheckoutClick()}

@@ -2,19 +2,15 @@
 @import '../../common/_extends';
 
 .product {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   @extend %main;
-  .product__container {
-    width: 80%;
-    height: 70%;
+  .container {
+    margin-top: 5vh;
     display: flex;
-    gap: 2%;
-    padding: 1rem 2rem;
-    .imageContainer {
-      padding: 1rem;
-      flex-basis: 49%;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6%;
+    .imgBox {
+      flex-basis: 47%;
       display: flex;
       align-items: center;
       .productImg {
@@ -22,13 +18,13 @@
         height: 350px;
       }
     }
-    .infoContainer {
-      flex-basis: 49%;
+    .infoCard {
+      flex-basis: 47%;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 4rem;
-      .metaContainer {
+      padding: 4rem 0;
+      .metaBox {
         .name {
           margin-bottom: 1.5rem;
           font-size: 32px;
@@ -41,25 +37,24 @@
           letter-spacing: 1px;
         }
         .description {
-          font-style: italic;
           margin-bottom: 2rem;
         }
       }
-      .QtyContainer {
+      .qtyBox {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        .QtyBtnContainer {
+        .btnBox {
           width: 140px;
           height: 40px;
           border-radius: 4px;
-          .QtyBtn {
+          .qtyBtn {
             all: unset;
             text-align: center;
             cursor: pointer;
             border: none;
-            width: 30%;
-            height: 100%;
+            width: 35px;
+            height: 35px;
             background-color: $lightGray;
             border-radius: 50%;
           }
@@ -71,13 +66,8 @@
           }
         }
       }
-      .bar {
-        width: 100%;
-        height: 1px;
-        background-color: lightgray;
-        margin: 2rem 0;
-      }
-      .btnContainer {
+      .btnCard {
+        margin-top: 2rem;
         display: flex;
         gap: 4px;
         .cartBtn,
@@ -93,16 +83,12 @@
           letter-spacing: 1px;
         }
         .cartBtn {
-          background-color: #c1121f;
-          color: white;
+          background-color: $red;
+          color: $white;
         }
         .shopNowBtn {
-          border: 3px solid black;
-          transition: all 0.3s ease-in-out;
-          &:hover {
-            background-color: black;
-            color: white;
-          }
+          background-color: $lightGreen;
+          color: $white;
         }
       }
     }

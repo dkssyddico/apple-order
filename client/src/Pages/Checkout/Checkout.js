@@ -58,10 +58,10 @@ function Checkout() {
 
   return (
     <div className={styles.checkout}>
-      <h1 className={styles.title}>checkout</h1>
+      <h1 className={styles.title}>Checkout</h1>
       <div className={styles.container}>
-        <section className={styles.orderContainer}>
-          <section className={styles.itemsContainer}>
+        <section className={styles.orderBox}>
+          <section className={styles.items}>
             <div className={styles.headBox}>
               <div className={styles.head}>
                 <h2>Product</h2>
@@ -73,7 +73,7 @@ function Checkout() {
                 <h2>Quantity</h2>
               </div>
             </div>
-            <div className={styles.container__contentBox}>
+            <div className={styles.contentBox}>
               {items.map((item) => (
                 <div key={uuidv4()} className={styles.contentCard}>
                   <section className={styles.content}>
@@ -94,8 +94,8 @@ function Checkout() {
           </section>
         </section>
         <section className={styles.paymentContainer}>
-          <h2 className={styles.shipping__title}>Shipping Address</h2>
-          <form className={styles.shipping__form} onSubmit={handleSubmit(submitShippingForm)}>
+          <h2 className={styles.paymentTitle}>Shipping Address</h2>
+          <form className={styles.shippingForm} onSubmit={handleSubmit(submitShippingForm)}>
             <div className={styles.inputBox}>
               <input
                 className={styles.input}
@@ -104,7 +104,7 @@ function Checkout() {
                 type='text'
                 required
               ></input>
-              <label className={styles.shipping__label} htmlFor='fullName'>
+              <label className={styles.shippingLabel} htmlFor='fullName'>
                 Full Name
               </label>
             </div>
@@ -116,7 +116,7 @@ function Checkout() {
                 type='text'
                 required
               ></input>
-              <label className={styles.shipping__label} htmlFor='address'>
+              <label className={styles.shippingLabel} htmlFor='address'>
                 Address
               </label>
             </div>
@@ -128,13 +128,15 @@ function Checkout() {
                 type='text'
                 required
               ></input>
-              <label className={styles.shipping__label} htmlFor='contact'>
+              <label className={styles.shippingLabel} htmlFor='contact'>
                 Contact
               </label>
             </div>
-            <div className={styles.totalPriceContainer}>
+            <div className={styles.totalPriceBox}>
               <span>Total price</span>
-              <span>${items.reduce((a, b) => b.canBeSold && a + b.price * b.quantity, 0)}</span>
+              <span className={styles.price}>
+                ${items.reduce((a, b) => b.canBeSold && a + b.price * b.quantity, 0)}
+              </span>
             </div>
             <button className={styles.paymentBtn} onSubmit={handleSubmit(submitShippingForm)}>
               Payment

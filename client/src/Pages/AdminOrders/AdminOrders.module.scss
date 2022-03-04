@@ -1,4 +1,5 @@
 @import '../../common/_extends';
+@import '../../common/_colors';
 
 .adminOrders {
   display: flex;
@@ -62,6 +63,12 @@
       font-weight: 500;
       letter-spacing: 1.1px;
     }
+
+    .contentBox:nth-child(2),
+    .contentBox:nth-child(3) {
+      justify-content: flex-start;
+      padding-left: 3rem;
+    }
   }
 }
 
@@ -81,12 +88,18 @@
   background-color: #ffd60a;
 }
 
+.badge__delivered,
+.badge__InDelivery {
+  width: 120px;
+  text-align: center;
+}
+
 .badge__delivered {
-  background-color: #e07a5f;
+  background-color: $red;
   color: white;
 }
 
 .badge__InDelivery {
-  background-color: #56ab91;
+  background-color: $lightGreen;
   color: white;
 }

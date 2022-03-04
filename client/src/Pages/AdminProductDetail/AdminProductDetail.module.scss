@@ -3,91 +3,83 @@
 
 .adminProductDetail {
   @extend %main;
-  padding-left: 15vw;
-  padding-right: 15vw;
-}
-
-.title {
-  @extend %title;
-}
-
-.infoContainer {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
-.form {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.inputContainer {
-  width: 100%;
-  margin-bottom: 1rem;
-  display: flex;
-  flex-direction: column;
-}
-
-.label {
-  margin-bottom: 1rem;
-  font-weight: 600;
-}
-
-.warning {
-  color: red;
-  margin-bottom: 1rem;
-}
-
-.input {
-  padding: 1rem;
-  font-family: inherit;
-  font-size: 1rem;
-  resize: none;
-  border: 2px solid lightgray;
-  border-radius: 4px;
-  &:focus {
-    outline: none;
-    border-color: $mainGreen;
+  .title {
+    @extend %title;
   }
-}
+  .infoContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    .form {
+      margin-top: 2rem;
+      width: 80%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .inputContainer {
+        width: 100%;
+        margin-bottom: 1rem;
+        display: flex;
+        flex-direction: column;
+        .label {
+          margin-bottom: 1rem;
+          font-weight: 600;
+        }
+        .warning {
+          color: $red;
+          margin-bottom: 1rem;
+        }
 
-.select {
-  padding: 1rem;
-  border: 2px solid lightgray;
-  font-family: inherit;
-  font-size: 1rem;
-  border-radius: 4px;
-  &:focus {
-    outline: none;
-    border-color: $mainGreen;
-  }
-}
-
-.btnContainer {
-  display: flex;
-  margin: 1.5rem 0;
-}
-
-.submitBtn {
-  font-weight: 600;
-  padding: 1rem 2rem;
-  background-color: $mainGreen;
-  border-radius: 4px;
-  margin: 0.5rem;
-}
-
-.deleteBtn {
-  margin: 0.5rem;
-  font-weight: 600;
-  padding: 1rem 2rem;
-  color: red;
-  border-radius: 4px;
-  transition: all 0.3s ease-in-out;
-  &:hover {
-    background-color: red;
-    color: white;
+        .input {
+          padding: 1rem;
+          font-family: inherit;
+          font-size: 1rem;
+          resize: none;
+          border: 2px solid lightgray;
+          border-radius: 4px;
+          &:focus {
+            outline: none;
+            border-color: $lightGreen;
+          }
+        }
+        .select {
+          padding: 1rem;
+          border: 2px solid lightgray;
+          font-family: inherit;
+          font-size: 1rem;
+          border-radius: 4px;
+          &:focus {
+            outline: none;
+            border-color: $lightGreen;
+          }
+        }
+      }
+      .btnContainer {
+        display: flex;
+        margin: 1.5rem 0;
+        .submitBtn {
+          padding: 1rem 2rem;
+          font-weight: 600;
+          border-radius: 2rem;
+          margin: 0.5rem;
+          background-color: $lightGreen;
+          color: white;
+        }
+        .deleteBtn {
+          cursor: pointer;
+          padding: 1rem 1.5rem;
+          font-weight: 600;
+          border-radius: 2rem;
+          margin: 0.5rem;
+          color: $red;
+          border: 2px solid $red;
+          transition: all 0.3s ease-in-out;
+          &:hover {
+            background-color: $red;
+            color: $white;
+          }
+        }
+      }
+    }
   }
 }

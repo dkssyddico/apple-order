@@ -28,7 +28,7 @@
 
 .btnContainer button {
   font-weight: 600;
-  border: 2px solid $mainGreen;
+  border: 2px solid $lightGreen;
   width: 350px;
   padding: 1rem 0;
   text-align: center;
@@ -38,10 +38,10 @@
 }
 
 .mainBtn {
-  background-color: $mainGreen;
-  color: white;
+  background-color: $lightGreen;
+  color: $white;
 }
 
 .detailBtn {
-  color: black;
+  color: $lightGreen;
 }
