@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 import { loginUser } from '../../reducers/userReducers';
 import styles from './Login.module.scss';
 import toast from 'react-hot-toast';
-import MainSlider from '../../Components/MainSlider/MainSlider';
 
 function Login() {
   const dispatch = useDispatch();

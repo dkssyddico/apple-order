@@ -37,6 +37,16 @@ class User {
       newPassword,
     });
   };
+
+  addFavorite = (data) => {
+    let { userId, productId } = data;
+    return this.user.post(`/users/${userId}/favorite`, { productId });
+  };
+
+  deleteFavorite = (data) => {
+    let { userId, productId } = data;
+    return this.user.delete(`/users/${userId}/favorite/${productId}`);
+  };
 }
 
 const userService = new User(httpClient);

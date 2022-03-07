@@ -82,6 +82,12 @@
           font-weight: 600;
           letter-spacing: 1px;
         }
+        .favBtn {
+          border: 1px solid $lightGray;
+          padding: 1rem;
+          border-radius: 4px;
+          color: $red;
+        }
         .cartBtn {
           background-color: $red;
           color: $white;

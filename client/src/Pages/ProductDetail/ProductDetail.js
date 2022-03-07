@@ -7,6 +7,8 @@ import styles from './productDetail.module.scss';
 import { addToCart } from '../../reducers/cartReducer';
 import productService from '../../service/product';
 import Message from '../../Components/Message/Message';
+import userService from '../../service/user';
+import { addFavorite, deleteFavorite } from '../../reducers/userReducers';
 
 function ProductDetail() {
   const dispatch = useDispatch();
@@ -15,12 +17,14 @@ function ProductDetail() {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const cart = useSelector((state) => state.cart);
-  const { login, userId } = user;
+  const { login, userId, favorites } = user;
   const { items } = cart;
   const { isLoading, isError, data, error } = useQuery(['product', productId], async () => {
     let { data } = await productService.getInfo(productId);
     return data;
   });
+
+  console.log(favorites);
 
   // 객체 형태로 줘야함.
   const handleCartClick = () => {
@@ -85,6 +89,26 @@ function ProductDetail() {
     }
   };
 
+  const handleFavoriteClick = (productId) => {
+    // 로그인 확인
+    if (!login) {
+      alert('로그인을 먼저 해주세요!');
+      return;
+    }
+    let favorite = favorites.includes(productId);
+    let data = {
+      userId,
+      productId,
+    };
+    if (favorite) {
+      // favorite를 해제하는 경우
+      dispatch(deleteFavorite(data));
+    } else {
+      // favorite 를 하는 경우
+      dispatch(addFavorite(data));
+    }
+  };
+
   if (isLoading) {
     return (
       <div className={styles.product}>
@@ -103,6 +127,8 @@ function ProductDetail() {
       </div>
     );
   }
+
+  const isFavorited = favorites.includes(data.product._id);
 
   return (
     <div className={styles.product}>
@@ -133,6 +159,22 @@ function ProductDetail() {
             </div>
           </div>
           <div className={styles.btnCard}>
+            <button onClick={() => handleFavoriteClick(data.product._id)} className={styles.favBtn}>
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                width='24'
+                height='24'
+                viewBox='0 0 24 24'
+                fill={isFavorited ? '#f45b69' : 'none'}
+                stroke='currentColor'
+                stroke-width='2'
+                stroke-linecap='round'
+                stroke-linejoin='round'
+                className='feather feather-heart'
+              >
+                <path d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'></path>
+              </svg>
+            </button>
             <button className={styles.cartBtn} onClick={handleCartClick}>
               Add to cart
             </button>

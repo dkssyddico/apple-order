@@ -36,6 +36,7 @@ const productSchema = new mongoose.Schema(
     remarks: {
       type: String,
     },
+    favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   },
   { timestamps: true }
 );

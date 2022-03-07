@@ -64,6 +64,7 @@ export const login = async (req, res) => {
       _id: user._id,
       username: user.username,
       isAdmin: user.role === 0 ? true : false,
+      favorites: user.favorites,
       accessToken: accessToken,
     });
 };
@@ -114,9 +115,9 @@ export const removeUser = async (req, res) => {
 };
 
 export const getCartInfo = async (req, res) => {
-  const { id } = req.params;
+  const { userId } = req.params;
   try {
-    let user = await User.findById(id);
+    let user = await User.findById(userId);
     let productList = await Product.find();
     productList = productList.map((item) => String(item._id));
     let newCart = user.cart.map((cartItem) => {
@@ -132,7 +133,7 @@ export const getCartInfo = async (req, res) => {
         };
       }
     });
-    await User.findByIdAndUpdate(id, { cart: newCart });
+    await User.findByIdAndUpdate(userId, { cart: newCart });
     return res.status(200).json({ success: true, cart: newCart });
   } catch (error) {
     return res.status(400).json({
@@ -445,6 +446,7 @@ export const checkUserLogin = (req, res, next) => {
         username: user.username,
         isAdmin: user.role === 0 ? true : false,
         accessToken: accessToken,
+        favorites: user.favorites,
       });
     } catch (error) {
       console.log('error2, rt', error);
@@ -456,4 +458,95 @@ export const checkUserLogin = (req, res, next) => {
       });
     }
   });
+};
+
+export const addFavorite = async (req, res) => {
+  // item id를 가져와야 함.
+
+  const { productId } = req.body;
+  const { userId } = req.params;
+  const { user } = req;
+
+  if (String(userId) !== String(user._id)) {
+    return res.status(400).json({ success: false, message: '유저 정보가 일치하지 않습니다.' });
+  }
+  // 유저 찾기
+  const currentUser = await User.findById(userId);
+  if (!currentUser) {
+    console.log('error');
+    return res.status(400).json({ success: false, errorMessage: '유저 정보가 없습니다.' });
+  }
+  // 상품 찾기
+  const product = await Product.findById(productId);
+  if (!product) {
+    console.log('error: 아이템을 찾지 못했습니다.');
+    return res.status(400).json({ success: false, errorMessage: '상품 정보가 없습니다.' });
+  }
+  // user favorite array에 push
+  currentUser.favorites.push(productId);
+  await currentUser.save((err, _) => {
+    if (err) {
+      console.log(err);
+      return res.status(400).json({
+        success: false,
+        errorMessage: '유저 정보에 관심 상품을 등록하는데 실패했습니다.',
+      });
+    }
+  });
+  // item favorite array에 push
+  product.favorites.push(userId);
+  await product.save((err, _) => {
+    if (err) {
+      console.log(err);
+      return res.status(400).json({
+        success: false,
+        errorMessage: '상품 정보에 관심있는 유저를 등록하는데 실패했습니다.',
+      });
+    }
+  });
+  return res.status(201).json({ success: true, favorites: currentUser.favorites });
+};
+
+export const deleteFavorite = async (req, res) => {
+  const { userId, productId } = req.params;
+  const { user } = req;
+
+  if (String(userId) !== String(user._id)) {
+    return res.status(400).json({ success: false, message: '유저 정보가 일치하지 않습니다.' });
+  }
+  // 유저 찾기
+  const currentUser = await User.findById(userId);
+  if (!currentUser) {
+    console.log('error');
+    return res.status(400).json({ success: false, errorMessage: '유저 정보가 없습니다.' });
+  }
+  // 상품 찾기
+  const product = await Product.findById(productId);
+  if (!product) {
+    console.log('error: 아이템을 찾지 못했습니다.');
+    return res.status(400).json({ success: false, errorMessage: '상품 정보가 없습니다.' });
+  }
+
+  currentUser.favorites.splice(currentUser.favorites.indexOf(productId), 1);
+  await currentUser.save((err, _) => {
+    if (err) {
+      console.log(err);
+      return res.status(400).json({
+        success: false,
+        errorMessage: '유저 정보에 관심 상품을 제거하는데 실패했습니다.',
+      });
+    }
+  });
+  // item favorite array에 push
+  product.favorites.splice(product.favorites.indexOf(userId), 1);
+  await product.save((err, _) => {
+    if (err) {
+      console.log(err);
+      return res.status(400).json({
+        success: false,
+        errorMessage: '상품 정보에 관심있는 유저를 제거하는데 실패했습니다.',
+      });
+    }
+  });
+  return res.status(200).json({ success: true, favorites: currentUser.favorites });
 };

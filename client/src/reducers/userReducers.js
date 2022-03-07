@@ -6,6 +6,8 @@ const loginUserAction = createAction('user/loginUser');
 const checkUserLoginAction = createAction('user/checkLogin');
 const logoutUserAction = createAction('user/logoutUser');
 const changeProfileAction = createAction('user/changeProfile');
+const addFavoriteAction = createAction('user/addProductFavorite');
+const deleteFavoriteAction = createAction('user/deleteProductFavorite');
 
 const initialState = {
   username: undefined,
@@ -13,6 +15,7 @@ const initialState = {
   login: false,
   isAdmin: false,
   error: null,
+  favorites: undefined,
 };
 
 const loginUser = createAsyncThunk(loginUserAction, async (userInfo, { rejectWithValue }) => {
@@ -70,6 +73,31 @@ const logoutUser = createAsyncThunk(logoutUserAction, async (userInfo, { rejectW
   }
 });
 
+const addFavorite = createAsyncThunk(addFavoriteAction, async (userInfo, { rejectWithValue }) => {
+  try {
+    const { data } = await userService.addFavorite(userInfo);
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.log(error.response);
+    return rejectWithValue(error.response);
+  }
+});
+
+const deleteFavorite = createAsyncThunk(
+  deleteFavoriteAction,
+  async (userInfo, { rejectWithValue }) => {
+    try {
+      const { data } = await userService.deleteFavorite(userInfo);
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log(error.response);
+      return rejectWithValue(error.response);
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -83,6 +111,7 @@ const userSlice = createSlice({
       isAdmin: payload.isAdmin,
       login: true,
       error: '',
+      favorites: payload.favorites,
     }),
     [loginUser.rejected]: (state, { payload }) => {
       console.log(payload);
@@ -97,6 +126,7 @@ const userSlice = createSlice({
       isAdmin: payload.isAdmin,
       login: true,
       error: '',
+      favorites: payload.favorites,
     }),
     [checkUserLogin.rejected]: (state, { payload }) => {
       return {
@@ -115,10 +145,24 @@ const userSlice = createSlice({
     [changeProfile.rejected]: (state, { payload }) => {
       return { ...state, error: payload };
     },
+    [addFavorite.fulfilled]: (state, { payload }) => ({
+      ...state,
+      favorites: payload.favorites,
+    }),
+    [addFavorite.rejected]: (state, { payload }) => {
+      return { ...state, error: payload };
+    },
+    [deleteFavorite.fulfilled]: (state, { payload }) => ({
+      ...state,
+      favorites: payload.favorites,
+    }),
+    [deleteFavorite.rejected]: (state, { payload }) => {
+      return { ...state, error: payload };
+    },
   },
 });
 
 export const { clearUser } = userSlice.actions;
-export { loginUser, logoutUser, checkUserLogin, changeProfile };
+export { loginUser, logoutUser, checkUserLogin, changeProfile, addFavorite, deleteFavorite };
 
 export default userSlice.reducer;

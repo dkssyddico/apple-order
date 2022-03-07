@@ -16,6 +16,8 @@ import {
   refreshCart,
   removeUser,
   checkUserLogin,
+  addFavorite,
+  deleteFavorite,
 } from '../controllers/user.js';
 import { auth } from '../middleware/auth.js';
 import isAdmin from '../middleware/isAdmin.js';
@@ -31,17 +33,19 @@ userRouter.get('/checkLogin', checkUserLogin);
 userRouter.get('/:userId', auth, getUserInfo);
 
 userRouter.put('/:userId/username', auth, changeUsername);
-
 userRouter.put('/:userId/password', auth, changePassword);
+
+userRouter.post('/:userId/favorite', auth, addFavorite);
+userRouter.delete('/:userId/favorite/:productId', auth, deleteFavorite);
 
 userRouter.delete('/:id', auth, isAdmin, removeUser);
 
 // user cart
-userRouter.get('/:id/cart', auth, getCartInfo);
-userRouter.post('/:id/cart', auth, addItemToCart);
-userRouter.put('/:id/cart', auth, changeQuantityInCart);
+userRouter.get('/:userId/cart', auth, getCartInfo);
+userRouter.post('/:userId/cart', auth, addItemToCart);
+userRouter.put('/:userId/cart', auth, changeQuantityInCart);
 userRouter.delete('/:userId/cart', auth, refreshCart);
-userRouter.delete('/:id/cart/:productId', auth, deleteItem);
+userRouter.delete('/:userId/cart/:productId', auth, deleteItem);
 
 // user order
 userRouter.get('/:userId/orders/:index', auth, getOrders);

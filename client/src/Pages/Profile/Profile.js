@@ -73,83 +73,87 @@ function Profile() {
     <div className={styles.profile}>
       <h1 className={styles.title}>Profile</h1>
       <section className={styles.section}>
-        <div className={styles.usernameContainer}>
-          <form className={styles.form} onSubmit={handleSubmit(changeUsername)}>
-            {errors.username && <p className={styles.warning}>{errors.username.message}</p>}
-            <label className={styles.label} htmlFor='username'>
-              Username
-            </label>
-            <input
-              className={styles.input}
-              {...register('username', {
-                minLength: {
-                  value: 3,
-                  message: '3글자 이상 입력하세요.',
-                },
-                value: username,
-              })}
-              name='username'
-            />
-            <button className={styles.button} type='submit'>
-              Update
-            </button>
-          </form>
-        </div>
-        <div className={styles.passwordContainer}>
-          <h2 className={styles.passwordTitle}>Change Password</h2>
-          <form className={styles.form} onSubmit={handleSubmit2(changePassword)}>
-            {errors2.currentPassword && (
-              <p className={styles.warning}>{errors2.currentPassword.message}</p>
-            )}
-            <input
-              className={styles.input}
-              {...register2('currentPassword', {
-                minLength: {
-                  value: 5,
-                  message: '5글자 이상 입력하세요.',
-                },
-              })}
-              placeholder='current password'
-              type='password'
-            />
-            {errors2.newPassword && <p className={styles.warning}>{errors2.newPassword.message}</p>}
-            {watchFields.newPassword &&
-              watchFields.currentPassword &&
-              watchFields.newPassword === watchFields.currentPassword && (
-                <p className={styles.warning}>현재 비밀번호와 동일합니다.</p>
+        <div>
+          <div className={styles.usernameContainer}>
+            <form className={styles.form} onSubmit={handleSubmit(changeUsername)}>
+              {errors.username && <p className={styles.warning}>{errors.username.message}</p>}
+              <label className={styles.label} htmlFor='username'>
+                Username
+              </label>
+              <input
+                className={styles.input}
+                {...register('username', {
+                  minLength: {
+                    value: 3,
+                    message: '3글자 이상 입력하세요.',
+                  },
+                  value: username,
+                })}
+                name='username'
+              />
+              <button className={styles.button} type='submit'>
+                Update
+              </button>
+            </form>
+          </div>
+          <div className={styles.passwordContainer}>
+            <h2 className={styles.passwordTitle}>Change Password</h2>
+            <form className={styles.form} onSubmit={handleSubmit2(changePassword)}>
+              {errors2.currentPassword && (
+                <p className={styles.warning}>{errors2.currentPassword.message}</p>
               )}
-            <input
-              className={styles.input}
-              {...register2('newPassword', {
-                minLength: {
-                  value: 5,
-                  message: '5글자 이상 입력하세요.',
-                },
-              })}
-              placeholder='new password'
-              type='password'
-            />
-            {watchFields.newPassword !== watchFields.newPasswordConfirmation && (
-              <p className={styles.warning}>동일한 비밀번호를 입력해주세요.</p>
-            )}
-            {errors2.newPasswordConfirmation && (
-              <p className={styles.warning}>{errors2.newPasswordConfirmation.message}</p>
-            )}
-            <input
-              className={styles.input}
-              {...register2('newPasswordConfirmation', {
-                minLength: {
-                  value: 5,
-                  message: '5글자 이상 입력하세요.',
-                },
-              })}
-              placeholder='new password confirmation'
-              type='password'
-            />
-            <button className={styles.button} type='submit'>
-              Update
-            </button>
-          </form>
+              <input
+                className={styles.input}
+                {...register2('currentPassword', {
+                  minLength: {
+                    value: 5,
+                    message: '5글자 이상 입력하세요.',
+                  },
+                })}
+                placeholder='current password'
+                type='password'
+              />
+              {errors2.newPassword && (
+                <p className={styles.warning}>{errors2.newPassword.message}</p>
+              )}
+              {watchFields.newPassword &&
+                watchFields.currentPassword &&
+                watchFields.newPassword === watchFields.currentPassword && (
+                  <p className={styles.warning}>현재 비밀번호와 동일합니다.</p>
+                )}
+              <input
+                className={styles.input}
+                {...register2('newPassword', {
+                  minLength: {
+                    value: 5,
+                    message: '5글자 이상 입력하세요.',
+                  },
+                })}
+                placeholder='new password'
+                type='password'
+              />
+              {watchFields.newPassword !== watchFields.newPasswordConfirmation && (
+                <p className={styles.warning}>동일한 비밀번호를 입력해주세요.</p>
+              )}
+              {errors2.newPasswordConfirmation && (
+                <p className={styles.warning}>{errors2.newPasswordConfirmation.message}</p>
+              )}
+              <input
+                className={styles.input}
+                {...register2('newPasswordConfirmation', {
+                  minLength: {
+                    value: 5,
+                    message: '5글자 이상 입력하세요.',
+                  },
+                })}
+                placeholder='new password confirmation'
+                type='password'
+              />
+              <button className={styles.button} type='submit'>
+                Update
+              </button>
+            </form>
+          </div>
         </div>
       </section>
     </div>
