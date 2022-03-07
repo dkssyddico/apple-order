@@ -256,7 +256,6 @@ export const addOrder = async (req, res) => {
   // 새로운 order 만들어서 유저의 order에 넣어주기
   // item 마다 주문 횟수 1씩 추가
   try {
-    console.log(items);
     let newOrder = await Order.create({ user: userId, items, shippingInfo });
     currentUser.orders.push(newOrder._id);
     await currentUser.save((err, user) => {
@@ -458,6 +457,21 @@ export const checkUserLogin = (req, res, next) => {
       });
     }
   });
+};
+
+export const getFavorite = async (req, res) => {
+  const { userId } = req.params;
+  const { user } = req;
+  if (String(userId) !== String(user._id)) {
+    return res.status(400).json({ success: false, message: '유저 정보가 일치하지 않습니다.' });
+  }
+  // 유저 찾기
+  const currentUser = await User.findById(userId).populate('favorites');
+  if (!currentUser) {
+    console.log('error');
+    return res.status(400).json({ success: false, errorMessage: '유저 정보가 없습니다.' });
+  }
+  return res.status(200).json({ success: true, favorites: currentUser.favorites });
 };
 
 export const addFavorite = async (req, res) => {

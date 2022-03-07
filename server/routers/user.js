@@ -18,6 +18,7 @@ import {
   checkUserLogin,
   addFavorite,
   deleteFavorite,
+  getFavorite,
 } from '../controllers/user.js';
 import { auth } from '../middleware/auth.js';
 import isAdmin from '../middleware/isAdmin.js';
@@ -35,6 +36,7 @@ userRouter.get('/:userId', auth, getUserInfo);
 userRouter.put('/:userId/username', auth, changeUsername);
 userRouter.put('/:userId/password', auth, changePassword);
 
+userRouter.get('/:userId/favorite', auth, getFavorite);
 userRouter.post('/:userId/favorite', auth, addFavorite);
 userRouter.delete('/:userId/favorite/:productId', auth, deleteFavorite);
 
