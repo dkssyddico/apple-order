@@ -14,7 +14,9 @@ function Orders() {
   const [index, setIndex] = useState(1);
   const [totalOrders, setTotalOrders] = useState(null);
 
-  const { isLoading, isError, data, error } = useQuery(['orders', index], async () => {
+  console.log(userId);
+
+  const { isLoading, isError, data, error } = useQuery(['orders', userId, index], async () => {
     let { data } = await orderService.getOrderByUserId(userId, index);
     setTotalOrders(Math.ceil(data.total / offset));
     return data;

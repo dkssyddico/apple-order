@@ -30,8 +30,6 @@ function AdminUsers() {
     );
   }
 
-  console.log(data);
-
   return (
     <div className={styles.adminUsers}>
       <h1 className={styles.title}>Admin Users</h1>

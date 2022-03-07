@@ -11,6 +11,7 @@ import AdminUserDetail from '../Pages/AdminUserDetail/AdminUserDetail';
 import AdminUsers from '../Pages/AdminUsers/AdminUsers';
 import Cart from '../Pages/Cart/Cart';
 import Checkout from '../Pages/Checkout/Checkout';
+import Favorites from '../Pages/Favorites/Favorites';
 import Home from '../Pages/Home/Home';
 import Join from '../Pages/Join/Join';
 import Login from '../Pages/Login/Login';
@@ -37,6 +38,7 @@ function Router() {
         <Route path='/cart' element={login ? <Cart /> : <Navigate to='/login' />} />
         <Route path='/checkout' element={login ? <Checkout /> : <Navigate to='/login' />} />
         <Route path='/profile' element={login ? <Profile /> : <Navigate to='/login' />} />
+        <Route path='/favorite' element={login ? <Favorites /> : <Navigate to='/login' />} />
         <Route path='/orders' element={login ? <OrderHistory /> : <Navigate to='/login' />} />
         <Route
           path='/orders/:orderId'

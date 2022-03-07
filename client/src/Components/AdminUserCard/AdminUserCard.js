@@ -8,7 +8,7 @@ import { getToday } from '../../utils/date';
 import Message from '../Message/Message';
 
 function AdminUserCard() {
-  const { isLoading, isError, data, error } = useQuery('users', async () => {
+  const { isLoading, isError, data, error } = useQuery(['users'], async () => {
     let { data } = await userService.getAll();
     return data;
   });

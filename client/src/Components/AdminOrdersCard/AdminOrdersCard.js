@@ -32,9 +32,6 @@ function AdminOrdersCard() {
     );
   }
 
-  const newOrder = data.orders.filter(
-    (order) => order.createdAt.slice(0, 10) === getToday()
-  ).length;
   return (
     <div className={styles.adminMainCard}>
       <section className={styles.titleContainer}>
@@ -50,7 +47,9 @@ function AdminOrdersCard() {
         </div>
         <div className={styles.contentBox}>
           <h3 className={styles.contentHead}>Today</h3>
-          <span className={styles.content}>{newOrder}</span>
+          <span className={styles.content}>
+            {data.orders.filter((order) => order.createdAt.slice(0, 10) === getToday()).length}
+          </span>
         </div>
       </section>
       <button className={styles.button}>

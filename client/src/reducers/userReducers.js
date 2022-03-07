@@ -21,7 +21,6 @@ const initialState = {
 const loginUser = createAsyncThunk(loginUserAction, async (userInfo, { rejectWithValue }) => {
   try {
     const { data } = await userService.login(userInfo);
-    console.log(data);
     const accessToken = data.accessToken;
     if (data.success) {
       httpClient.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;

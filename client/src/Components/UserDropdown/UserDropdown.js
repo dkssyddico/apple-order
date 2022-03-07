@@ -16,6 +16,9 @@ function UserDropdown() {
           <Link to='/profile'>Profile</Link>
         </li>
         <li className={styles.menu}>
+          <Link to='/favorite'>Favorite</Link>
+        </li>
+        <li className={styles.menu}>
           <Link to='/orders'>Orders</Link>
         </li>
         <li className={styles.menu}>

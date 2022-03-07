@@ -38,6 +38,10 @@ class User {
     });
   };
 
+  getFavorite = (userId) => {
+    return this.user.get(`/users/${userId}/favorite`);
+  };
+
   addFavorite = (data) => {
     let { userId, productId } = data;
     return this.user.post(`/users/${userId}/favorite`, { productId });

@@ -2,7 +2,6 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import ChangePassword from '../../Components/ChangePassword/ChangePassword';
 import ChangeUsername from '../../Components/ChangeUsername.js/ChangeUsername';
-
 import styles from './Profile.module.scss';
 
 function Profile() {
@@ -12,7 +11,7 @@ function Profile() {
   return (
     <div className={styles.profile}>
       <h1 className={styles.title}>Profile</h1>
-      <section className={styles.section}>
+      <section className={styles.container}>
         <div className={styles.profileEditCard}>
           <ChangeUsername username={username} userId={userId} />
           <ChangePassword userId={userId} />

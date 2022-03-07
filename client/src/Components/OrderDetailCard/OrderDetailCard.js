@@ -67,6 +67,7 @@ function OrderDetailCard({ data, isAdmin }) {
           </div>
           {data.order.items.map((item) => (
             <OrderItemCard
+              key={item.productId}
               productId={item.productId}
               images={item.images}
               name={item.name}

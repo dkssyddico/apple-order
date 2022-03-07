@@ -8,7 +8,7 @@ import styles from './AdminOrderDetail.module.scss';
 
 function AdminOrderDetail() {
   const { orderId } = useParams();
-  const { isLoading, isError, data, error } = useQuery('orderDetail', async () => {
+  const { isLoading, isError, data, error } = useQuery(['orderDetail', orderId], async () => {
     let { data } = await orderService.getOrderByOrderId(orderId);
     return data;
   });
