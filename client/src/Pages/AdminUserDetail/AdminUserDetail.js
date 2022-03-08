@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
+import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import Message from '../../Components/Message/Message';
 import OrderCard from '../../Components/OrderCard/OrderCard';
@@ -8,7 +9,8 @@ import styles from './AdminUserDetail.module.scss';
 
 function AdminUserDetail() {
   const navigate = useNavigate();
-
+  const user = useSelector((state) => state.user);
+  const { accessToken } = user;
   const { userId } = useParams();
   const [deleteError, setDeleteError] = useState(false);
   const [deleteErrorMessage, setDeleteErrorMessage] = useState('');
@@ -38,8 +40,8 @@ function AdminUserDetail() {
     }
   };
 
-  const { isLoading, isError, data, error } = useQuery('user', async () => {
-    let { data } = await userService.getProfile(userId);
+  const { isLoading, isError, data, error } = useQuery(['user', userId, accessToken], async () => {
+    let { data } = await userService.getProfile({ userId, accessToken });
     return data;
   });
 

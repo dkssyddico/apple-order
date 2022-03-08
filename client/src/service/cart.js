@@ -4,8 +4,12 @@ class Cart {
   constructor(httpClient) {
     this.cart = httpClient;
   }
-  getInfo = async (userId) => {
-    return this.cart.get(`/users/${userId}/cart`);
+  getInfo = async ({ userId, accessToken }) => {
+    return this.cart.get(`/users/${userId}/cart`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
   };
 
   addItem = async (userData) => {

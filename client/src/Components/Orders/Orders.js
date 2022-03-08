@@ -9,18 +9,19 @@ import Message from '../Message/Message';
 
 function Orders() {
   const user = useSelector((state) => state.user);
-  const { userId } = user;
+  const { userId, accessToken } = user;
   const offset = 4;
   const [index, setIndex] = useState(1);
   const [totalOrders, setTotalOrders] = useState(null);
 
-  console.log(userId);
-
-  const { isLoading, isError, data, error } = useQuery(['orders', userId, index], async () => {
-    let { data } = await orderService.getOrderByUserId(userId, index);
-    setTotalOrders(Math.ceil(data.total / offset));
-    return data;
-  });
+  const { isLoading, isError, data, error } = useQuery(
+    ['orders', userId, index, accessToken],
+    async () => {
+      let { data } = await orderService.getOrderByUserId({ userId, index, accessToken });
+      setTotalOrders(Math.ceil(data.total / offset));
+      return data;
+    }
+  );
 
   if (isLoading) {
     return (

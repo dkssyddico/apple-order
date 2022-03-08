@@ -9,22 +9,37 @@ const changeProfileAction = createAction('user/changeProfile');
 const addFavoriteAction = createAction('user/addProductFavorite');
 const deleteFavoriteAction = createAction('user/deleteProductFavorite');
 
-const initialState = {
-  username: undefined,
-  userId: undefined,
-  login: false,
-  isAdmin: false,
-  error: null,
-  favorites: undefined,
-};
+const userInfo = localStorage.getItem('userInfo');
+
+const initialState = userInfo
+  ? JSON.parse(userInfo)
+  : {
+      username: undefined,
+      userId: undefined,
+      login: false,
+      isAdmin: false,
+      error: null,
+      favorites: undefined,
+      accessToken: undefined,
+    };
 
 const loginUser = createAsyncThunk(loginUserAction, async (userInfo, { rejectWithValue }) => {
   try {
     const { data } = await userService.login(userInfo);
     const accessToken = data.accessToken;
+    let dataForLS = {
+      username: data.username,
+      userId: data._id,
+      login: true,
+      isAdmin: data.isAdmin,
+      error: null,
+      favorites: data.favorites,
+      accessToken: data.accessToken,
+    };
     if (data.success) {
       httpClient.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
     }
+    localStorage.setItem('userInfo', JSON.stringify(dataForLS));
     localStorage.setItem('r_token', true);
     return data;
   } catch (error) {
@@ -39,8 +54,19 @@ const checkUserLogin = createAsyncThunk(checkUserLoginAction, async (_, { reject
     if (data.success) {
       httpClient.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
     }
-    localStorage.setItem('r_token', true);
-    console.log(data);
+    let dataForLS = {
+      username: data.username,
+      userId: data._id,
+      login: true,
+      isAdmin: data.isAdmin,
+      error: null,
+      favorites: data.favorites,
+      accessToken: data.accessToken,
+    };
+    if (data.success) {
+      httpClient.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+    }
+    localStorage.setItem('userInfo', JSON.stringify(dataForLS));
     return data;
   } catch (error) {
     console.log(error.response);
@@ -65,6 +91,7 @@ const logoutUser = createAsyncThunk(logoutUserAction, async (userInfo, { rejectW
   try {
     const { data } = await userService.logout();
     localStorage.removeItem('r_token');
+    localStorage.removeItem('userInfo');
     return data;
   } catch (error) {
     console.log(error.response);
@@ -75,7 +102,6 @@ const logoutUser = createAsyncThunk(logoutUserAction, async (userInfo, { rejectW
 const addFavorite = createAsyncThunk(addFavoriteAction, async (userInfo, { rejectWithValue }) => {
   try {
     const { data } = await userService.addFavorite(userInfo);
-    console.log(data);
     return data;
   } catch (error) {
     console.log(error.response);
@@ -88,7 +114,6 @@ const deleteFavorite = createAsyncThunk(
   async (userInfo, { rejectWithValue }) => {
     try {
       const { data } = await userService.deleteFavorite(userInfo);
-      console.log(data);
       return data;
     } catch (error) {
       console.log(error.response);
@@ -111,6 +136,7 @@ const userSlice = createSlice({
       login: true,
       error: '',
       favorites: payload.favorites,
+      accessToken: payload.accessToken,
     }),
     [loginUser.rejected]: (state, { payload }) => {
       console.log(payload);
@@ -126,6 +152,7 @@ const userSlice = createSlice({
       login: true,
       error: '',
       favorites: payload.favorites,
+      accessToken: payload.accessToken,
     }),
     [checkUserLogin.rejected]: (state, { payload }) => {
       return {

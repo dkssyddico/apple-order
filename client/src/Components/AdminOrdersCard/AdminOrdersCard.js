@@ -6,10 +6,14 @@ import orderService from '../../service/order';
 import styles from './AdminOrdersCard.module.scss';
 import { getToday } from '../../utils/date';
 import Message from '../Message/Message';
+import { useSelector } from 'react-redux';
 
 function AdminOrdersCard() {
+  const user = useSelector((state) => state.user);
+  const { accessToken } = user;
+
   const { isLoading, isError, data, error } = useQuery('orders', async () => {
-    let { data } = await orderService.getAllOrders();
+    let { data } = await orderService.getAllOrders(accessToken);
     return data;
   });
 

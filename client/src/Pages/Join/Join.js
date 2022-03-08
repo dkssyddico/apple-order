@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import userService from '../../service/user';
 import styles from './Join.module.scss';
 import toast from 'react-hot-toast';
-import MainSlider from '../../Components/MainSlider/MainSlider';
 
 function Join() {
   const navigate = useNavigate();

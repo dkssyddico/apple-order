@@ -1,5 +1,6 @@
 import React from 'react';
 import { useQuery } from 'react-query';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import Message from '../../Components/Message/Message';
 import OrderDetailCard from '../../Components/OrderDetailCard/OrderDetailCard';
@@ -8,10 +9,15 @@ import styles from './AdminOrderDetail.module.scss';
 
 function AdminOrderDetail() {
   const { orderId } = useParams();
-  const { isLoading, isError, data, error } = useQuery(['orderDetail', orderId], async () => {
-    let { data } = await orderService.getOrderByOrderId(orderId);
-    return data;
-  });
+  const user = useSelector((state) => state.user);
+  const { accessToken } = user;
+  const { isLoading, isError, data, error } = useQuery(
+    ['orderDetail', orderId, accessToken],
+    async () => {
+      let { data } = await orderService.getOrderByOrderId({ orderId, accessToken });
+      return data;
+    }
+  );
 
   if (isLoading) {
     return (

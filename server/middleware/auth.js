@@ -16,6 +16,7 @@ export const auth = (req, res, next) => {
             message: '액세스 토큰이 만료되었습니다. 다시 로그인해주세요.',
           });
         }
+        console.log(error);
         console.log('error here');
         return res.status(401).json({
           success: false,

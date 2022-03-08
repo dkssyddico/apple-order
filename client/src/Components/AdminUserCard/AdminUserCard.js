@@ -6,10 +6,13 @@ import userService from '../../service/user';
 import styles from './AdminUserCard.module.scss';
 import { getToday } from '../../utils/date';
 import Message from '../Message/Message';
+import { useSelector } from 'react-redux';
 
 function AdminUserCard() {
-  const { isLoading, isError, data, error } = useQuery(['users'], async () => {
-    let { data } = await userService.getAll();
+  const user = useSelector((state) => state.user);
+  const { accessToken } = user;
+  const { isLoading, isError, data, error } = useQuery(['users', accessToken], async () => {
+    let { data } = await userService.getAll(accessToken);
     return data;
   });
   if (isLoading) {

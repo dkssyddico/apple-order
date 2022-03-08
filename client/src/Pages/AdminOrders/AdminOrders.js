@@ -5,10 +5,13 @@ import Message from '../../Components/Message/Message';
 import orderService from '../../service/order';
 import { getToday } from '../../utils/date';
 import styles from './AdminOrders.module.scss';
+import { useSelector } from 'react-redux';
 
 function AdminOrders() {
-  const { isLoading, isError, data, error } = useQuery('adminOrders', async () => {
-    let { data } = await orderService.getAllOrders();
+  const user = useSelector((state) => state.user);
+  const { accessToken } = user;
+  const { isLoading, isError, data, error } = useQuery(['adminOrders', accessToken], async () => {
+    let { data } = await orderService.getAllOrders(accessToken);
     return data;
   });
 

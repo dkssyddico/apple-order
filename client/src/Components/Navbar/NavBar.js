@@ -13,16 +13,16 @@ function NavBar() {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const cart = useSelector((state) => state.cart);
-  const { login, userId, isAdmin, error } = user;
+  const { login, userId, isAdmin, error, accessToken } = user;
   const { items } = cart;
   const isRToken = localStorage.getItem('r_token');
 
   useEffect(() => {
-    // 새로고침해서 로그인은 풀렸는데 리프레쉬 토큰이 남아있는 경우
-    if (!login && isRToken) {
+    // 새로고침: 리프레쉬 토큰이 남아있는 경우
+    if (isRToken) {
       dispatch(checkUserLogin());
     }
-  }, [dispatch, login, isRToken, navigate]);
+  }, [dispatch, isRToken]);
 
   useEffect(() => {
     if (error) {
@@ -38,10 +38,10 @@ function NavBar() {
   }, [error, dispatch, navigate]);
 
   useEffect(() => {
-    if (login) {
-      dispatch(getCart(userId));
+    if (isRToken) {
+      dispatch(getCart({ userId, accessToken }));
     }
-  }, [dispatch, login, userId]);
+  }, [dispatch, isRToken, userId, accessToken]);
 
   return (
     <nav className={styles.navbar}>

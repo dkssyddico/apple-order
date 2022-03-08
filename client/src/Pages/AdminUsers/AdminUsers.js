@@ -4,10 +4,13 @@ import { useQuery } from 'react-query';
 import userService from '../../service/user';
 import styles from './AdminUsers.module.scss';
 import Message from '../../Components/Message/Message';
+import { useSelector } from 'react-redux';
 
 function AdminUsers() {
-  const { isLoading, isError, data, error } = useQuery('user', async () => {
-    let { data } = await userService.getAll();
+  const user = useSelector((state) => state.user);
+  const { accessToken } = user;
+  const { isLoading, isError, data, error } = useQuery(['users', accessToken], async () => {
+    let { data } = await userService.getAll(accessToken);
     return data;
   });
 

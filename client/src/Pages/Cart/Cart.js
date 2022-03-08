@@ -12,12 +12,12 @@ function Cart() {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const cart = useSelector((state) => state.cart);
-  const { userId } = user;
+  const { userId, accessToken } = user;
   let { items, error } = cart;
 
   useEffect(() => {
-    dispatch(getCart(userId));
-  }, [dispatch, userId]);
+    dispatch(getCart({ userId, accessToken }));
+  }, [dispatch, accessToken, userId]);
 
   useEffect(() => {
     if (error) {

@@ -7,12 +7,12 @@ const changeQtyInCartAction = createAction('cart/changeQtyInCart');
 const deleteItemInCartAction = createAction('cart/deleteItemInCart');
 const refreshCartAction = createAction('cart/refreshCart');
 
-const getCart = createAsyncThunk(getCartAction, async (userId, { rejectWithValue }) => {
+const getCart = createAsyncThunk(getCartAction, async (userData, { rejectWithValue }) => {
   try {
-    const { data } = await cartService.getInfo(userId);
+    const { data } = await cartService.getInfo(userData);
     return data;
   } catch (error) {
-    console.log(error.response);
+    console.log(error);
     return rejectWithValue(
       error.response.data.message ? error.response.data.message : error.response.data.error.name
     );

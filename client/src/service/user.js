@@ -19,11 +19,21 @@ class User {
     return this.user.get('/users/logout');
   };
 
-  getAll = () => this.user.get('/users');
+  getAll = (accessToken) =>
+    this.user.get('/users', {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
 
   remove = (userId) => this.user.delete(`/users/${userId}`);
 
-  getProfile = (userId) => this.user.get(`/users/${userId}`);
+  getProfile = ({ userId, accessToken }) =>
+    this.user.get(`/users/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
 
   changeUsername = (userData) => {
     let { userId, username } = userData;
@@ -38,8 +48,12 @@ class User {
     });
   };
 
-  getFavorite = (userId) => {
-    return this.user.get(`/users/${userId}/favorite`);
+  getFavorite = ({ userId, accessToken }) => {
+    return this.user.get(`/users/${userId}/favorite`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
   };
 
   addFavorite = (data) => {

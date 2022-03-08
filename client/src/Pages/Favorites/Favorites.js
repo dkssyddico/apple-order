@@ -8,14 +8,15 @@ import styles from './Favorites.module.scss';
 
 function Favorites() {
   const user = useSelector((state) => state.user);
-  const { userId } = user;
-  console.log(user);
+  const { userId, accessToken } = user;
 
-  const { isLoading, isError, data, error } = useQuery(['favorites', userId], async () => {
-    let { data } = await userService.getFavorite(userId);
-    console.log(data);
-    return data;
-  });
+  const { isLoading, isError, data, error } = useQuery(
+    ['favorites', userId, accessToken],
+    async () => {
+      let { data } = await userService.getFavorite({ userId, accessToken });
+      return data;
+    }
+  );
 
   if (isLoading) {
     return (

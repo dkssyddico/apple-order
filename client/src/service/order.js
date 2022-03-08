@@ -4,19 +4,33 @@ class Order {
   constructor(httpClient) {
     this.order = httpClient;
   }
+
   addOrder = (userId, items) => this.order.post(`/users/${userId}/orders`, items);
 
-  getOrderByUserId = async (userId, index) => {
-    return this.order.get(`/users/${userId}/orders/${index}`);
+  getOrderByUserId = async ({ userId, index, accessToken }) => {
+    return this.order.get(`/users/${userId}/orders/${index}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
   };
 
-  getOrderByOrderId = (orderId) => {
-    return this.order.get(`/orders/${orderId}`);
+  getOrderByOrderId = ({ orderId, accessToken }) => {
+    return this.order.get(`/orders/${orderId}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
   };
 
-  getAllOrders = () => {
-    return this.order.get('/orders');
+  getAllOrders = (accessToken) => {
+    return this.order.get('/orders', {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
   };
+
   changeDeliverStatus = (orderId) => {
     return this.order.post(`/orders/${orderId}/deliverStatus`);
   };
