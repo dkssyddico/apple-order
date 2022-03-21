@@ -3,7 +3,7 @@ import { useQuery } from 'react-query';
 import productService from '../../service/product';
 import ProductCard from '../ProductCard/ProductCard';
 import Message from '../Message/Message';
-import styles from './AllProducts.module.css';
+import styles from './AllProducts.module.scss';
 
 function AllProducts() {
   const { isLoading, isError, data, error } = useQuery('products', async () => {

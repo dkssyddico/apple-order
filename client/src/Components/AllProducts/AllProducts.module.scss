@@ -1,0 +1,25 @@
+@import '../../common/mixin';
+
+.products {
+  width: 100%;
+  display: grid;
+}
+
+@include mobile {
+  .products {
+    gap: 10px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@include tablet {
+  .products {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@include desktop {
+  .products {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

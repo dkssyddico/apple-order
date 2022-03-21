@@ -1,12 +1,13 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useDropdown from '../../hooks/useDropdown';
 import { clearCart } from '../../reducers/cartReducer';
 import { logoutUser } from '../../reducers/userReducers';
 import styles from './SmallNavbar.module.scss';
 
 function SmallNavbar() {
+  const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const cart = useSelector((state) => state.cart);
   const { login, isAdmin } = user;
@@ -16,6 +17,14 @@ function SmallNavbar() {
   const onLogoutClick = () => {
     dispatch(logoutUser());
     dispatch(clearCart());
+  };
+
+  const handleCartClick = () => {
+    if (!login) {
+      alert('Please login first!');
+    } else {
+      navigate('/cart');
+    }
   };
   return (
     <div className={styles.smallNavbar}>
@@ -43,28 +52,26 @@ function SmallNavbar() {
           <img className={styles.logo} src='./logo.png' alt='logo' />
         </Link>
       </div>
-      <div className={styles.cartBox}>
-        <Link to='/cart'>
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            width='24'
-            height='24'
-            viewBox='0 0 24 24'
-            fill='none'
-            stroke='currentColor'
-            strokeWidth='2'
-            strokeLinecap='round'
-            strokeLinejoin='round'
-            className='feather feather-shopping-bag'
-          >
-            <path d='M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z'></path>
-            <line x1='3' y1='6' x2='21' y2='6'></line>
-            <path d='M16 10a4 4 0 0 1-8 0'></path>
-          </svg>
-          <div className={styles.cartItem}>
-            <span>{items && items.length}</span>
-          </div>
-        </Link>
+      <div className={styles.cartBox} onClick={handleCartClick}>
+        <svg
+          xmlns='http://www.w3.org/2000/svg'
+          width='24'
+          height='24'
+          viewBox='0 0 24 24'
+          fill='none'
+          stroke='currentColor'
+          strokeWidth='2'
+          strokeLinecap='round'
+          strokeLinejoin='round'
+          className='feather feather-shopping-bag'
+        >
+          <path d='M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z'></path>
+          <line x1='3' y1='6' x2='21' y2='6'></line>
+          <path d='M16 10a4 4 0 0 1-8 0'></path>
+        </svg>
+        <div className={styles.cartItem}>
+          <span>{items && items.length}</span>
+        </div>
       </div>
       {menuVisible && (
         <div className={styles.hiddenMenu}>
