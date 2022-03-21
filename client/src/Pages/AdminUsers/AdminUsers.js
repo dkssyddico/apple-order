@@ -1,18 +1,36 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import userService from '../../service/user';
 import styles from './AdminUsers.module.scss';
 import Message from '../../Components/Message/Message';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearUser } from '../../reducers/userReducers';
+import toast from 'react-hot-toast';
 
 function AdminUsers() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const { accessToken } = user;
-  const { isLoading, isError, data, error } = useQuery(['users', accessToken], async () => {
-    let { data } = await userService.getAll(accessToken);
-    return data;
-  });
+  const { isLoading, isError, data, error } = useQuery(
+    ['users', accessToken],
+    async () => {
+      let { data } = await userService.getAll(accessToken);
+      return data;
+    },
+    {
+      onError: (error) => {
+        if (error.response?.status === 401) {
+          localStorage.removeItem('r_token');
+          localStorage.removeItem('userInfo');
+          dispatch(clearUser());
+          navigate('/login');
+          toast.error('Login token is expired. Please login again');
+        }
+      },
+    }
+  );
 
   if (isLoading) {
     return (

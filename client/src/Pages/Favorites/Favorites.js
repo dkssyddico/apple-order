@@ -1,12 +1,17 @@
 import React from 'react';
 import { useQuery } from 'react-query';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Message from '../../Components/Message/Message';
 import ProductCard from '../../Components/ProductCard/ProductCard';
 import userService from '../../service/user';
 import styles from './Favorites.module.scss';
+import { clearUser } from '../../reducers/userReducers';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 function Favorites() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const { userId, accessToken } = user;
 
@@ -15,6 +20,17 @@ function Favorites() {
     async () => {
       let { data } = await userService.getFavorite({ userId, accessToken });
       return data;
+    },
+    {
+      onError: (error) => {
+        if (error.response?.status === 401) {
+          localStorage.removeItem('r_token');
+          localStorage.removeItem('userInfo');
+          dispatch(clearUser());
+          navigate('/login');
+          toast.error('Login token is expired. Please login again');
+        }
+      },
     }
   );
 

@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { VscTriangleLeft, VscTriangleRight } from 'react-icons/vsc';
 import orderService from '../../service/order';
 import OrderCard from '../OrderCard/OrderCard';
 import styles from './Orders.module.scss';
 import Message from '../Message/Message';
+import { clearUser } from '../../reducers/userReducers';
+import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 function Orders() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const { userId, accessToken } = user;
   const offset = 4;
@@ -20,6 +25,17 @@ function Orders() {
       let { data } = await orderService.getOrderByUserId({ userId, index, accessToken });
       setTotalOrders(Math.ceil(data.total / offset));
       return data;
+    },
+    {
+      onError: (error) => {
+        if (error.response?.status === 401) {
+          localStorage.removeItem('r_token');
+          localStorage.removeItem('userInfo');
+          dispatch(clearUser());
+          navigate('/login');
+          toast.error('Login token is expired. Please login again');
+        }
+      },
     }
   );
 

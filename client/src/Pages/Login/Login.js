@@ -16,17 +16,17 @@ function Login() {
       email,
       password,
     };
-    dispatch(loginUser(userInfo)).then((response) => {
-      const {
-        meta: { requestStatus },
-        payload,
-      } = response;
-      if (requestStatus === 'fulfilled') {
-        toast.success('Login successfully!');
-      } else {
-        toast.error(payload.data.message ? payload.data.message : payload.data.error.name);
-      }
-    });
+    dispatch(loginUser(userInfo))
+      .then((response) => {
+        const {
+          meta: { requestStatus },
+          payload,
+        } = response;
+        if (requestStatus === 'fulfilled') {
+          toast.success('Login successfully!');
+        }
+      })
+      .catch((error) => console.log(error));
   };
 
   const onChange = (e) => {

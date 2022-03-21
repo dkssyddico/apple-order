@@ -1,19 +1,37 @@
 import React from 'react';
+import toast from 'react-hot-toast';
 import { useQuery } from 'react-query';
-import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 import Message from '../../Components/Message/Message';
+import { clearUser } from '../../reducers/userReducers';
 import orderService from '../../service/order';
 import { getToday } from '../../utils/date';
 import styles from './AdminOrders.module.scss';
-import { useSelector } from 'react-redux';
 
 function AdminOrders() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const { accessToken } = user;
-  const { isLoading, isError, data, error } = useQuery(['adminOrders', accessToken], async () => {
-    let { data } = await orderService.getAllOrders(accessToken);
-    return data;
-  });
+  const { isLoading, isError, data, error } = useQuery(
+    ['adminOrders', accessToken],
+    async () => {
+      let { data } = await orderService.getAllOrders(accessToken);
+      return data;
+    },
+    {
+      onError: (error) => {
+        if (error.response?.status === 401) {
+          localStorage.removeItem('r_token');
+          localStorage.removeItem('userInfo');
+          dispatch(clearUser());
+          navigate('/login');
+          toast.error('Login token is expired. Please login again');
+        }
+      },
+    }
+  );
 
   if (isLoading) {
     return (

@@ -126,7 +126,15 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    clearUser: (state) => initialState,
+    clearUser: (state) => ({
+      username: undefined,
+      userId: undefined,
+      login: false,
+      isAdmin: false,
+      error: null,
+      favorites: undefined,
+      accessToken: undefined,
+    }),
   },
   extraReducers: {
     [loginUser.fulfilled]: (state, { payload }) => ({

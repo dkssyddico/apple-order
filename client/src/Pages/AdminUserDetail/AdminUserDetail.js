@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
+import toast from 'react-hot-toast';
 import { useQuery } from 'react-query';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import Message from '../../Components/Message/Message';
 import OrderCard from '../../Components/OrderCard/OrderCard';
+import { clearUser } from '../../reducers/userReducers';
 import userService from '../../service/user';
 import styles from './AdminUserDetail.module.scss';
 
 function AdminUserDetail() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const { accessToken } = user;
@@ -40,10 +43,24 @@ function AdminUserDetail() {
     }
   };
 
-  const { isLoading, isError, data, error } = useQuery(['user', userId, accessToken], async () => {
-    let { data } = await userService.getProfile({ userId, accessToken });
-    return data;
-  });
+  const { isLoading, isError, data, error } = useQuery(
+    ['user', userId, accessToken],
+    async () => {
+      let { data } = await userService.getProfile({ userId, accessToken });
+      return data;
+    },
+    {
+      onError: (error) => {
+        if (error.response?.status === 401) {
+          localStorage.removeItem('r_token');
+          localStorage.removeItem('userInfo');
+          dispatch(clearUser());
+          navigate('/login');
+          toast.error('Login token is expired. Please login again');
+        }
+      },
+    }
+  );
 
   if (isLoading) {
     return (

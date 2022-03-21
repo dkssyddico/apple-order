@@ -1,15 +1,34 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import toast from 'react-hot-toast';
 import { useQuery } from 'react-query';
 import productService from '../../service/product';
 import styles from './AdminProducts.module.scss';
 import Message from '../../Components/Message/Message';
+import { clearUser } from '../../reducers/userReducers';
 
 function AdminProducts() {
-  const { isLoading, isError, data, error } = useQuery('adminProducts', async () => {
-    let { data } = await productService.getAllProducts();
-    return data;
-  });
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { isLoading, isError, data, error } = useQuery(
+    'adminProducts',
+    async () => {
+      let { data } = await productService.getAllProducts();
+      return data;
+    },
+    {
+      onError: (error) => {
+        if (error.response?.status === 401) {
+          localStorage.removeItem('r_token');
+          localStorage.removeItem('userInfo');
+          dispatch(clearUser());
+          navigate('/login');
+          toast.error('Login token is expired. Please login again');
+        }
+      },
+    }
+  );
 
   if (isLoading) {
     return (

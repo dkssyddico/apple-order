@@ -13,9 +13,7 @@ const getCart = createAsyncThunk(getCartAction, async (userData, { rejectWithVal
     return data;
   } catch (error) {
     console.log(error);
-    return rejectWithValue(
-      error.response.data.message ? error.response.data.message : error.response.data.error.name
-    );
+    return rejectWithValue(error.response.data);
   }
 });
 

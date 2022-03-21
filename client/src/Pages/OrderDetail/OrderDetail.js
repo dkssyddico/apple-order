@@ -1,18 +1,37 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { useQuery } from 'react-query';
+import toast from 'react-hot-toast';
 import orderService from '../../service/order';
 import styles from './OrderDetail.module.scss';
 import OrderDetailCard from '../../Components/OrderDetailCard/OrderDetailCard';
 import Message from '../../Components/Message/Message';
+import { clearUser } from '../../reducers/userReducers';
 
 function OrderDetail() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { orderId } = useParams();
 
-  const { isLoading, isError, data, error } = useQuery('orderDetail', async () => {
-    let { data } = await orderService.getOrderByOrderId(orderId);
-    return data;
-  });
+  const { isLoading, isError, data, error } = useQuery(
+    'orderDetail',
+    async () => {
+      let { data } = await orderService.getOrderByOrderId(orderId);
+      return data;
+    },
+    {
+      onError: (error) => {
+        if (error.response?.status === 401) {
+          localStorage.removeItem('r_token');
+          localStorage.removeItem('userInfo');
+          dispatch(clearUser());
+          navigate('/login');
+          toast.error('Login token is expired. Please login again');
+        }
+      },
+    }
+  );
 
   if (isLoading) {
     return (

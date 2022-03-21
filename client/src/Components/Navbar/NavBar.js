@@ -18,6 +18,20 @@ function NavBar() {
   const isRToken = localStorage.getItem('r_token');
 
   useEffect(() => {
+    if (error) {
+      const { status } = error;
+      if (status === 401) {
+        console.log('here');
+        localStorage.removeItem('r_token');
+        localStorage.removeItem('userInfo');
+        dispatch(clearUser());
+        navigate('/login'); // 리프레쉬 토큰이 만료된 경우 새로 로그인 유도.
+        toast.error('Login token is expired. Please login again');
+      }
+    }
+  }, [error, dispatch, navigate]);
+
+  useEffect(() => {
     // 새로고침: 리프레쉬 토큰이 남아있는 경우
     if (isRToken) {
       dispatch(checkUserLogin());
@@ -25,23 +39,10 @@ function NavBar() {
   }, [dispatch, isRToken]);
 
   useEffect(() => {
-    if (error) {
-      console.log(error);
-      const { status } = error;
-      if (status === 401) {
-        navigate('/login'); // 리프레쉬 토큰이 만료된 경우 새로 로그인 유도.
-        localStorage.removeItem('r_token');
-        dispatch(clearUser());
-        toast.error('Refresh token is expired. Please login again');
-      }
-    }
-  }, [error, dispatch, navigate]);
-
-  useEffect(() => {
-    if (isRToken) {
+    if (login) {
       dispatch(getCart({ userId, accessToken }));
     }
-  }, [dispatch, isRToken, userId, accessToken]);
+  }, [login, dispatch, accessToken, userId]);
 
   return (
     <nav className={styles.navbar}>

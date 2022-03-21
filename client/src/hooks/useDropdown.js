@@ -21,7 +21,7 @@ function useDropdown() {
   useEffect(() => {
     window.addEventListener('click', handleOtherClick);
     return () => {
-      window.addEventListener('click', handleOtherClick);
+      window.removeEventListener('click', handleOtherClick);
     };
   }, [handleOtherClick]);
 

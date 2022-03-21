@@ -21,10 +21,12 @@ function Cart() {
 
   useEffect(() => {
     if (error) {
-      alert(error);
-      navigate('/login'); // 리프레쉬 토큰이 만료된 경우 새로 로그인 유도.
+      console.log(error);
+      navigate('/login');
       localStorage.removeItem('r_token');
+      localStorage.removeItem('userInfo');
       dispatch(clearUser());
+      toast.error(error.message);
     }
   }, [error, dispatch, navigate]);
 
