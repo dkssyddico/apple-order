@@ -53,7 +53,7 @@ userSchema.methods.generateAccessToken = function () {
     },
     process.env.JWT_SECRET,
     {
-      expiresIn: '3s',
+      expiresIn: '1h',
     }
   );
   return accessToken;
@@ -67,7 +67,7 @@ userSchema.methods.generateRefreshToken = function () {
     },
     process.env.JWT_SECRET,
     {
-      expiresIn: '10s', // 2d
+      expiresIn: '2d', // 2d
     }
   );
   return refreshToken;

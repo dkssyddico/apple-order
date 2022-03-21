@@ -64,7 +64,9 @@ const initialState = {
 const cartSlice = createSlice({
   name: 'cart',
   initialState,
-  reducers: {},
+  reducers: {
+    clearCart: () => initialState,
+  },
   extraReducers: {
     [getCart.fulfilled]: (state, { payload }) => ({
       items: payload.cart,
@@ -87,6 +89,8 @@ const cartSlice = createSlice({
     }),
   },
 });
+
+export const { clearCart } = cartSlice.actions;
 
 export { getCart, addToCart, refreshCart, changeQty, deleteItemInCart };
 

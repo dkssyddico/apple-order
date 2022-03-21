@@ -1,0 +1,67 @@
+@import '../../common/_colors.scss';
+
+.smallNavbar {
+  padding: 1.5rem 10vw;
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .menuBox {
+    cursor: pointer;
+  }
+  .logoBox {
+    .logo {
+      width: 2rem;
+      height: 2rem;
+    }
+  }
+  .cartBox {
+    position: relative;
+    .cartItem {
+      background-color: $red;
+      width: 1rem;
+      height: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      border-radius: 10px;
+      position: absolute;
+      bottom: -0.4rem;
+      right: -0.4rem;
+      span {
+        color: $white;
+        font-size: 12px;
+      }
+    }
+  }
+  .hiddenMenu {
+    width: 100%;
+    padding: 0.5rem 10vw 1rem;
+    background-color: $white;
+    position: absolute;
+    top: 11vh;
+    right: 0;
+    ul {
+      .menu {
+        padding: 0.5rem 0;
+        a {
+          font-weight: 500;
+          transition: all 0.3s ease-in;
+          &:hover {
+            color: $red;
+          }
+        }
+        .logout {
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.3s ease-in;
+          &:hover {
+            color: $red;
+          }
+        }
+      }
+    }
+  }
+}

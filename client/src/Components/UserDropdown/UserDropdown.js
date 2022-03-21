@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { clearCart } from '../../reducers/cartReducer';
 import { logoutUser } from '../../reducers/userReducers';
 import styles from './UserDropdown.module.scss';
 
@@ -8,6 +9,7 @@ function UserDropdown() {
   const dispatch = useDispatch();
   const onLogoutClick = () => {
     dispatch(logoutUser());
+    dispatch(clearCart());
   };
   return (
     <div className={styles.dropdown}>

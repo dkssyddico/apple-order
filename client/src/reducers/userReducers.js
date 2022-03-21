@@ -168,7 +168,15 @@ const userSlice = createSlice({
         error: payload,
       };
     },
-    [logoutUser.fulfilled]: (state) => initialState,
+    [logoutUser.fulfilled]: (state) => ({
+      username: undefined,
+      userId: undefined,
+      login: false,
+      isAdmin: false,
+      error: null,
+      favorites: undefined,
+      accessToken: undefined,
+    }),
     [logoutUser.rejected]: (state) => initialState,
     [changeProfile.fulfilled]: (state, { payload }) => {
       return {
