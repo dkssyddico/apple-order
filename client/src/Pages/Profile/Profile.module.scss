@@ -1,5 +1,6 @@
 @import '../../common/_extends';
-@import '../../common/_colors.scss';
+@import '../../common/_colors';
+@import '../../common/_mixin';
 
 .profile {
   @extend %main;
@@ -9,18 +10,28 @@
   @extend %title;
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.profileEditCard {
-  display: flex;
-  justify-content: center;
-  gap: 10rem;
-}
-
 .favoriteCard {
   width: 100%;
+}
+
+@include mobile {
+  .profileEditCard {
+    display: block;
+  }
+}
+
+@include tablet {
+  .profileEditCard {
+    display: flex;
+    justify-content: center;
+    gap: 10rem;
+  }
+}
+
+@include desktop {
+  .profileEditCard {
+    display: flex;
+    justify-content: center;
+    gap: 10rem;
+  }
 }

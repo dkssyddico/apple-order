@@ -1,4 +1,5 @@
 @import '../../common/_extends';
+@import '../../common/_mixin';
 
 .favorites {
   @extend %main;
@@ -8,9 +9,25 @@
   .container {
     width: 100%;
     margin-top: 2rem;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    gap: 4%;
+    display: grid;
+  }
+}
+
+@include mobile {
+  .container {
+    gap: 10px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@include tablet {
+  .container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@include desktop {
+  .container {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
