@@ -1,5 +1,6 @@
 @import '../../common/_extends';
 @import '../../common/_colors';
+@import '../../common/mixin';
 
 .cart {
   @extend %main;
@@ -7,8 +8,6 @@
     @extend %title;
   }
   .container {
-    display: flex;
-    gap: 5%;
     .items {
       flex-basis: 65%;
       .headBox {
@@ -23,15 +22,11 @@
             font-weight: 600;
           }
           &:first-child {
-            flex-basis: 8%;
+            flex-basis: 50%;
           }
 
           &:nth-child(2) {
-            flex-basis: 47%;
-          }
-
-          &:nth-child(3) {
-            flex-basis: 25%;
+            flex-basis: 30%;
           }
 
           &:last-child {
@@ -128,5 +123,30 @@
         letter-spacing: 1px;
       }
     }
+  }
+}
+
+@include mobile {
+  .container {
+    display: block;
+    .summaryBox {
+      margin-top: 2rem;
+    }
+  }
+}
+
+@include tablet {
+  .container {
+    display: block;
+    .summaryBox {
+      margin-top: 2rem;
+    }
+  }
+}
+
+@include desktop {
+  .container {
+    display: flex;
+    gap: 5%;
   }
 }

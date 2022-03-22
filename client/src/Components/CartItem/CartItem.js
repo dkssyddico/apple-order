@@ -46,9 +46,6 @@ function CartItem({ name, images, price, quantity, canBeSold, productId }) {
   return (
     <div className={styles.contents}>
       <section className={styles.content}>
-        <input type='checkbox' />
-      </section>
-      <section className={styles.content}>
         <div className={styles.infoBox}>
           <Link to={`/product/${productId}`}>
             <div className={styles.imgBox}>

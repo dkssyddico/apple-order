@@ -1,4 +1,5 @@
 @import '../../common/_colors';
+@import '../../common/_mixin';
 
 .contents {
   width: 100%;
@@ -6,19 +7,15 @@
   border-top: 1px solid $lightGray;
   .content {
     width: 100%;
-    padding: 1rem;
     display: flex;
     &:first-child {
-      flex-basis: 8%;
+      flex-basis: 50%;
       justify-content: center;
       align-items: center;
     }
     &:nth-child(2) {
-      flex-basis: 47%;
+      flex-basis: 30%;
       width: 100%;
-    }
-    &:nth-child(3) {
-      flex-basis: 25%;
       justify-content: center;
       align-items: center;
     }
@@ -31,7 +28,9 @@
   .infoBox {
     width: 100%;
     height: 100%;
-    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     a {
       display: flex;
       align-items: center;
@@ -39,23 +38,9 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        .image {
-          height: 100px;
-          width: 100px;
-        }
       }
-      .itemName {
-        margin-left: 1rem;
-        font-weight: 500;
-      }
-    }
-    .iconBox {
-      position: absolute;
-      top: 0;
-      right: 0;
     }
   }
-
   .qtyContainer {
     width: 100%;
     height: 2.5rem;
@@ -64,14 +49,11 @@
     align-items: center;
     .qtyBtn {
       border: none;
-      width: 35px;
-      height: 35px;
       cursor: pointer;
       text-align: center;
       border-radius: 50%;
       background-color: $lightGray;
     }
-
     .qtyBox {
       border: none;
       text-align: center;
@@ -82,5 +64,56 @@
       align-items: center;
       font-size: 14px;
     }
+  }
+}
+
+@include mobile {
+  .content {
+    padding: 0.5rem;
+  }
+  .image {
+    height: 80px;
+    width: 80px;
+  }
+  .itemName {
+    margin-left: 0.5rem;
+  }
+  .qtyBtn {
+    width: 25px;
+    height: 25px;
+  }
+}
+
+@include tablet {
+  .content {
+    padding: 1rem;
+  }
+  .image {
+    height: 100px;
+    width: 100px;
+  }
+  .itemName {
+    margin-left: 1rem;
+  }
+  .qtyBtn {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+@include desktop {
+  .content {
+    padding: 1rem;
+  }
+  .image {
+    height: 100px;
+    width: 100px;
+  }
+  .itemName {
+    margin-left: 1rem;
+  }
+  .qtyBtn {
+    width: 35px;
+    height: 35px;
   }
 }

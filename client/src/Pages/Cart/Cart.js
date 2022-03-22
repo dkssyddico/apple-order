@@ -45,9 +45,6 @@ function Cart() {
         <section className={styles.items}>
           <div className={styles.headBox}>
             <div className={styles.head}>
-              <input type='checkbox' />
-            </div>
-            <div className={styles.head}>
               <h2>Product</h2>
             </div>
             <div className={styles.head}>
