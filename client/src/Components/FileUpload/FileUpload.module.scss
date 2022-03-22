@@ -1,9 +1,9 @@
 @import '../../common/_colors';
+@import '../../common/_mixin';
 
 .fileUploadBox {
   width: 100%;
   display: flex;
-  justify-content: space-evenly;
   margin-bottom: 2rem;
 }
 
@@ -34,13 +34,37 @@
 
 .previews {
   display: flex;
-  width: 350px;
+  width: 300px;
   height: 240px;
   overflow-x: scroll;
   background-color: $lightGray;
 }
 
 .image {
-  width: 350px;
+  width: 300px;
   height: 240px;
+}
+
+@include mobile {
+  .fileUploadBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .previews {
+      margin-top: 2rem;
+    }
+  }
+}
+
+@include tablet {
+  .fileUploadBox {
+    justify-content: space-evenly;
+    gap: 2rem;
+  }
+}
+
+@include desktop {
+  .fileUploadBox {
+    justify-content: space-evenly;
+  }
 }

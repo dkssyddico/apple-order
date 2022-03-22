@@ -1,10 +1,12 @@
 @import '../../common/_extends';
 @import '../../common/_colors';
+@import '../../common/_mixin';
 
 .adminProducts {
   @extend %main;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   width: 100%;
   .title {
@@ -20,7 +22,6 @@
     color: $white;
   }
   .itemsContainer {
-    width: 100%;
     .headContainer {
       display: flex;
       border-top: 3px solid black;
@@ -29,7 +30,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        flex-basis: 20%;
+        flex-basis: 33.3%;
         h2 {
           font-weight: 600;
         }
@@ -44,14 +45,14 @@
       border-bottom: 1px solid gainsboro;
     }
     .content {
-      flex-basis: 20%;
+      flex-basis: 33.3%;
       display: flex;
       justify-content: center;
       align-items: center;
     }
     .image {
-      width: 70px;
-      height: 70px;
+      width: 80px;
+      height: 80px;
     }
     .detailBtn {
       padding: 0.8rem 1rem;
@@ -62,5 +63,23 @@
       border: 1px solid $lightGreen;
       transition: all 0.3s ease-in-out;
     }
+  }
+}
+
+@include mobile {
+  .itemsContainer {
+    width: 100%;
+  }
+}
+
+@include tablet {
+  .itemsContainer {
+    width: 100%;
+  }
+}
+
+@include desktop {
+  .itemsContainer {
+    width: 80%;
   }
 }
