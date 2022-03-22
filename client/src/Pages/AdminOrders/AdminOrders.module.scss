@@ -1,5 +1,6 @@
 @import '../../common/_extends';
 @import '../../common/_colors';
+@import '../../common/_mixin';
 
 .adminOrders {
   display: flex;
@@ -8,84 +9,45 @@
   .title {
     @extend %title;
   }
+  .headBox,
+  .contentBox {
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .head {
+    font-weight: 500;
+    letter-spacing: 1.1px;
+  }
+
   .adminOrders__container {
     display: flex;
     flex-direction: column;
-
     .headSection,
     .contentContainer {
       display: flex;
     }
-
     .headSection {
       border-top: 3px solid black;
       border-bottom: 1px solid lightgrey;
     }
-
     .contentContainer {
       border-bottom: 1px solid lightgray;
-    }
-
-    .headBox,
-    .contentBox {
-      height: 3rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .headBox:first-child,
-    .contentBox:first-child {
-      flex-basis: 15%;
-    }
-
-    .headBox:nth-child(2),
-    .contentBox:nth-child(2) {
-      flex-basis: 33%;
-    }
-
-    .headBox:nth-child(3),
-    .contentBox:nth-child(3) {
-      flex-basis: 25%;
-    }
-
-    .headBox:nth-child(4),
-    .contentBox:nth-child(4) {
-      flex-basis: 15%;
-    }
-
-    .headBox:last-child,
-    .contentBox:last-child {
-      flex-basis: 22%;
-    }
-
-    .head {
-      font-weight: 500;
-      letter-spacing: 1.1px;
-    }
-
-    .contentBox:nth-child(2),
-    .contentBox:nth-child(3) {
-      justify-content: flex-start;
-      padding-left: 3rem;
     }
   }
 }
 
-.badge__new,
 .badge__delivered,
 .badge__InDelivery {
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.8rem;
   background-color: aliceblue;
   letter-spacing: 1.1px;
   font-weight: 500;
   border-radius: 8px;
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-  font-size: 14px;
-}
-
-.badge__new {
-  background-color: #ffd60a;
+  font-size: 12px;
 }
 
 .badge__delivered,
@@ -102,4 +64,104 @@
 .badge__InDelivery {
   background-color: $lightGreen;
   color: white;
+}
+
+@include mobile {
+  .headBox,
+  .contentBox {
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .headBox:first-child,
+  .contentBox:first-child {
+    flex-basis: 60%;
+  }
+
+  .headBox:nth-child(2),
+  .contentBox:nth-child(2) {
+    display: none;
+  }
+
+  .headBox:nth-child(3),
+  .contentBox:nth-child(3) {
+    display: none;
+  }
+
+  .headBox:last-child,
+  .contentBox:nth-child(4) {
+    flex-basis: 40%;
+  }
+}
+
+@include tablet {
+  .headBox,
+  .contentBox {
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .headBox:first-child,
+  .contentBox:first-child {
+    flex-basis: 35%;
+  }
+
+  .headBox:nth-child(2),
+  .contentBox:nth-child(2) {
+    flex-basis: 25%;
+  }
+
+  .headBox:nth-child(3),
+  .contentBox:nth-child(3) {
+    flex-basis: 20%;
+  }
+
+  .headBox:last-child,
+  .contentBox:nth-child(4) {
+    flex-basis: 20%;
+  }
+
+  .contentBox:nth-child(2) {
+    justify-content: flex-start;
+    padding-left: 3rem;
+  }
+}
+
+@include desktop {
+  .headBox,
+  .contentBox {
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .headBox:first-child,
+  .contentBox:first-child {
+    flex-basis: 35%;
+  }
+
+  .headBox:nth-child(2),
+  .contentBox:nth-child(2) {
+    flex-basis: 25%;
+  }
+
+  .headBox:nth-child(3),
+  .contentBox:nth-child(3) {
+    flex-basis: 20%;
+  }
+
+  .headBox:last-child,
+  .contentBox:nth-child(4) {
+    flex-basis: 20%;
+  }
+
+  .contentBox:nth-child(2) {
+    justify-content: flex-start;
+    padding-left: 3rem;
+  }
 }

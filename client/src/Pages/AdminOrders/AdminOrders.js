@@ -51,15 +51,12 @@ function AdminOrders() {
       </div>
     );
   }
-  console.log(data);
+
   return (
     <div className={styles.adminOrders}>
       <h1 className={styles.title}>Admin Orders</h1>
       <section className={styles.adminOrders__container}>
         <div className={styles.headSection}>
-          <div className={styles.headBox}>
-            <h3 className={styles.head}>{getToday()}</h3>
-          </div>
           <div className={styles.headBox}>
             <h3 className={styles.head}>Order Id.</h3>
           </div>
@@ -76,15 +73,6 @@ function AdminOrders() {
         {data.orders &&
           data.orders.map((order) => (
             <section className={styles.contentContainer} key={order._id}>
-              <div className={styles.contentBox}>
-                <span
-                  className={`${
-                    order.createdAt.slice(0, 10) === getToday() ? styles.badge__new : styles.content
-                  }`}
-                >
-                  {order.createdAt.slice(0, 10) === getToday() ? 'New' : null}
-                </span>
-              </div>
               <div className={styles.contentBox}>
                 <span className={styles.content}>
                   <Link to={`/admin/orders/${order._id}`}>{order._id} </Link>
