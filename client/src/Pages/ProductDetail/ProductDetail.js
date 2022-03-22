@@ -7,7 +7,6 @@ import styles from './productDetail.module.scss';
 import { addToCart } from '../../reducers/cartReducer';
 import productService from '../../service/product';
 import Message from '../../Components/Message/Message';
-import userService from '../../service/user';
 import { addFavorite, deleteFavorite } from '../../reducers/userReducers';
 
 function ProductDetail() {
@@ -23,8 +22,6 @@ function ProductDetail() {
     let { data } = await productService.getInfo(productId);
     return data;
   });
-
-  console.log(favorites);
 
   // 객체 형태로 줘야함.
   const handleCartClick = () => {

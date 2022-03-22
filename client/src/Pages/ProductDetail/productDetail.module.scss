@@ -1,14 +1,11 @@
 @import '../../common/_colors.scss';
 @import '../../common/_extends';
+@import '../../common/mixin';
 
 .product {
   @extend %main;
   .container {
     margin-top: 5vh;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 6%;
     .imgBox {
       flex-basis: 47%;
       display: flex;
@@ -77,14 +74,14 @@
           cursor: pointer;
           border: none;
           flex: 1 1 45%;
-          padding: 1rem;
           border-radius: 4px;
           font-weight: 600;
           letter-spacing: 1px;
+          font-size: 14px;
         }
         .favBtn {
           border: 1px solid $lightGray;
-          padding: 1rem;
+          padding: 0.5rem;
           border-radius: 4px;
           color: $red;
         }
@@ -98,5 +95,29 @@
         }
       }
     }
+  }
+}
+
+@include mobile {
+  .container {
+    display: block;
+  }
+}
+
+@include tablet {
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6%;
+  }
+}
+
+@include desktop {
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6%;
   }
 }
