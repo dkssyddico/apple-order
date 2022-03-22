@@ -1,10 +1,10 @@
 @import '../../common/_colors';
+@import '../../common/_mixin';
 
 .card {
   display: flex;
   flex-direction: column;
   margin-bottom: 2rem;
-  width: 70%;
   .date {
     color: #2d3436;
     font-weight: 500;
@@ -17,8 +17,6 @@
     padding: 1.2rem 1.5rem;
     transition: all 0.3s ease-in;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-    &:hover {
-    }
     .titleContainer {
       display: flex;
       justify-content: space-between;
@@ -52,5 +50,23 @@
         }
       }
     }
+  }
+}
+
+@include mobile {
+  .card {
+    width: 100%;
+  }
+}
+
+@include tablet {
+  .card {
+    width: 80%;
+  }
+}
+
+@include desktop {
+  .card {
+    width: 70%;
   }
 }

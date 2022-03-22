@@ -1,21 +1,15 @@
 @import '../../common/_colors';
+@import '../../common/_mixin';
 
 .metaContainer {
-  height: 100px;
-  padding: 2rem;
   margin-bottom: 3rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
   border-radius: 1rem;
   .dateBox,
   .orderNumberBox {
     p {
-      font-size: 16px;
       span {
         margin-left: 0.5rem;
-        font-size: 18px;
         font-weight: 500;
       }
     }
@@ -38,7 +32,6 @@
       background-color: $lightGreen;
       color: $white;
     }
-
     .delivered {
       background-color: $red;
       color: $white;
@@ -47,8 +40,6 @@
 }
 
 .container {
-  display: flex;
-  gap: 5%;
   .itemsContainer {
     height: 100%;
     flex-basis: 55%;
@@ -144,5 +135,56 @@
         }
       }
     }
+  }
+}
+
+@include mobile {
+  .metaContainer {
+    padding: 1.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .orderNumberBox,
+    .statusBox {
+      margin-top: 1rem;
+    }
+  }
+  .container {
+    display: block;
+    .orderInfoContainer {
+      margin-top: 2rem;
+    }
+  }
+}
+
+@include tablet {
+  .metaContainer {
+    padding: 1.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .orderNumberBox,
+    .statusBox {
+      margin-top: 1rem;
+    }
+  }
+  .container {
+    display: block;
+    .orderInfoContainer {
+      margin-top: 2rem;
+    }
+  }
+}
+
+@include desktop {
+  .metaContainer {
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+  .container {
+    display: flex;
+    gap: 5%;
   }
 }

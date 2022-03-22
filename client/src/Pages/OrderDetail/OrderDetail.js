@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useQuery } from 'react-query';
 import toast from 'react-hot-toast';
 import orderService from '../../service/order';
@@ -12,12 +12,14 @@ import { clearUser } from '../../reducers/userReducers';
 function OrderDetail() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const user = useSelector((state) => state.user);
+  const { accessToken } = user;
   const { orderId } = useParams();
 
   const { isLoading, isError, data, error } = useQuery(
-    'orderDetail',
+    ['orderDetail', orderId, accessToken],
     async () => {
-      let { data } = await orderService.getOrderByOrderId(orderId);
+      let { data } = await orderService.getOrderByOrderId({ orderId, accessToken });
       return data;
     },
     {
