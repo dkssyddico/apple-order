@@ -49,7 +49,7 @@ function SmallNavbar() {
       </div>
       <div className={styles.logoBox}>
         <Link to='/'>
-          <img className={styles.logo} src={process.env.PUBLIC_URL + '/img/logo.png'} alt='logo' />
+          <img className={styles.logo} src='/img/logo.png' alt='logo' />
         </Link>
       </div>
       <div className={styles.cartBox} onClick={handleCartClick}>

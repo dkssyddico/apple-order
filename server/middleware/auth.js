@@ -6,6 +6,7 @@ dotenv.config();
 export const auth = (req, res, next) => {
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
     let accessToken = req.headers.authorization.split('Bearer ')[1];
+    console.log(accessToken);
     jwt.verify(accessToken, process.env.JWT_SECRET, async function (error, decoded) {
       if (error) {
         if (error instanceof jwt.TokenExpiredError) {
