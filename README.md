@@ -1,23 +1,65 @@
-# apple-order
+# 1. Apple Order
 
-Apple order by paypal
+가상으로 사과를 주문할 수 있는 풀스택 어플리케이션입니다.
+프론트엔드 개발자가 되기 위해서 프론트엔드 지식뿐만 아니라 백엔드에 대한 이해도 필요하다고 생각하여 풀스택으로 만들어본 개인 프로젝트입니다.
 
-## client side
+# 2. 기술 스택
 
-- Product lists
-  - Product detail
-    - Reviews
-- Cart
-  - Pay
-- Login
-  - join
-- Admin
-  - Dashboard
-    - show summary
-  - User List
-    - Add / Delete user
-  - Product List
-    - Add / Modify / Delete items
-  - Order List
-    - Change status ex) paid - delivered
-    - Delete order
+## Front-end
+
+- React
+- Redux
+- Styled-components
+- SCSS
+
+## Back-end
+
+- Node.js
+- Express
+- MongoDB
+
+# 3. 핵심 기능
+
+e-commerce 사이트에서 고객이 이용할 수 있는 상품 확인, 관심 상품 등록, 장바구니, 주문 등의 기능을 만들었습니다.
+추가로 고객과 주문을 관리하는 관리자 전용 기능도 구현했습니다.
+
+<details>
+<summary>상세 기능 확인하기</summary>
+
+<h3>고객을 위한 기능</h3>
+
+- 회원가입
+- 로그인, 로그아웃
+- 관심 상품 등록
+- 장바구니
+  - 상품 삭제
+  - 상품 수량 수정
+- 상품 주문
+- 주문 조회
+- 관심 상품 조회
+
+<h3>관리자 기능</h3>
+
+- 고객 조회, 삭제
+- 주문 조회
+- 상품 조회, 등록, 삭제
+- 배송 상태 변경
+
+</details>
+
+# 4. What I learnt
+
+- CORS
+- REST API
+- Status code
+- Redux 사용을 통한 전역 상태에 대한 이해
+- Authentication: JWT(Json Web Token)을 통해 access Token, refresh Token을 발행.
+- custom hook 만들기: `useDropdown`, `useWidthCheck`
+- 커밋 컨벤션
+
+# 5. 회고
+
+혼자서 고객과 관리자가 되어보면서 각각 어떤 기능이 필요한지 생각해보고 구현해본 프로젝트였습니다. 평소엔 주로 고객의 입장이지만, 개발자가 되어 사이트를 관리하게 될 경우에 필요한 기능을 미리 상상해볼 수 있어서 재밌었습니다.
+전역 상태 관리에 대해 공부하면서 처음에는 모든 정보를 전역 상태에 넣는 미숙한 처리를 했었는데, 마무리 단계에서는 최소한의 정보인 고객 고유의 id만 가지고 필요한 상황에서 데이터를 불러올 수 있도록 했습니다.
+그리고 의외로 어떻게 CSS를 할 것인가 진지하게 고민했었는데, 처음에는 styled-components를 사용했으나 JS 파일이 커지는 것에 부담을 느꼈습니다. 그래서 관심사의 분리가 중요하다고 생각해 CSS와 JS 파일을 분리했습니다.
+e-commerce 사이트에서는 로그인 상태를 유지할 수 있어야 고객이 끊기지 않는 경험을 할 수 있는데 로그인 유지 및 확인 로직의 처리가 아쉬웠습니다. 로그인을 확인하는 코드가 전체 코드를 감싸주도록 만들었어야 하는데 각 페이지마다 확인하게 만들어 코드의 중복이 늘어났다는 점이 아쉬웠고 이는 설계 단계에서 생각했어야 하는 문제라고 생각합니다. 추후에 이러한 인증(Authentication)에 대해 따로 토이 프로젝트를 해볼 생각입니다.

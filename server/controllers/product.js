@@ -10,9 +10,7 @@ export const add = async (req, res) => {
   // 이름 중복 제거
   const existence = await Product.exists({ name });
   if (existence) {
-    return res
-      .status(400)
-      .json({ success: false, message: '이미 존재하는 상품입니다!' });
+    return res.status(400).json({ success: false, message: '이미 존재하는 상품입니다!' });
   }
   price = parseInt(price);
   category = parseInt(category);
@@ -25,9 +23,7 @@ export const add = async (req, res) => {
       images,
       canBeSold: true,
     });
-    return res
-      .status(201)
-      .json({ success: true, message: '새로운 상품이 등록되었습니다!' });
+    return res.status(201).json({ success: true, message: '새로운 상품이 등록되었습니다!' });
   } catch (error) {
     console.log(error);
     return res.status(400).json({
@@ -69,9 +65,7 @@ export const saveImage = (req, res) => {
   upload(req, res, (err) => {
     if (err) {
       console.log(err);
-      return res
-        .status(400)
-        .json({ success: false, message: '사진 업로드에 실패했습니다' });
+      return res.status(400).json({ success: false, message: '사진 업로드에 실패했습니다' });
     }
     console.log(res.req.file);
     return res.status(200).json({
@@ -86,6 +80,7 @@ export const getAll = async (req, res) => {
     const products = await Product.find().sort({ createdAt: 'desc' });
     return res.status(200).json({ success: true, products });
   } catch (error) {
+    console.log(error);
     return res.status(400).json({
       success: false,
       error,
@@ -100,13 +95,9 @@ export const remove = async (req, res) => {
   await Product.findByIdAndDelete(id).exec((err, result) => {
     if (err) {
       console.log(err);
-      return res
-        .status(400)
-        .json({ success: false, message: '상품을 삭제하지 못했습니다.' });
+      return res.status(400).json({ success: false, message: '상품을 삭제하지 못했습니다.' });
     }
-    return res
-      .status(200)
-      .json({ success: true, message: '상품을 성공적으로 삭제했습니다.' });
+    return res.status(200).json({ success: true, message: '상품을 성공적으로 삭제했습니다.' });
   });
 };
 
@@ -138,8 +129,6 @@ export const update = async (req, res) => {
     });
     return res.status(200).json({ success: true });
   } catch (error) {
-    return res
-      .status(400)
-      .json({ success: false, message: '상품 정보 업데이트에 실패했습니다.' });
+    return res.status(400).json({ success: false, message: '상품 정보 업데이트에 실패했습니다.' });
   }
 };
